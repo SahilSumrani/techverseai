@@ -22,10 +22,10 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Header Bar - Bold & Clear Brand Header */}
-      <div className="flex md:hidden w-[92%] justify-between items-center px-5 py-2.5 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
+      {/* Mobile Header Bar - Prominent Mobile Logo */}
+      <div className="flex md:hidden w-[92%] max-w-[420px] justify-between items-center px-4 sm:px-5 py-2 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
         <a href="/" className="flex items-center">
-          <img src="/logo.png" alt="Techverse Logo" className="h-10 sm:h-12 w-auto max-w-[170px] sm:max-w-[200px] object-contain" />
+          <img src="/logo.png" alt="Techverse Logo" className="h-12 sm:h-15 w-auto max-w-[200px] sm:max-w-[240px] object-contain" />
         </a>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

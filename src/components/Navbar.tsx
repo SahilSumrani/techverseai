@@ -6,14 +6,14 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="relative flex justify-center items-center py-3 bg-transparent z-40" style={{ fontFamily: 'Matter, sans-serif' }}>
       {/* Desktop Navigation Pill - Sleek Header */}
-      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-2 border border-gray-200 min-w-[680px] bg-white/95 backdrop-blur-md shadow-sm">
+      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-1.5 border border-gray-200 min-w-[700px] bg-white/95 backdrop-blur-md shadow-sm">
         <div className="flex justify-center space-x-10">
           <a className="hover:text-blue-600 font-medium text-sm lg:text-base text-gray-800 transition-colors" href="/prebuilt">Prebuilt</a>
           <a className="hover:text-blue-600 font-medium text-sm lg:text-base text-gray-800 transition-colors" href="/customized">Customized</a>
         </div>
         <div className="flex justify-center items-center">
           <a href="/">
-            <img src="/logo.png" alt="Techverse Logo" className="h-10 lg:h-12 w-auto max-w-[180px] object-contain transition-transform hover:scale-105" />
+            <img src="/logo.png" alt="Techverse Logo" className="h-14 lg:h-16 w-auto max-w-[220px] object-contain transition-transform hover:scale-105" />
           </a>
         </div>
         <div className="flex justify-center space-x-10">

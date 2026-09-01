@@ -81,17 +81,7 @@ export const ContactPage: React.FC = () => {
                   <MapPin className="w-5 h-5" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900 font-poppins">343, Sector 12A, Near Canara Bank</p>
-                  <p className="text-sm text-gray-600 font-poppins">Rajendra Space, Awas Vikas Colony, Sikandra, Agra, UP–282007</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <span className="p-3 rounded-full bg-gray-100 text-gray-900 shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900 font-poppins">Kotdawar, Uttarakhand</p>
+                  <p className="text-sm font-semibold text-gray-900 font-poppins">Delhi, India</p>
                 </div>
               </div>
 

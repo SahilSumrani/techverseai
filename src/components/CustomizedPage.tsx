@@ -51,6 +51,19 @@ const projects: Project[] = [
       'User-friendly layout designed for quick appointment scheduling.',
       'Responsive mobile interface optimised for global visitors.'
     ]
+  },
+  {
+    title: 'Cycle Store Ecom',
+    image: '/customized/work4.png',
+    link: 'https://cycle-website-sage.vercel.app/',
+    imageOrder: 'md:order-2',
+    textOrder: 'md:order-1',
+    points: [
+      'Modern online bicycle storefront with interactive gear & model selection.',
+      'Sleek product showcase for premium cycles, accessories & riding gear.',
+      'Optimised responsive shopping cart with seamless checkout flow.',
+      'Fast loading mobile UX designed for outdoor & fitness enthusiasts.'
+    ]
   }
 ];
 

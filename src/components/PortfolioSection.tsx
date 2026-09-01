@@ -25,6 +25,12 @@ const projects: Project[] = [
     description: 'Vedic astrology & spiritual consultation platform featuring online booking.',
     image: '/customized/work2.png',
     link: 'https://vinayakjyotish.org/'
+  },
+  {
+    title: 'Cycle Store Ecom',
+    description: 'Modern online bicycle storefront with interactive gear & model selection.',
+    image: '/customized/work4.png',
+    link: 'https://cycle-website-sage.vercel.app/'
   }
 ];
 

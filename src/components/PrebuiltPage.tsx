@@ -1,0 +1,59 @@
+import React from 'react';
+import { Navbar } from './Navbar';
+import { Footer } from './Footer';
+import { FloatingActions } from './FloatingActions';
+import { FaqSection } from './FaqSection';
+
+export const PrebuiltPage: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden selection:bg-black selection:text-white font-poppins">
+      <FloatingActions />
+
+      {/* Hero Container */}
+      <div className="relative w-full flex flex-col bg-no-repeat bg-center bg-cover min-h-[70vh] sm:min-h-[75vh] md:min-h-screen" style={{ backgroundImage: "url('/common/Bg2.png')" }}>
+        <Navbar />
+
+        <div className="flex-1 flex flex-col justify-start pt-12 md:justify-center md:pt-0">
+          <section className="flex flex-1 items-start md:items-center justify-start md:justify-center text-center px-4 sm:px-6 pt-12 sm:pt-14 md:pt-0 h-[70vh] sm:h-[75vh] md:h-screen">
+            <div className="w-full">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-gray-900 leading-snug sm:leading-tight font-medium" style={{ fontFamily: 'Matter, sans-serif' }}>
+                Prebuilt SaaS Software for <br />Startups
+              </h1>
+              <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-gray-500/80 max-w-md sm:max-w-xl md:max-w-2xl mx-auto">
+                Skip the long wait and high costs. Our prebuilt platforms help you go digital faster without compromising on quality.
+              </p>
+              <div className="mt-8 flex justify-center">
+                <span className="inline-block px-8 py-3 bg-black text-white text-base sm:text-lg font-semibold rounded-full shadow-lg tracking-wider uppercase animate-pulse">
+                  Coming Soon
+                </span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* Floating Side Objects */}
+        <img src="/common/object1.png" alt="Left Object" className="absolute top-36 left-2 w-20 md:top-48 md:left-0 md:w-48 lg:top-48 lg:left-0 lg:w-64 float-animation pointer-events-none z-20" />
+        <img src="/common/object2.png" alt="Right Object" className="absolute top-35 right-2 w-20 md:top-20 md:right-0 md:w-48 lg:top-20 lg:right-0 lg:w-64 float-animation pointer-events-none z-20" />
+
+        {/* Marquee Banner */}
+        <div className="overflow-hidden w-full bg-black">
+          <div className="marquee inline-flex items-center">
+            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+        </div>
+      </div>
+
+
+
+      {/* FAQ Section */}
+      <FaqSection />
+
+      <Footer />
+    </div>
+  );
+};

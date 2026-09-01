@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/((?!assets/|common/|customized/|home/|placeholders/|thumbnails/|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

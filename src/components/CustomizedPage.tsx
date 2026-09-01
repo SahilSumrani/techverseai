@@ -92,8 +92,8 @@ export const CustomizedPage: React.FC = () => {
         </div>
 
         {/* Floating Side Objects */}
-        <img src="/common/object1.png" alt="Left Object" className="absolute top-36 left-2 w-20 md:top-48 md:left-0 md:w-48 lg:top-48 lg:left-0 lg:w-64 float-animation pointer-events-none z-20" />
-        <img src="/common/object2.png" alt="Right Object" className="absolute top-35 right-2 w-20 md:top-20 md:right-0 md:w-48 lg:top-20 lg:right-0 lg:w-64 float-animation pointer-events-none z-20" />
+        <img src="/common/object1.png" alt="Left Object" className="absolute top-20 left-2 w-14 sm:w-18 md:top-48 md:left-0 md:w-48 lg:top-48 lg:left-0 lg:w-64 float-animation pointer-events-none z-20" />
+        <img src="/common/object2.png" alt="Right Object" className="absolute top-20 right-2 w-14 sm:w-18 md:top-20 md:right-0 md:w-48 lg:top-20 lg:right-0 lg:w-64 float-animation pointer-events-none z-20" />
 
         {/* Marquee Banner */}
         <div className="overflow-hidden w-full bg-black">

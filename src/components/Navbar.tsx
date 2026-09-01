@@ -13,7 +13,7 @@ export const Navbar: React.FC = () => {
         </div>
         <div className="flex justify-center items-center">
           <a href="/">
-            <img src="/logo.png" alt="Techverse Logo" className="h-14 sm:h-16 w-auto max-w-[200px] object-contain transition-transform hover:scale-105" />
+            <img src="/logo.png" alt="Techverse Logo" className="h-16 lg:h-20 w-auto max-w-[240px] object-contain transition-transform hover:scale-105" />
           </a>
         </div>
         <div className="flex justify-center space-x-12">
@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
       {/* Mobile Header Bar - Larger Logo */}
       <div className="flex md:hidden w-[90%] justify-between items-center px-6 py-3 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
         <a href="/">
-          <img src="/logo.png" alt="Techverse Logo" className="h-10 sm:h-12 w-auto max-w-[150px] object-contain" />
+          <img src="/logo.png" alt="Techverse Logo" className="h-14 sm:h-16 w-auto max-w-[190px] object-contain" />
         </a>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

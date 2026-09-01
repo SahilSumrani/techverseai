@@ -37,32 +37,10 @@ export const HeroSection: React.FC = () => {
         </div>
 
         {/* Audience Count Tag */}
-        <div className="flex items-center gap-2 sm:gap-4 mt-4">
+        <div className="flex items-center gap-2 sm:gap-4 mt-4 pb-12">
           <p className="text-gray-700 text-sm sm:text-lg leading-none" style={{ fontFamily: 'Matter, sans-serif' }}>
             Trusted by <span className="text-blue-500 font-semibold">1.3L+</span> Audience
           </p>
-        </div>
-
-        {/* Moving Ticker Strips */}
-        <div className="flex flex-col items-center space-y-6 w-full mt-10 pb-12">
-          {/* Left Moving Strip */}
-          <div className="w-full overflow-hidden">
-            <div className="strip-left flex gap-4">
-              <img alt="strip" className="h-14 sm:h-16 w-auto object-contain" src="/common/strip-1.png" />
-              <img alt="strip" className="h-14 sm:h-16 w-auto object-contain" src="/common/strip-1.png" />
-              <img alt="strip" className="h-14 sm:h-16 w-auto object-contain" src="/common/strip-1.png" />
-              <img alt="strip" className="h-14 sm:h-16 w-auto object-contain" src="/common/strip-1.png" />
-            </div>
-          </div>
-          {/* Right Moving Strip */}
-          <div className="w-full overflow-hidden relative isolate">
-            <div className="strip-right flex gap-4">
-              <img alt="strip" className="h-14 sm:h-16 w-auto object-contain" src="/common/strip-2.png" />
-              <img alt="strip" className="h-14 sm:h-16 w-auto object-contain" src="/common/strip-2.png" />
-              <img alt="strip" className="h-14 sm:h-16 w-auto object-contain" src="/common/strip-2.png" />
-              <img alt="strip" className="h-14 sm:h-16 w-auto object-contain" src="/common/strip-2.png" />
-            </div>
-          </div>
         </div>
 
       </div>

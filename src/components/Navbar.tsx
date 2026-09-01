@@ -4,28 +4,28 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="relative flex justify-center items-center py-6 bg-transparent z-40" style={{ fontFamily: 'Matter, sans-serif' }}>
-      {/* Desktop Navigation Pill - Prominent Logo & Spacing */}
-      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-12 py-3.5 border border-gray-200 min-w-[720px] bg-white/95 backdrop-blur-md shadow-sm">
-        <div className="flex justify-center space-x-12">
-          <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/prebuilt">Prebuilt</a>
-          <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/customized">Customized</a>
+    <nav className="relative flex justify-center items-center py-3 bg-transparent z-40" style={{ fontFamily: 'Matter, sans-serif' }}>
+      {/* Desktop Navigation Pill - Sleek Header */}
+      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-2 border border-gray-200 min-w-[680px] bg-white/95 backdrop-blur-md shadow-sm">
+        <div className="flex justify-center space-x-10">
+          <a className="hover:text-blue-600 font-medium text-sm lg:text-base text-gray-800 transition-colors" href="/prebuilt">Prebuilt</a>
+          <a className="hover:text-blue-600 font-medium text-sm lg:text-base text-gray-800 transition-colors" href="/customized">Customized</a>
         </div>
         <div className="flex justify-center items-center">
           <a href="/">
-            <img src="/logo.png" alt="Techverse Logo" className="h-16 lg:h-20 w-auto max-w-[240px] object-contain transition-transform hover:scale-105" />
+            <img src="/logo.png" alt="Techverse Logo" className="h-10 lg:h-12 w-auto max-w-[180px] object-contain transition-transform hover:scale-105" />
           </a>
         </div>
-        <div className="flex justify-center space-x-12">
-          <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/about-us">About Us</a>
-          <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/contact">Contact Us</a>
+        <div className="flex justify-center space-x-10">
+          <a className="hover:text-blue-600 font-medium text-sm lg:text-base text-gray-800 transition-colors" href="/about-us">About Us</a>
+          <a className="hover:text-blue-600 font-medium text-sm lg:text-base text-gray-800 transition-colors" href="/contact">Contact Us</a>
         </div>
       </div>
 
-      {/* Mobile Header Bar - Larger Logo */}
-      <div className="flex md:hidden w-[90%] justify-between items-center px-6 py-3 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
+      {/* Mobile Header Bar - Sleek Header */}
+      <div className="flex md:hidden w-[90%] justify-between items-center px-5 py-2 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
         <a href="/">
-          <img src="/logo.png" alt="Techverse Logo" className="h-14 sm:h-16 w-auto max-w-[190px] object-contain" />
+          <img src="/logo.png" alt="Techverse Logo" className="h-9 sm:h-10 w-auto max-w-[150px] object-contain" />
         </a>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

@@ -36,10 +36,14 @@ export const HeroSection: React.FC = () => {
           </a>
         </div>
 
-        {/* Audience Count Tag */}
-        <div className="flex items-center gap-2 sm:gap-4 mt-4 pb-12">
-          <p className="text-gray-700 text-sm sm:text-lg leading-none" style={{ fontFamily: 'Matter, sans-serif' }}>
-            Trusted by <span className="text-blue-500 font-semibold">1.3L+</span> Audience
+        {/* Authentic Social Proof Trust Tag */}
+        <div className="flex items-center justify-center gap-2 mt-4 pb-12">
+          <div className="flex items-center text-amber-400 text-xs sm:text-sm tracking-tighter">
+            ★★★★★
+          </div>
+          <span className="text-gray-300 font-light text-xs sm:text-sm">|</span>
+          <p className="text-gray-700 text-xs sm:text-sm md:text-base font-medium" style={{ fontFamily: 'Matter, sans-serif' }}>
+            Trusted by <span className="text-blue-600 font-semibold">5+ Brands</span> &amp; 100% On-Time Delivery
           </p>
         </div>
 

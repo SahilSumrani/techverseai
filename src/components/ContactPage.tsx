@@ -101,15 +101,6 @@ export const ContactPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <span className="p-3 rounded-full bg-gray-100 text-gray-900 shrink-0">
-                  <Phone className="w-5 h-5" />
-                </span>
-                <div className="font-poppins">
-                  <a href="tel:+918700543448" className="text-sm text-gray-900 hover:underline block">+91 8700543448</a>
-                  <a href="tel:+918789104097" className="text-sm text-gray-900 hover:underline block">+91 8789104097</a>
-                </div>
-              </div>
             </div>
           </div>
 

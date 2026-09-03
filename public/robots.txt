@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin
 
-Sitemap: https://techverse.ai/sitemap.xml
+Sitemap: https://techverseai.vercel.app/sitemap.xml

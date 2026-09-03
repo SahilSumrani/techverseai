@@ -6,18 +6,18 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="relative flex justify-center items-center py-3 bg-transparent z-40" style={{ fontFamily: 'Matter, sans-serif' }}>
       {/* Desktop Navigation Pill - Sleek Compact Header */}
-      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-1.5 border border-gray-200 min-w-[700px] max-w-[850px] bg-white/95 backdrop-blur-md shadow-sm">
+      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-2 border border-gray-200 min-w-[700px] max-w-[850px] bg-white/95 backdrop-blur-md shadow-sm">
         <div className="flex justify-center space-x-8">
           <a className="hover:text-blue-600 font-medium text-sm text-gray-800 transition-colors" href="/prebuilt">Prebuilt</a>
           <a className="hover:text-blue-600 font-medium text-sm text-gray-800 transition-colors" href="/customized">Customized</a>
         </div>
         <div className="flex justify-center items-center">
           <a href="/" className="flex items-center justify-center transition-transform hover:scale-105">
-            <div className="h-10 w-[180px] sm:w-[200px] relative overflow-hidden flex items-center justify-center">
+            <div className="h-12 w-[180px] sm:w-[220px] relative overflow-hidden flex items-center justify-center">
               <img
                 src="/logo.png"
                 alt="Techverse Logo"
-                className="w-full h-full object-contain scale-[1.75]"
+                className="w-full h-full object-contain scale-[3.2]"
               />
             </div>
           </a>
@@ -29,13 +29,13 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Header Bar - Prominent Mobile Logo */}
-      <div className="flex md:hidden w-[92%] max-w-[420px] justify-between items-center px-4 sm:px-5 py-1.5 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
+      <div className="flex md:hidden w-[92%] max-w-[420px] justify-between items-center px-4 sm:px-5 py-2 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
         <a href="/" className="flex items-center">
-          <div className="h-9 w-[150px] relative overflow-hidden flex items-center justify-start">
+          <div className="h-11 w-[160px] relative overflow-hidden flex items-center justify-start">
             <img
               src="/logo.png"
               alt="Techverse Logo"
-              className="w-full h-full object-contain object-left scale-[1.7]"
+              className="w-full h-full object-contain object-left scale-[3]"
             />
           </div>
         </a>

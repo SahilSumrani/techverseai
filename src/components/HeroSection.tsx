@@ -221,6 +221,8 @@ export const HeroSection: React.FC = () => {
                       <img
                         src={tile.src}
                         alt={`Superside Hero Item ${idx}`}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
                       />
                     )}

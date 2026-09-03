@@ -74,7 +74,7 @@ export const HeroSection: React.FC = () => {
             {/* Headline */}
             <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold text-gray-900 tracking-tight leading-[1.12] mb-5">
               <span className="block sm:whitespace-nowrap">Build your Startup</span>
-              <span className="block font-semibold text-gray-800">with Techverse</span>
+              <span className="block font-semibold text-gray-800">with Techverse AI</span>
             </h1>
 
             {/* Supporting Subtitle */}

@@ -106,8 +106,8 @@ export const ContactPage: React.FC = () => {
                   <Phone className="w-5 h-5" />
                 </span>
                 <div className="font-poppins">
-                  <a href="tel:+918595669310" className="text-sm text-gray-900 hover:underline block">+91 8595669310</a>
-                  <a href="tel:+918923612313" className="text-sm text-gray-900 hover:underline block">+91 8923612313</a>
+                  <a href="tel:+918700543448" className="text-sm text-gray-900 hover:underline block">+91 8700543448</a>
+                  <a href="tel:+918789104097" className="text-sm text-gray-900 hover:underline block">+91 8789104097</a>
                 </div>
               </div>
             </div>
@@ -207,11 +207,11 @@ export const ContactPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Google Map Section */}
+        {/* Google Map Section - Laxmi Nagar, Delhi */}
         <div className="mt-16 rounded-2xl overflow-hidden shadow-md h-[350px] sm:h-[420px] border border-gray-200">
           <iframe
-            title="Google Map Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.123722734972!2d77.96537597485362!3d27.1776619507776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3974776d1b3f15c5%3A0x5a2d4a58c3b9b70!2sAwas%20Vikas%20Colony%2C%20Sikandra%2C%20Agra%2C%20Uttar%20Pradesh%20282007!5e0!3m2!1sen!2sin!4v1697797267911!5m2!1sen!2sin"
+            title="Google Map Location - Laxmi Nagar, Delhi"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14006.311746231908!2d77.2715003461476!3d28.63945417855395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfcadda080757%3A0x959950e32512f455!2sLaxmi%20Nagar%2C%20New%20Delhi%2C%20Delhi%20110092!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style={{ border: 0 }}

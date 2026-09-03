@@ -91,12 +91,12 @@ export const Footer: React.FC = () => {
       {/* Large Unclipped Watermark Title */}
       <div className="w-full flex justify-center pt-4 pb-8 overflow-visible">
         <span
-          className="w-full text-center font-bold tracking-wider select-none whitespace-nowrap bg-clip-text text-transparent text-[45px] sm:text-[75px] md:text-[95px] lg:text-[115px] leading-tight block"
+          className="w-full text-center font-bold tracking-wider select-none whitespace-nowrap bg-clip-text text-transparent text-[40px] sm:text-[65px] md:text-[85px] lg:text-[105px] leading-tight block"
           style={{
             backgroundImage: 'linear-gradient(180deg, rgba(180, 180, 180, 0.45) 0%, rgba(235, 235, 235, 0.95) 100%)'
           }}
         >
-          TECHVERSE
+          TECHVERSE AI
         </span>
       </div>
     </footer>

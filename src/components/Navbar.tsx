@@ -12,8 +12,8 @@ export const Navbar: React.FC = () => {
           <a className="hover:text-blue-600 font-medium text-sm lg:text-base text-gray-800 transition-colors" href="/customized">Customized</a>
         </div>
         <div className="flex justify-center items-center">
-          <a href="/">
-            <img src="/logo.png" alt="Techverse Logo" className="h-14 lg:h-16 w-auto max-w-[220px] object-contain transition-transform hover:scale-105" />
+          <a href="/" className="flex items-center justify-center">
+            <img src="/logo.png" alt="Techverse Logo" className="h-16 sm:h-20 md:h-20 lg:h-24 w-auto max-w-[280px] object-contain transition-transform hover:scale-105" />
           </a>
         </div>
         <div className="flex justify-center space-x-10">
@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
       {/* Mobile Header Bar - Prominent Mobile Logo */}
       <div className="flex md:hidden w-[92%] max-w-[420px] justify-between items-center px-4 sm:px-5 py-2 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
         <a href="/" className="flex items-center">
-          <img src="/logo.png" alt="Techverse Logo" className="h-12 sm:h-15 w-auto max-w-[200px] sm:max-w-[240px] object-contain" />
+          <img src="/logo.png" alt="Techverse Logo" className="h-14 sm:h-18 w-auto max-w-[240px] sm:max-w-[280px] object-contain" />
         </a>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

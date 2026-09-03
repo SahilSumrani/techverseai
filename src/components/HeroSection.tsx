@@ -79,7 +79,7 @@ export const HeroSection: React.FC = () => {
 
             {/* Supporting Subtitle */}
             <p className="text-sm sm:text-lg text-gray-600 font-normal leading-relaxed max-w-xl mb-7 px-1 sm:px-0">
-              Scale your in-house product &amp; design capabilities with top 1% engineering talent powered by modern workflows, delivering custom web apps &amp; software fast and affordably.
+              We build scalable, AI-powered web applications for startups &amp; businesses globally. Let's transform your ideas into code.
             </p>
 
             {/* Call to Actions */}

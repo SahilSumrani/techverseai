@@ -6,7 +6,7 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="relative flex justify-center items-center py-3 bg-transparent z-40" style={{ fontFamily: 'Matter, sans-serif' }}>
       {/* Desktop Navigation Pill - Sleek Compact Header */}
-      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-3 border border-gray-200 min-w-[750px] max-w-[900px] bg-white/95 backdrop-blur-md shadow-sm">
+      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-1.5 border border-gray-200 min-w-[720px] max-w-[850px] bg-white/95 backdrop-blur-md shadow-sm">
         <div className="flex justify-center space-x-8">
           <a className="hover:text-blue-600 font-medium text-sm text-gray-800 transition-colors" href="/prebuilt">Prebuilt</a>
           <a className="hover:text-blue-600 font-medium text-sm text-gray-800 transition-colors" href="/customized">Customized</a>
@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
             <img
               src="/logo.png"
               alt="Techverse Logo"
-              className="h-16 sm:h-20 md:h-20 lg:h-24 w-auto max-w-[300px] object-contain"
+              className="h-12 md:h-14 lg:h-16 w-auto max-w-[260px] object-contain"
             />
           </a>
         </div>
@@ -27,12 +27,12 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Header Bar - Prominent Mobile Logo */}
-      <div className="flex md:hidden w-[92%] max-w-[440px] justify-between items-center px-4 sm:px-5 py-2.5 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
+      <div className="flex md:hidden w-[92%] max-w-[420px] justify-between items-center px-4 sm:px-5 py-1.5 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50">
         <a href="/" className="flex items-center">
           <img
             src="/logo.png"
             alt="Techverse Logo"
-            className="h-12 sm:h-15 w-auto max-w-[240px] object-contain"
+            className="h-10 sm:h-12 w-auto max-w-[200px] object-contain"
           />
         </a>
         <button

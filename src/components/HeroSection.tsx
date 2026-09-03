@@ -8,7 +8,7 @@ const VideoTile: React.FC<{ src: string }> = ({ src }) => {
     if (v) {
       v.defaultMuted = true;
       v.muted = true;
-      v.play().catch(() => {});
+      v.play().catch(() => { });
     }
   }, [src]);
 
@@ -56,13 +56,13 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section className="font-poppins w-full relative pt-2 pb-10 lg:pt-4 lg:pb-16 min-h-[85vh] flex items-center overflow-visible bg-transparent">
-      
+
       <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
-          
+
           {/* Left Side: Clean Typography, Description & CTAs */}
           <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left py-4 sm:py-6 z-10">
-            
+
             {/* Top Pill Tag */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-gray-200 shadow-xs mb-5 transition-all hover:scale-105">
               <span className="flex h-2 w-2 rounded-full bg-blue-600 animate-ping" />
@@ -74,7 +74,7 @@ export const HeroSection: React.FC = () => {
             {/* Headline */}
             <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold text-gray-900 tracking-tight leading-[1.12] mb-5">
               <span className="block sm:whitespace-nowrap">Build your Startup</span>
-              <span className="block font-semibold text-gray-800">with Techverse AI</span>
+              <span className="block font-semibold text-gray-800">with TechverseAI</span>
             </h1>
 
             {/* Supporting Subtitle */}
@@ -114,23 +114,23 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* Right Side: Responsive Layout (Horizontal Left-to-Right Scrolling on Mobile, Full-Height Vertical Marquee on Desktop) */}
-          
+
           {/* MOBILE VIEW (Horizontal Left-to-Right & Right-to-Left Rows with Matching Speed - Full Bleed Edge-to-Edge) */}
           <div className="lg:hidden w-full mt-4 flex flex-col gap-3 overflow-hidden py-2 -mx-4 sm:-mx-6 w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)]">
-            
+
             {/* Row 1: Left to Right */}
             <div className="w-full overflow-hidden">
               <div className="strip-left flex gap-3">
                 {[...allTilesHorizontal, ...allTilesHorizontal].map((tile, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="w-36 sm:w-48 h-52 sm:h-64 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-gray-200/80 bg-gray-100"
                   >
                     {tile.type === 'video' ? (
                       <VideoTile src={tile.src} />
                     ) : (
-                      <img 
-                        src={tile.src} 
+                      <img
+                        src={tile.src}
                         alt={`Showcase Mobile ${idx}`}
                         className="w-full h-full object-cover"
                       />
@@ -144,15 +144,15 @@ export const HeroSection: React.FC = () => {
             <div className="w-full overflow-hidden">
               <div className="strip-right flex gap-3">
                 {[...allTilesHorizontal, ...allTilesHorizontal].map((tile, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="w-36 sm:w-48 h-52 sm:h-64 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-gray-200/80 bg-gray-100"
                   >
                     {tile.type === 'video' ? (
                       <VideoTile src={tile.src} />
                     ) : (
-                      <img 
-                        src={tile.src} 
+                      <img
+                        src={tile.src}
                         alt={`Showcase Mobile ${idx}`}
                         className="w-full h-full object-cover"
                       />
@@ -167,19 +167,19 @@ export const HeroSection: React.FC = () => {
           {/* DESKTOP VIEW (Vertical Full-Height Marquee Deck) */}
           <div className="hidden lg:block lg:col-span-6 w-full lg:absolute lg:-top-24 xl:-top-28 lg:right-0 lg:w-[48vw] xl:w-[50vw] lg:h-[calc(100%+115px)] z-0 overflow-hidden">
             <div className="grid grid-cols-3 gap-4 h-full overflow-hidden p-2 bg-transparent relative">
-              
+
               {/* Column 1 - Marquee Up */}
               <div className="flex flex-col gap-4 animate-marquee-up pt-2">
                 {[...col1Tiles, ...col1Tiles].map((tile, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.03] shrink-0 h-56 bg-gray-100"
                   >
                     {tile.type === 'video' ? (
                       <VideoTile src={tile.src} />
                     ) : (
-                      <img 
-                        src={tile.src} 
+                      <img
+                        src={tile.src}
                         alt={`Superside Hero Item ${idx}`}
                         className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
                       />
@@ -191,15 +191,15 @@ export const HeroSection: React.FC = () => {
               {/* Column 2 - Marquee Down */}
               <div className="flex flex-col gap-4 animate-marquee-down">
                 {[...col2Tiles, ...col2Tiles].map((tile, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.03] shrink-0 h-56 bg-gray-100"
                   >
                     {tile.type === 'video' ? (
                       <VideoTile src={tile.src} />
                     ) : (
-                      <img 
-                        src={tile.src} 
+                      <img
+                        src={tile.src}
                         alt={`Superside Hero Item ${idx}`}
                         className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
                       />
@@ -211,15 +211,15 @@ export const HeroSection: React.FC = () => {
               {/* Column 3 - Marquee Up */}
               <div className="flex flex-col gap-4 animate-marquee-up pt-6">
                 {[...col3Tiles, ...col3Tiles].map((tile, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.03] shrink-0 h-56 bg-gray-100"
                   >
                     {tile.type === 'video' ? (
                       <VideoTile src={tile.src} />
                     ) : (
-                      <img 
-                        src={tile.src} 
+                      <img
+                        src={tile.src}
                         alt={`Superside Hero Item ${idx}`}
                         className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
                       />

@@ -89,10 +89,10 @@ async function hashSHA256(text: string): Promise<string> {
   return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-// Target hash for Sahil@881032
+// Environment Variables configured in Vercel / .env
 const metaEnv = (import.meta as any).env || {};
-const TARGET_PASS_HASH = metaEnv.VITE_ADMIN_PASS_HASH || '5c531d0dbce526046e7f1f0a40d5ea7ef3f24bf7a052ff37c35ec3631fdf7924';
-const TARGET_USER = metaEnv.VITE_ADMIN_USER || 'sahilarora7892';
+const TARGET_PASS_HASH = metaEnv.VITE_ADMIN_PASS_HASH;
+const TARGET_USER = metaEnv.VITE_ADMIN_USER;
 
 export const isAuthenticated = (): boolean => {
   return localStorage.getItem(AUTH_KEY) === 'true';

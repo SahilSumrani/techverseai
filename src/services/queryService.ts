@@ -80,13 +80,29 @@ export const deleteQuery = (id: string): ContactQuery[] => {
   return updated;
 };
 
-// Admin authentication helpers
+// SHA-256 Hash helper to avoid plain-text credentials in client bundle
+async function hashSHA256(text: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Target hash for Sahil@881032
+const metaEnv = (import.meta as any).env || {};
+const TARGET_PASS_HASH = metaEnv.VITE_ADMIN_PASS_HASH || '5c531d0dbce526046e7f1f0a40d5ea7ef3f24bf7a052ff37c35ec3631fdf7924';
+const TARGET_USER = metaEnv.VITE_ADMIN_USER || 'sahilarora7892';
+
 export const isAuthenticated = (): boolean => {
   return localStorage.getItem(AUTH_KEY) === 'true';
 };
 
-export const loginAdmin = (password: string): boolean => {
-  if (password === 'admin123' || password === 'techverse2026') {
+export const loginAdminSecure = async (username: string, pass: string): Promise<boolean> => {
+  const trimmedUser = username.trim();
+  const inputHash = await hashSHA256(pass.trim());
+
+  if (trimmedUser === TARGET_USER && inputHash === TARGET_PASS_HASH) {
     localStorage.setItem(AUTH_KEY, 'true');
     return true;
   }

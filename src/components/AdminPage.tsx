@@ -7,7 +7,7 @@ import {
   updateQueryStatus,
   deleteQuery,
   isAuthenticated,
-  loginAdmin,
+  loginAdminSecure,
   logoutAdmin,
   ContactQuery
 } from '../services/queryService';
@@ -30,6 +30,7 @@ import {
 
 export const AdminPage: React.FC = () => {
   const [authed, setAuthed] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
   const [queries, setQueries] = useState<ContactQuery[]>([]);
@@ -44,15 +45,17 @@ export const AdminPage: React.FC = () => {
     }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (loginAdmin(password)) {
+    const success = await loginAdminSecure(username, password);
+    if (success) {
       setAuthed(true);
       setLoginError('');
       setPassword('');
+      setUsername('');
       setQueries(getStoredQueries());
     } else {
-      setLoginError('Invalid Administrator Password! Please try again.');
+      setLoginError('Invalid Username or Password! Access Denied.');
     }
   };
 
@@ -131,9 +134,20 @@ export const AdminPage: React.FC = () => {
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="relative">
                   <input
+                    type="text"
+                    required
+                    placeholder="Admin Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full px-4 py-3.5 bg-slate-800/80 border border-slate-700/80 rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  />
+                </div>
+
+                <div className="relative">
+                  <input
                     type="password"
                     required
-                    placeholder="Enter Security Password"
+                    placeholder="Admin Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-3.5 bg-slate-800/80 border border-slate-700/80 rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
@@ -150,7 +164,7 @@ export const AdminPage: React.FC = () => {
               </form>
 
               <div className="mt-6 pt-4 border-t border-slate-800/80 text-xs text-gray-500">
-                Techverse Security System • Default password: <code className="text-blue-400">admin123</code>
+                Techverse Encrypted Admin System
               </div>
             </div>
           </div>

@@ -74,7 +74,6 @@ export const App: React.FC = () => {
         <FeaturesSection />
         <PortfolioSection />
         <TickerBanner />
-        <TeamSection />
         <FaqSection />
         <Footer />
       </div>

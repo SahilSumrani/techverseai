@@ -17,9 +17,9 @@ export const FeaturesSection: React.FC = () => {
           <article className="cursor-pointer bg-white flex flex-col items-center rounded-2xl overflow-hidden shadow-sm ring-1 ring-gray-200 p-5 transition-all duration-300 hover:shadow-xl hover:scale-[1.03] w-full">
             <div className="flex justify-center items-center h-[200px] sm:h-[250px] w-full mb-4 overflow-hidden rounded-xl bg-gray-50 p-2">
               <img
-                src="/home/features1.png"
+                src="/home/custom_dev.png"
                 alt="Custom Development"
-                className="max-h-full max-w-full object-contain"
+                className="max-h-full max-w-full object-contain rounded-lg"
               />
             </div>
             <div className="w-full text-left px-2">

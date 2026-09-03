@@ -12,8 +12,8 @@ export const Footer: React.FC = () => {
             <div>
               <h3 className="text-footer-text text-base text-gray-400">Contact us at</h3>
               <p className="text-footer-text text-lg font-medium text-gray-900">
-                <a href="mailto:officialsahilarora05@gmail.com" className="hover:underline">
-                  officialsahilarora05@gmail.com
+                <a href="mailto:digitechcreator11@gmail.com" className="hover:underline">
+                  digitechcreator11@gmail.com
                 </a>
               </p>
             </div>

@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
             <img
               src="/logo.png"
               alt="Techverse Logo"
-              className="h-12 w-auto max-w-[280px] object-contain scale-[1.55]"
+              className="h-12 w-auto max-w-[300px] object-contain scale-[2.1]"
             />
           </a>
         </div>
@@ -32,7 +32,7 @@ export const Navbar: React.FC = () => {
           <img
             src="/logo.png"
             alt="Techverse Logo"
-            className="h-10 w-auto max-w-[220px] object-contain scale-[1.45] origin-left"
+            className="h-10 w-auto max-w-[240px] object-contain scale-[1.95] origin-left"
           />
         </a>
         <button

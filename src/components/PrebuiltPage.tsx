@@ -3,6 +3,7 @@ import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { FloatingActions } from './FloatingActions';
 import { FaqSection } from './FaqSection';
+import { GetInTouchSection } from './GetInTouchSection';
 
 export const PrebuiltPage: React.FC = () => {
   return (
@@ -49,6 +50,12 @@ export const PrebuiltPage: React.FC = () => {
       </div>
 
 
+
+      {/* Get In Touch Section for Direct Contact */}
+      <GetInTouchSection
+        sourceTitle="Prebuilt SaaS Page"
+        defaultSubject="Inquiry about Prebuilt SaaS Solution (@ 50,000 /-)"
+      />
 
       {/* FAQ Section */}
       <FaqSection />

@@ -39,13 +39,13 @@ export const FeaturesSection: React.FC = () => {
             <div className="flex justify-center items-center h-[200px] sm:h-[250px] w-full mb-4 overflow-hidden rounded-xl bg-gray-50 p-2">
               <img
                 src="/home/features2.png"
-                alt="SaaS Prebuilt @ 50,000 /-"
+                alt="SaaS Prebuilt"
                 className="max-h-full max-w-full object-contain"
               />
             </div>
             <div className="w-full text-left px-2">
               <h3 className="text-lg sm:text-2xl font-semibold text-gray-900 mb-2">
-                SaaS Prebuilt @ 50,000 /-
+                SaaS Prebuilt
               </h3>
               <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                 Launch fast with our ready-to-deploy, high-performance prebuilt SaaS & e-commerce templates.

@@ -12,6 +12,7 @@ import { CustomizedPage } from './components/CustomizedPage';
 import { PrebuiltPage } from './components/PrebuiltPage';
 import { ContactPage } from './components/ContactPage';
 import { AboutPage } from './components/AboutPage';
+import { AdminPage } from './components/AdminPage';
 
 export const App: React.FC = () => {
   const [pathname, setPathname] = useState<string>(window.location.pathname);
@@ -25,7 +26,7 @@ export const App: React.FC = () => {
       const target = (e.target as HTMLElement).closest('a');
       if (target) {
         const href = target.getAttribute('href');
-        if (href && (href === '/customized' || href === '/prebuilt' || href === '/contact' || href === '/about-us' || href === '/')) {
+        if (href && (href === '/customized' || href === '/prebuilt' || href === '/contact' || href === '/about-us' || href === '/admin' || href === '/')) {
           e.preventDefault();
           window.history.pushState({}, '', href);
           setPathname(href);
@@ -42,6 +43,10 @@ export const App: React.FC = () => {
       document.removeEventListener('click', handleClick);
     };
   }, []);
+
+  if (pathname === '/admin') {
+    return <AdminPage />;
+  }
 
   if (pathname === '/customized') {
     return <CustomizedPage />;

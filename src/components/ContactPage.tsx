@@ -3,6 +3,7 @@ import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { FloatingActions } from './FloatingActions';
 import { MapPin, Mail, Phone, User, MessageSquare, MailOpen } from 'lucide-react';
+import { saveQuery } from '../services/queryService';
 
 export const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -16,6 +17,10 @@ export const ContactPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    saveQuery({
+      ...formData,
+      source: 'Contact Us Page'
+    });
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);

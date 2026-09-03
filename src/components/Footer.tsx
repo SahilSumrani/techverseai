@@ -77,7 +77,6 @@ export const Footer: React.FC = () => {
               <div>
                 <h4 className="text-footer-muted text-base font-medium mb-4 text-gray-400">More Resources</h4>
                 <nav className="space-y-2">
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/blogs">Blogs</a>
                   <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/terms">Terms & Conditions</a>
                   <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/privacy">Privacy Policy</a>
                   <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/refund">Refund Policy</a>

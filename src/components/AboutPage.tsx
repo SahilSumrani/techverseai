@@ -2,7 +2,6 @@ import React from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { FloatingActions } from './FloatingActions';
-import { TeamSection } from './TeamSection';
 import { FaqSection } from './FaqSection';
 
 export const AboutPage: React.FC = () => {
@@ -61,9 +60,6 @@ export const AboutPage: React.FC = () => {
           </p>
         </div>
       </section>
-
-      {/* Team Behind Wonders Section */}
-      <TeamSection />
 
       {/* FAQ Section */}
       <FaqSection />

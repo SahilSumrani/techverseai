@@ -12,6 +12,9 @@ import { CustomizedPage } from './components/CustomizedPage';
 import { PrebuiltPage } from './components/PrebuiltPage';
 import { ContactPage } from './components/ContactPage';
 import { AboutPage } from './components/AboutPage';
+import { TermsPage } from './components/TermsPage';
+import { PrivacyPage } from './components/PrivacyPage';
+import { RefundPage } from './components/RefundPage';
 import { AdminPage } from './components/AdminPage';
 
 export const App: React.FC = () => {
@@ -26,7 +29,18 @@ export const App: React.FC = () => {
       const target = (e.target as HTMLElement).closest('a');
       if (target) {
         const href = target.getAttribute('href');
-        if (href && (href === '/customized' || href === '/prebuilt' || href === '/contact' || href === '/about-us' || href === '/admin' || href === '/')) {
+        if (
+          href &&
+          (href === '/customized' ||
+            href === '/prebuilt' ||
+            href === '/contact' ||
+            href === '/about-us' ||
+            href === '/admin' ||
+            href === '/terms' ||
+            href === '/privacy' ||
+            href === '/refund' ||
+            href === '/')
+        ) {
           e.preventDefault();
           window.history.pushState({}, '', href);
           setPathname(href);
@@ -46,6 +60,18 @@ export const App: React.FC = () => {
 
   if (pathname === '/admin') {
     return <AdminPage />;
+  }
+
+  if (pathname === '/terms') {
+    return <TermsPage />;
+  }
+
+  if (pathname === '/privacy') {
+    return <PrivacyPage />;
+  }
+
+  if (pathname === '/refund') {
+    return <RefundPage />;
   }
 
   if (pathname === '/customized') {

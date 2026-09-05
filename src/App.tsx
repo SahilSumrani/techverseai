@@ -21,8 +21,44 @@ export const App: React.FC = () => {
   const [pathname, setPathname] = useState<string>(window.location.pathname);
 
   useEffect(() => {
+    const updateTitle = (path: string) => {
+      switch (path) {
+        case '/prebuilt':
+          document.title = 'Prebuilt SaaS Solutions & Ready-to-Deploy Products | Techverse AI';
+          break;
+        case '/customized':
+          document.title = 'Custom AI Web Applications & Software Development | Techverse AI';
+          break;
+        case '/about-us':
+          document.title = 'About Us | Techverse AI';
+          break;
+        case '/contact':
+          document.title = 'Contact Us | Techverse AI';
+          break;
+        case '/privacy':
+          document.title = 'Privacy Policy | Techverse AI';
+          break;
+        case '/terms':
+          document.title = 'Terms & Conditions | Techverse AI';
+          break;
+        case '/refund':
+          document.title = 'Refund Policy | Techverse AI';
+          break;
+        case '/admin':
+          document.title = 'Admin Portal | Techverse AI';
+          break;
+        default:
+          document.title = 'Techverse AI | Scalable AI-Powered Web Applications & Prebuilt SaaS Solutions';
+          break;
+      }
+    };
+
+    updateTitle(pathname);
+
     const handlePopState = () => {
-      setPathname(window.location.pathname);
+      const newPath = window.location.pathname;
+      setPathname(newPath);
+      updateTitle(newPath);
     };
 
     const handleClick = (e: MouseEvent) => {
@@ -44,6 +80,7 @@ export const App: React.FC = () => {
           e.preventDefault();
           window.history.pushState({}, '', href);
           setPathname(href);
+          updateTitle(href);
           window.scrollTo(0, 0);
         }
       }
@@ -56,7 +93,7 @@ export const App: React.FC = () => {
       window.removeEventListener('popstate', handlePopState);
       document.removeEventListener('click', handleClick);
     };
-  }, []);
+  }, [pathname]);
 
   if (pathname === '/admin') {
     return <AdminPage />;

@@ -1,4 +1,17 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(.*)techverseai\\.in"
+        }
+      ],
+      "destination": "https://www.techverseai.tech/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!assets/|common/|customized/|home/|placeholders/|thumbnails/|.*\\..*).*)",

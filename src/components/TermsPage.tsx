@@ -67,8 +67,8 @@ export const TermsPage: React.FC = () => {
               <p className="mb-4">
                 If you have any questions or concerns regarding these Terms &amp; Conditions, please reach out to us:
               </p>
-              <a href="mailto:digitechcreator11@gmail.com" className="text-black font-medium border-b border-black hover:text-blue-600 hover:border-blue-600 transition-colors">
-                digitechcreator11@gmail.com
+              <a href="mailto:contact@techverseai.tech" className="text-black font-medium border-b border-black hover:text-blue-600 hover:border-blue-600 transition-colors">
+                contact@techverseai.tech
               </a>
             </section>
           </div>

@@ -43,8 +43,8 @@ export const RefundPage: React.FC = () => {
               <p className="mb-4">
                 For refund inquiries or billing assistance, please contact us at:
               </p>
-              <a href="mailto:digitechcreator11@gmail.com" className="text-black font-medium border-b border-black hover:text-blue-600 hover:border-blue-600 transition-colors">
-                digitechcreator11@gmail.com
+              <a href="mailto:contact@techverseai.tech" className="text-black font-medium border-b border-black hover:text-blue-600 hover:border-blue-600 transition-colors">
+                contact@techverseai.tech
               </a>
             </section>
           </div>

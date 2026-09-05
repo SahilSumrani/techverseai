@@ -95,8 +95,8 @@ export const ContactPage: React.FC = () => {
                   <Mail className="w-5 h-5" />
                 </span>
                 <div>
-                  <a href="mailto:digitechcreator11@gmail.com" className="text-sm text-gray-900 font-poppins hover:underline">
-                    digitechcreator11@gmail.com
+                  <a href="mailto:contact@techverseai.tech" className="text-sm text-gray-900 font-poppins hover:underline">
+                    contact@techverseai.tech
                   </a>
                 </div>
               </div>

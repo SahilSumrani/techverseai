@@ -32,24 +32,71 @@
     <link rel="preconnect" href="https://cdn.sanity.io">
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Schema.org JSON-LD Structured Data for Google Search -->
+    <!-- Schema.org JSON-LD Structured Data for Google, ChatGPT, Gemini & Perplexity (GEO/AEO Optimization) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Techverse AI",
-        "url": "https://www.techverseai.tech/",
-        "logo": "https://www.techverseai.tech/logo.png",
-        "description": "Techverse AI builds scalable, AI-powered web applications and prebuilt SaaS platforms for startups and businesses globally.",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "email": "contact@techverseai.tech",
-          "contactType": "customer service"
-        },
-        "sameAs": [
-          "https://www.instagram.com/techverseai00/",
-          "https://x.com/TechVerseAII",
-          "https://www.linkedin.com/in/techverse-ai-digital-solution-37b998426/"
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://www.techverseai.tech/#organization",
+            "name": "Techverse AI",
+            "url": "https://www.techverseai.tech/",
+            "logo": "https://www.techverseai.tech/logo.png",
+            "description": "Techverse AI is a premier digital tech agency building scalable, AI-powered web applications, custom software solutions, ready-to-deploy prebuilt SaaS products, and UI/UX designs for founders and global businesses.",
+            "email": "contact@techverseai.tech",
+            "sameAs": [
+              "https://www.instagram.com/techverseai00/",
+              "https://x.com/TechVerseAII",
+              "https://www.linkedin.com/in/techverse-ai-digital-solution-37b998426/"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "contact@techverseai.tech",
+              "contactType": "customer support"
+            }
+          },
+          {
+            "@type": "Service",
+            "@id": "https://www.techverseai.tech/#service",
+            "name": "Custom AI Web Application & SaaS Development",
+            "provider": {
+              "@id": "https://www.techverseai.tech/#organization"
+            },
+            "serviceType": "Software Development Agency",
+            "areaServed": "Global",
+            "description": "Custom full-stack web and mobile application development, AI platform engineering, prebuilt SaaS deployment, graphic design, and UI/UX architecture."
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://www.techverseai.tech/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What services does Techverse AI provide?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Techverse AI provides custom web & mobile application development, prebuilt ready-to-deploy SaaS platforms, graphic design, branding, and custom AI software solutions for founders and businesses."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How can I contact Techverse AI for a project?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You can reach Techverse AI via email at contact@techverseai.tech or through their website contact form at https://www.techverseai.tech/contact."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does Techverse AI offer prebuilt SaaS platforms?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, Techverse AI offers ready-to-deploy prebuilt SaaS products that allow startups and businesses to launch scalable software quickly."
+                }
+              }
+            ]
+          }
         ]
       }
     </script>

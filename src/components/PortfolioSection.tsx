@@ -76,8 +76,11 @@ export const PortfolioSection: React.FC = () => {
                   <img
                     alt={item.title}
                     src={item.image}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    width="600"
+                    height="400"
+                    decoding="async"
                     loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-3 right-3 bg-black/85 backdrop-blur-md text-white text-[11px] sm:text-xs font-medium px-3 py-1 rounded-full shadow-sm">
                     {item.tag}

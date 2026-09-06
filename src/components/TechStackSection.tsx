@@ -73,6 +73,9 @@ export const TechStackSection: React.FC = () => {
                       <img
                         src={item.iconUrl}
                         alt={item.name}
+                        width="48"
+                        height="48"
+                        decoding="async"
                         className="max-w-full max-h-full object-contain"
                         loading="lazy"
                       />
@@ -95,6 +98,9 @@ export const TechStackSection: React.FC = () => {
                       <img
                         src={item.iconUrl}
                         alt={item.name}
+                        width="48"
+                        height="48"
+                        decoding="async"
                         className="max-w-full max-h-full object-contain"
                         loading="lazy"
                       />
@@ -117,6 +123,9 @@ export const TechStackSection: React.FC = () => {
                       <img
                         src={item.iconUrl}
                         alt={item.name}
+                        width="48"
+                        height="48"
+                        decoding="async"
                         className="max-w-full max-h-full object-contain"
                         loading="lazy"
                       />

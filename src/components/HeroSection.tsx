@@ -21,7 +21,9 @@ const VideoTile: React.FC<{ src: string }> = ({ src }) => {
       muted
       playsInline
       preload="metadata"
-      className="w-full h-full object-cover rounded-xl sm:rounded-2xl"
+      aria-hidden="true"
+      tabIndex={-1}
+      className="w-full h-full object-cover rounded-xl sm:rounded-2xl pointer-events-none"
     />
   );
 };

@@ -56,12 +56,12 @@ export const ContactPage: React.FC = () => {
         {/* Marquee Banner */}
         <div className="overflow-hidden w-full bg-black">
           <div className="marquee inline-flex items-center">
-            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
-            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
-            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
-            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
-            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
-            <img src="/common/Developer.png" alt="Moving String" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" width="1000" height="118" decoding="async" loading="lazy" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" width="1000" height="118" decoding="async" loading="lazy" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" width="1000" height="118" decoding="async" loading="lazy" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" width="1000" height="118" decoding="async" loading="lazy" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" width="1000" height="118" decoding="async" loading="lazy" className="h-16 sm:h-20 w-auto object-contain" />
+            <img src="/common/Developer.png" alt="Moving String" width="1000" height="118" decoding="async" loading="lazy" className="h-16 sm:h-20 w-auto object-contain" />
           </div>
         </div>
       </div>

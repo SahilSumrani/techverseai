@@ -101,8 +101,9 @@ export const PortfolioSection: React.FC = () => {
                 <a
                   href={item.caseStudyHref}
                   className="text-xs sm:text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors flex items-center gap-1"
+                  aria-label={`Read ${item.client} case study`}
                 >
-                  Read Case Study &rarr;
+                  Read {item.client} Case Study &rarr;
                 </a>
                 <a
                   target="_blank"

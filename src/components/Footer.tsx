@@ -17,16 +17,20 @@ export const Footer: React.FC = () => {
                 </a>
               </p>
             </div>
-            <form onSubmit={(e) => e.preventDefault()} className="relative w-full max-w-lg">
+            <form onSubmit={(e) => e.preventDefault()} className="relative w-full max-w-lg" aria-label="Subscribe to newsletter">
               <div className="flex items-center bg-white rounded-full shadow-md overflow-hidden border border-gray-200 p-1">
                 <input
                   type="email"
+                  id="newsletter-email"
+                  name="email"
                   placeholder="Enter your email address"
+                  aria-label="Email address for newsletter subscription"
                   className="grow min-w-0 pl-4 pr-2 py-3 text-sm text-gray-700 placeholder-gray-400 focus:outline-none md:px-7 md:py-4"
                   required
                 />
                 <button
                   type="submit"
+                  aria-label="Subscribe"
                   className="bg-black text-white px-5 py-3 rounded-full hover:bg-gray-900 transition-colors shrink-0 text-sm md:px-8 font-medium"
                 >
                   Subscribe

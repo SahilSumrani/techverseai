@@ -25,6 +25,10 @@ export const ProcessSection: React.FC = () => {
                 <img
                   src="/home/tell-us.webp"
                   alt="Tell Us About Your Product"
+                  width="443"
+                  height="269"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto object-contain max-h-[220px] group-hover:scale-103 transition-transform duration-500"
                 />
               </div>
@@ -44,6 +48,10 @@ export const ProcessSection: React.FC = () => {
                 <img
                   src="/home/plan-the-roadmap.webp"
                   alt="Plan the Roadmap"
+                  width="485"
+                  height="419"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto object-contain max-h-[220px] group-hover:scale-103 transition-transform duration-500"
                 />
               </div>
@@ -65,6 +73,10 @@ export const ProcessSection: React.FC = () => {
                 <img
                   src="/home/we-design.webp"
                   alt="We Design & Build"
+                  width="785"
+                  height="836"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto object-contain max-h-[480px] group-hover:scale-103 transition-transform duration-500"
                 />
               </div>
@@ -87,6 +99,10 @@ export const ProcessSection: React.FC = () => {
                 <img
                   src="/home/launch-and-grow.webp"
                   alt="Launch & Grow"
+                  width="485"
+                  height="419"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto object-contain max-h-[220px] group-hover:scale-103 transition-transform duration-500"
                 />
               </div>

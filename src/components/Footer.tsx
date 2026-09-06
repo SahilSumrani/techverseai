@@ -36,12 +36,12 @@ export const Footer: React.FC = () => {
             
             {/* Social Media Links */}
             <div className="flex items-center space-x-4 pt-2">
-              <span className="text-xs text-gray-400 font-medium">Follow Us:</span>
+              <span className="text-xs text-gray-600 font-medium">Follow Us:</span>
               <a
                 href="https://www.instagram.com/techverseai00/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-gray-100 hover:bg-pink-600 hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs"
+                className="p-2.5 rounded-full bg-gray-100 hover:bg-pink-600 hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
                 aria-label="Instagram"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
                 href="https://x.com/TechVerseAII"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-gray-100 hover:bg-black hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs"
+                className="p-2.5 rounded-full bg-gray-100 hover:bg-black hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
                 aria-label="X (Twitter)"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -63,7 +63,7 @@ export const Footer: React.FC = () => {
                 href="https://www.linkedin.com/in/techverse-ai-digital-solution-37b998426/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs"
+                className="p-2.5 rounded-full bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
                 aria-label="LinkedIn"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -76,20 +76,20 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-2 flex justify-end">
             <div className="grid grid-cols-2 gap-12 text-left sm:text-right">
               <div>
-                <h4 className="text-footer-muted text-base font-medium mb-4 text-gray-400">Services &amp; Work</h4>
-                <nav className="space-y-2">
-                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/prebuilt">Prebuilt SaaS</a>
-                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/customized">Customized Dev</a>
-                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/about-us">About Us</a>
-                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/contact">Contact Us</a>
+                <h4 className="text-footer-muted text-base font-semibold mb-4 text-gray-700">Services &amp; Work</h4>
+                <nav className="space-y-3">
+                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/prebuilt">Prebuilt SaaS</a>
+                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/customized">Customized Dev</a>
+                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/about-us">About Us</a>
+                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/contact">Contact Us</a>
                 </nav>
               </div>
               <div>
-                <h4 className="text-footer-muted text-base font-medium mb-4 text-gray-400">Legal</h4>
-                <nav className="space-y-2">
-                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/terms">Terms &amp; Conditions</a>
-                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/privacy">Privacy Policy</a>
-                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/refund">Refund Policy</a>
+                <h4 className="text-footer-muted text-base font-semibold mb-4 text-gray-700">Legal</h4>
+                <nav className="space-y-3">
+                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/terms">Terms &amp; Conditions</a>
+                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/privacy">Privacy Policy</a>
+                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/refund">Refund Policy</a>
                 </nav>
               </div>
             </div>

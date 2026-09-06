@@ -16,7 +16,10 @@ export const Navbar: React.FC = () => {
             <img
               src="/logo.png"
               alt="Techverse Logo"
+              width="80"
+              height="80"
               fetchPriority="high"
+              decoding="async"
               className="h-16 w-auto max-w-[340px] object-contain scale-[1.8]"
             />
           </a>
@@ -33,12 +36,15 @@ export const Navbar: React.FC = () => {
           <img
             src="/logo.png"
             alt="Techverse Logo"
+            width="80"
+            height="80"
+            decoding="async"
             className="h-12 w-auto max-w-[280px] object-contain scale-[2.3] origin-left"
           />
         </a>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-1 text-gray-700 hover:text-black focus:outline-none"
+          className="p-2 text-gray-700 hover:text-black focus:outline-none min-w-[48px] min-h-[48px] inline-flex items-center justify-center"
           aria-label="Toggle Navigation Menu"
         >
           <svg

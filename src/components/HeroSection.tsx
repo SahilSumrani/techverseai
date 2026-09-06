@@ -132,6 +132,10 @@ export const HeroSection: React.FC = () => {
                       <img
                         src={tile.src}
                         alt={`Showcase Mobile ${idx}`}
+                        width="300"
+                        height="300"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                     )}
@@ -154,6 +158,10 @@ export const HeroSection: React.FC = () => {
                       <img
                         src={tile.src}
                         alt={`Showcase Mobile ${idx}`}
+                        width="300"
+                        height="300"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                     )}
@@ -181,6 +189,10 @@ export const HeroSection: React.FC = () => {
                       <img
                         src={tile.src}
                         alt={`Superside Hero Item ${idx}`}
+                        width="300"
+                        height="300"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
                       />
                     )}
@@ -201,6 +213,10 @@ export const HeroSection: React.FC = () => {
                       <img
                         src={tile.src}
                         alt={`Superside Hero Item ${idx}`}
+                        width="300"
+                        height="300"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
                       />
                     )}
@@ -221,6 +237,8 @@ export const HeroSection: React.FC = () => {
                       <img
                         src={tile.src}
                         alt={`Superside Hero Item ${idx}`}
+                        width="300"
+                        height="300"
                         loading="lazy"
                         decoding="async"
                         className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"

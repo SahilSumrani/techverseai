@@ -2,37 +2,25 @@ import React, { useEffect, useRef } from 'react';
 
 const VideoTile: React.FC<{ src: string }> = ({ src }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [inView, setInView] = React.useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          v.play().catch(() => {});
-        } else {
-          v.pause();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(v);
-    return () => observer.disconnect();
-  }, []);
+    if (v) {
+      v.defaultMuted = true;
+      v.muted = true;
+      v.play().catch(() => { });
+    }
+  }, [src]);
 
   return (
     <video
       ref={videoRef}
-      src={inView ? src : undefined}
-      data-src={src}
+      src={src}
+      autoPlay
       loop
       muted
       playsInline
-      preload="none"
+      preload="metadata"
       aria-hidden="true"
       tabIndex={-1}
       className="w-full h-full object-cover rounded-xl sm:rounded-2xl pointer-events-none"

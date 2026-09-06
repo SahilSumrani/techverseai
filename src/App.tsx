@@ -94,29 +94,34 @@ export const App: React.FC = () => {
       <FloatingActions />
 
       <div className="relative">
-        {/* 1. Hero Section */}
-        <div className="w-full bg-cover bg-center" style={{ backgroundImage: "url('/common/Bg2.png')" }}>
+        <header className="w-full bg-cover bg-center" style={{ backgroundImage: "url('/common/Bg2.png')" }}>
           <Navbar />
-          <HeroSection />
-        </div>
+        </header>
 
-        {/* 2. Services Grid */}
-        <ServicesGridSection />
+        <main id="main-content">
+          {/* 1. Hero Section */}
+          <div className="w-full bg-cover bg-center" style={{ backgroundImage: "url('/common/Bg2.png')" }}>
+            <HeroSection />
+          </div>
 
-        {/* 3. Case Studies / Selected Work */}
-        <PortfolioSection />
+          {/* 2. Services Grid */}
+          <ServicesGridSection />
 
-        {/* 4. Process / How We Work */}
-        <ProcessSection />
+          {/* 3. Case Studies / Selected Work */}
+          <PortfolioSection />
 
-        {/* 5. Tech Stack */}
-        <TechStackSection />
+          {/* 4. Process / How We Work */}
+          <ProcessSection />
 
-        {/* Brand Banner */}
-        <TickerBanner />
+          {/* 5. Tech Stack */}
+          <TechStackSection />
 
-        {/* 7. FAQ */}
-        <FaqSection />
+          {/* Brand Banner */}
+          <TickerBanner />
+
+          {/* 7. FAQ */}
+          <FaqSection />
+        </main>
 
         {/* 8. Contact & Footer */}
         <Footer />

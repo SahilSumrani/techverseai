@@ -64,10 +64,11 @@ export const AboutSection: React.FC = () => {
             </div>
 
             <div className="pt-4">
-              <a href="/about-us">
-                <button className="px-6 py-3 bg-white text-blue-700 hover:bg-blue-50 font-semibold text-sm rounded-full transition-colors shadow-sm">
-                  Learn More About Us &rarr;
-                </button>
+              <a
+                href="/about-us"
+                className="px-6 py-3 bg-white text-blue-700 hover:bg-blue-50 font-semibold text-sm rounded-full transition-colors shadow-sm inline-flex items-center justify-center min-h-[48px]"
+              >
+                Learn More About Us &rarr;
               </a>
             </div>
           </div>

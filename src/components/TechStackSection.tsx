@@ -47,10 +47,11 @@ export const TechStackSection: React.FC = () => {
               We work with leading platforms and technologies that empower digital transformation, accelerate delivery, and drive measurable business results.
             </p>
 
-            <a href="/customized">
-              <button className="px-8 py-4 bg-black hover:bg-gray-900 text-white font-semibold text-sm sm:text-base rounded-full shadow-lg transition-all transform hover:-translate-y-0.5">
-                Explore Tech Stack
-              </button>
+            <a
+              href="/customized"
+              className="px-8 py-4 bg-black hover:bg-gray-900 text-white font-semibold text-sm sm:text-base rounded-full shadow-lg transition-all transform hover:-translate-y-0.5 inline-flex items-center justify-center min-h-[48px]"
+            >
+              Explore Tech Stack
             </a>
           </div>
 

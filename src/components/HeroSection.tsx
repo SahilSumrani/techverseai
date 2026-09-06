@@ -86,18 +86,20 @@ export const HeroSection: React.FC = () => {
 
             {/* Call to Actions */}
             <div className="flex flex-col sm:flex-row items-center gap-3.5 sm:gap-4 w-full sm:w-auto mb-8 sm:mb-10">
-              <a href="/customized" className="w-full sm:w-auto">
-                <button className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm sm:text-base rounded-full shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 group">
-                  <span>Let's Explore</span>
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
+              <a
+                href="/customized"
+                className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm sm:text-base rounded-full shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 transition-all transform hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 group min-h-[48px]"
+              >
+                <span>Let's Explore</span>
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </a>
-              <a href="/contact" className="w-full sm:w-auto">
-                <button className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-white hover:bg-gray-50 text-gray-900 font-medium text-sm sm:text-base rounded-full border border-gray-300 shadow-xs transition-all hover:border-gray-400 flex items-center justify-center">
-                  Book a Demo
-                </button>
+              <a
+                href="/contact"
+                className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-white hover:bg-gray-50 text-gray-900 font-medium text-sm sm:text-base rounded-full border border-gray-300 shadow-xs transition-all hover:border-gray-400 inline-flex items-center justify-center min-h-[48px]"
+              >
+                Book a Demo
               </a>
             </div>
 

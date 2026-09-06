@@ -166,13 +166,14 @@ export const ServicesGridSection: React.FC = () => {
           </div>
 
           {/* CTA button matching Lume black pill style */}
-          <a href="/contact">
-            <button className="group flex items-center justify-center gap-3 bg-black rounded-full px-8 py-4 text-white text-[17px] font-medium shadow-[0px_10px_25px_-5px_rgba(0,0,0,0.4)] hover:bg-[#1A1A1A] hover:shadow-[0px_15px_30px_-5px_rgba(0,0,0,0.5)] transition-all duration-300 cursor-pointer mt-4">
-              <span>Start Your Project</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300">
-                <path d="M6 14L14 6M14 6H8M14 6V12" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
+          <a
+            href="/contact"
+            className="group inline-flex items-center justify-center gap-3 bg-black rounded-full px-8 py-4 text-white text-[17px] font-medium shadow-[0px_10px_25px_-5px_rgba(0,0,0,0.4)] hover:bg-[#1A1A1A] hover:shadow-[0px_15px_30px_-5px_rgba(0,0,0,0.5)] transition-all duration-300 cursor-pointer mt-4 min-h-[48px]"
+          >
+            <span>Start Your Project</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300">
+              <path d="M6 14L14 6M14 6H8M14 6V12" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </a>
 
         </div>

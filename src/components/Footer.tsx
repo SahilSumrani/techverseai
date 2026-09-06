@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
           <div className="flex flex-col justify-center space-y-4">
             <div>
-              <h3 className="text-footer-text text-base text-gray-400">Contact us at</h3>
+              <h3 className="text-footer-text text-base text-gray-700">Contact us at</h3>
               <p className="text-footer-text text-lg font-medium text-gray-900">
                 <a href="mailto:contact@techverseai.tech" className="hover:underline">
                   contact@techverseai.tech

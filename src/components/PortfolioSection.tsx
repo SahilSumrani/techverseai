@@ -119,10 +119,11 @@ export const PortfolioSection: React.FC = () => {
       </div>
 
       <div className="flex justify-center mt-10 sm:mt-14">
-        <a href="/customized">
-          <button className="border border-black px-8 py-3.5 rounded-full text-xs sm:text-sm font-medium hover:bg-black hover:text-white transition-all shadow-xs">
-            View All Projects
-          </button>
+        <a
+          href="/customized"
+          className="border border-black px-8 py-3.5 rounded-full text-xs sm:text-sm font-medium hover:bg-black hover:text-white transition-all shadow-xs inline-flex items-center justify-center min-h-[48px]"
+        >
+          View All Projects
         </a>
       </div>
     </section>

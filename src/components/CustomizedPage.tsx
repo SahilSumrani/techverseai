@@ -162,10 +162,14 @@ export const CustomizedPage: React.FC = () => {
                     </li>
                   ))}
                 </ul>
-                <a target="_blank" rel="noopener noreferrer" href={project.link}>
-                  <button className="px-6 py-2 bg-black text-white rounded-xl shadow-md hover:bg-gray-800 transition-colors" style={{ fontFamily: 'Matter, sans-serif' }}>
-                    View Website
-                  </button>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={project.link}
+                  className="px-6 py-2 bg-black text-white rounded-xl shadow-md hover:bg-gray-800 transition-colors inline-flex items-center justify-center min-h-[44px]"
+                  style={{ fontFamily: 'Matter, sans-serif' }}
+                >
+                  View Website
                 </a>
               </div>
             </div>

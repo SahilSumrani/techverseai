@@ -16,6 +16,7 @@ export const Navbar: React.FC = () => {
             <img
               src="/logo.png"
               alt="Techverse Logo"
+              fetchPriority="high"
               className="h-16 w-auto max-w-[340px] object-contain scale-[1.8]"
             />
           </a>

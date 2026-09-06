@@ -74,23 +74,22 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="lg:col-span-2 flex justify-end">
-            <div className="grid grid-cols-2 gap-12 sm:gap-16 text-right">
+            <div className="grid grid-cols-2 gap-12 text-left sm:text-right">
               <div>
-                <h4 className="text-footer-muted text-base font-medium mb-4 text-gray-400">Links</h4>
+                <h4 className="text-footer-muted text-base font-medium mb-4 text-gray-400">Services &amp; Work</h4>
                 <nav className="space-y-2">
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/">Home</a>
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/prebuilt">Prebuilt</a>
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/customized">Customized</a>
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/about-us">About Us</a>
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/contact">Contact</a>
+                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/prebuilt">Prebuilt SaaS</a>
+                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/customized">Customized Dev</a>
+                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/about-us">About Us</a>
+                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/contact">Contact Us</a>
                 </nav>
               </div>
               <div>
-                <h4 className="text-footer-muted text-base font-medium mb-4 text-gray-400">More Resources</h4>
+                <h4 className="text-footer-muted text-base font-medium mb-4 text-gray-400">Legal</h4>
                 <nav className="space-y-2">
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/terms">Terms & Conditions</a>
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/privacy">Privacy Policy</a>
-                  <a className="block text-footer-text text-sm hover:text-blue-600 transition-colors" href="/refund">Refund Policy</a>
+                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/terms">Terms &amp; Conditions</a>
+                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/privacy">Privacy Policy</a>
+                  <a className="block text-footer-text text-xs sm:text-sm hover:text-blue-600 transition-colors" href="/refund">Refund Policy</a>
                 </nav>
               </div>
             </div>

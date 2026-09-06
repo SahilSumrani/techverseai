@@ -51,12 +51,6 @@ export const PrebuiltPage: React.FC = () => {
 
 
 
-      {/* Get In Touch Section for Direct Contact */}
-      <GetInTouchSection
-        sourceTitle="Prebuilt SaaS Page"
-        defaultSubject="Inquiry about Prebuilt SaaS Solution (@ 50,000 /-)"
-      />
-
       {/* FAQ Section */}
       <FaqSection />
 

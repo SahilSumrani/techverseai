@@ -27,29 +27,29 @@ const VideoTile: React.FC<{ src: string }> = ({ src }) => {
 };
 
 export const HeroSection: React.FC = () => {
-  // Exact unique media items extracted directly from Superside's index.html (zip package)
+  // Local optimized media items stored in /public/hero/
   const col1Tiles = [
-    { type: 'video', src: 'https://sanity-cdn.superside.com/4fedfabeb8aa20db6b9c9e9366842c2095c1e010.mp4' },
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/03661b447d641c63cb7dd21f2cd298a700264022-1206x1206.png?w=600&q=95&auto=format' },
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/bab0442adb666da58fb574fe04383a1996c54a48-1080x1080.png?w=600&q=95&auto=format' },
-    { type: 'video', src: 'https://sanity-cdn.superside.com/df1d19432be5ee92a0d6b3fd37d820138eafe513.mp4' },
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/7e2547c11e2f2a0b78ed659a007a12849ab5d296-800x800.jpg?w=600&q=95&auto=format' },
+    { type: 'video', src: '/hero/col1_vid1.mp4' },
+    { type: 'image', src: '/hero/col1_img1.webp' },
+    { type: 'image', src: '/hero/col1_img2.webp' },
+    { type: 'video', src: '/hero/col1_vid2.mp4' },
+    { type: 'image', src: '/hero/col1_img3.webp' },
   ];
 
   const col2Tiles = [
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/88031f8e9b23fd0f9e4520a0d9e46fa51d61abd8-1920x1920.png?w=600&q=95&auto=format' },
-    { type: 'video', src: 'https://sanity-cdn.superside.com/8b7171a3f5fbe86cc455505513a5b91f5131b1f3.mp4' },
-    { type: 'image', src: 'https://sanity-cdn.superside.com/d3599eee34f38ce663607182073cfe32ab7375af-768x768.jpg' },
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/b51ed4d490ea5ca5bccaccf6103cb8cf025af7ac-700x700.jpg?w=600&q=95&auto=format' },
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/205393f27ca363ad6afeb6c2c0cc59647195ccb0-800x800.png?w=600&q=95&auto=format' },
+    { type: 'image', src: '/hero/col2_img1.webp' },
+    { type: 'video', src: '/hero/col2_vid1.mp4' },
+    { type: 'image', src: '/hero/col2_img2.webp' },
+    { type: 'image', src: '/hero/col2_img3.webp' },
+    { type: 'image', src: '/hero/col2_img4.webp' },
   ];
 
   const col3Tiles = [
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/034b3e8a624db58160ceb19e062900bf908651ca-800x800.png?w=600&q=95&auto=format' },
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/643c7f381241a1d720b8aa5eb09408dab26ce12b-770x985.png?w=600&q=95&auto=format' },
-    { type: 'video', src: 'https://sanity-cdn.superside.com/824e8c02701a96a6c157a9bd62930c5e0046dffd.mp4' },
-    { type: 'image', src: 'https://cdn.sanity.io/images/k0dlbavy/production/03ecf80e02f200c68247212a39e0f45f20c958cc-1080x1080.png?w=600&q=95&auto=format' },
-    { type: 'image', src: 'https://sanity-cdn.superside.com/d93759f4cb24d83184671c30a23f71056fd00101-2334x3666.webp' },
+    { type: 'image', src: '/hero/col3_img1.webp' },
+    { type: 'image', src: '/hero/col3_img2.webp' },
+    { type: 'video', src: '/hero/col3_vid1.mp4' },
+    { type: 'image', src: '/hero/col3_img3.webp' },
+    { type: 'image', src: '/hero/col3_img4.webp' },
   ];
 
   const allTilesHorizontal = [...col1Tiles, ...col2Tiles, ...col3Tiles];

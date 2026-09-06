@@ -5,34 +5,34 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="relative flex justify-center items-center py-3 bg-transparent z-40" style={{ fontFamily: 'Matter, sans-serif' }}>
-      {/* Desktop Navigation Pill - Sleek Compact Header */}
-      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-1 border border-gray-200 min-w-[720px] max-w-[850px] bg-white/95 backdrop-blur-md shadow-sm h-14">
-        <div className="flex justify-center space-x-8">
-          <a className="hover:text-blue-600 font-medium text-sm text-gray-800 transition-colors" href="/prebuilt">Prebuilt</a>
-          <a className="hover:text-blue-600 font-medium text-sm text-gray-800 transition-colors" href="/customized">Customized</a>
+      {/* Desktop Navigation Pill - Thicker Bar with Prominent Logo */}
+      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-2 border border-gray-200 min-w-[720px] max-w-[850px] bg-white/95 backdrop-blur-md shadow-md h-20 overflow-hidden">
+        <div className="flex justify-center items-center space-x-8">
+          <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/prebuilt">Prebuilt</a>
+          <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/customized">Customized</a>
         </div>
         <div className="flex justify-center items-center">
           <a href="/" className="flex items-center justify-center transition-transform hover:scale-105">
             <img
               src="/logo.png"
               alt="Techverse Logo"
-              className="h-12 w-auto max-w-[300px] object-contain scale-[2.1]"
+              className="h-16 w-auto max-w-[340px] object-contain scale-[1.8]"
             />
           </a>
         </div>
-        <div className="flex justify-center space-x-8">
-          <a className="hover:text-blue-600 font-medium text-sm text-gray-800 transition-colors" href="/about-us">About Us</a>
-          <a className="hover:text-blue-600 font-medium text-sm text-gray-800 transition-colors" href="/contact">Contact Us</a>
+        <div className="flex justify-center items-center space-x-8">
+          <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/about-us">About Us</a>
+          <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/contact">Contact Us</a>
         </div>
       </div>
 
       {/* Mobile Header Bar - Prominent Mobile Logo */}
-      <div className="flex md:hidden w-[92%] max-w-[420px] justify-between items-center px-4 sm:px-5 py-1 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50 h-13">
+      <div className="flex md:hidden w-[92%] max-w-[420px] justify-between items-center px-4 sm:px-5 py-1 border border-gray-200 rounded-full bg-white/95 backdrop-blur-md shadow-sm z-50 h-14">
         <a href="/" className="flex items-center">
           <img
             src="/logo.png"
             alt="Techverse Logo"
-            className="h-10 w-auto max-w-[240px] object-contain scale-[1.95] origin-left"
+            className="h-12 w-auto max-w-[280px] object-contain scale-[2.3] origin-left"
           />
         </a>
         <button

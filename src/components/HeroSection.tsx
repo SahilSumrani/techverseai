@@ -115,16 +115,16 @@ export const HeroSection: React.FC = () => {
 
           {/* Right Side: Responsive Layout (Horizontal Left-to-Right Scrolling on Mobile, Full-Height Vertical Marquee on Desktop) */}
 
-          {/* MOBILE VIEW (Horizontal Left-to-Right & Right-to-Left Rows with Matching Speed - Full Bleed Edge-to-Edge) */}
-          <div className="lg:hidden w-full mt-4 flex flex-col gap-3 overflow-hidden py-2 -mx-4 sm:-mx-6 w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)]">
+          {/* MOBILE VIEW (Horizontal Left-to-Right & Right-to-Left Rows - Full Bleed Edge-to-Edge) */}
+          <div className="lg:hidden w-screen relative left-1/2 -translate-x-1/2 mt-4 flex flex-col gap-3 overflow-hidden py-2">
 
             {/* Row 1: Left to Right */}
             <div className="w-full overflow-hidden">
-              <div className="strip-left flex gap-3">
+              <div className="strip-left flex gap-3 px-2">
                 {[...allTilesHorizontal, ...allTilesHorizontal].map((tile, idx) => (
                   <div
                     key={idx}
-                    className="w-36 sm:w-48 h-52 sm:h-64 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-gray-200/80 bg-gray-100"
+                    className="w-[44vw] xs:w-44 sm:w-52 h-[58vw] xs:h-56 sm:h-64 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-gray-200/80 bg-gray-100"
                   >
                     {tile.type === 'video' ? (
                       <VideoTile src={tile.src} />
@@ -142,11 +142,11 @@ export const HeroSection: React.FC = () => {
 
             {/* Row 2: Right to Left */}
             <div className="w-full overflow-hidden">
-              <div className="strip-right flex gap-3">
+              <div className="strip-right flex gap-3 px-2">
                 {[...allTilesHorizontal, ...allTilesHorizontal].map((tile, idx) => (
                   <div
                     key={idx}
-                    className="w-36 sm:w-48 h-52 sm:h-64 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-gray-200/80 bg-gray-100"
+                    className="w-[44vw] xs:w-44 sm:w-52 h-[58vw] xs:h-56 sm:h-64 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-gray-200/80 bg-gray-100"
                   >
                     {tile.type === 'video' ? (
                       <VideoTile src={tile.src} />

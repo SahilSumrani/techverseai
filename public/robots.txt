@@ -18,4 +18,4 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://www.techverseai.tech/sitemap.xml
+Sitemap: https://www.techverseai.in/sitemap.xml

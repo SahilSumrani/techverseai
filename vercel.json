@@ -2,17 +2,44 @@
   "redirects": [
     {
       "source": "/:path*",
+      "has": [{ "type": "header", "key": "x-forwarded-proto", "value": "http" }],
+      "destination": "https://www.techverseai.in/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
-          "value": "(.*)techverseai\\.in"
+          "value": "(www\\.)?techverseai\\.tech"
         }
       ],
-      "destination": "https://www.techverseai.tech/:path*",
+      "destination": "https://www.techverseai.in/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "techverseai\\.in" }],
+      "destination": "https://www.techverseai.in/:path*",
       "statusCode": 301
     }
   ],
   "rewrites": [
+    { "source": "/prebuilt", "destination": "/prebuilt/index.html" },
+    { "source": "/customized", "destination": "/customized/index.html" },
+    { "source": "/contact", "destination": "/contact/index.html" },
+    { "source": "/terms", "destination": "/terms/index.html" },
+    { "source": "/about-us", "destination": "/about-us/index.html" },
+    { "source": "/privacy", "destination": "/privacy/index.html" },
+    { "source": "/refund", "destination": "/refund/index.html" },
+    { "source": "/website-development-company-delhi", "destination": "/website-development-company-delhi/index.html" },
+    { "source": "/website-development-cost-delhi", "destination": "/website-development-cost-delhi/index.html" },
+    { "source": "/mobile-app-development-company-delhi", "destination": "/mobile-app-development-company-delhi/index.html" },
+    { "source": "/shopify-development-company-delhi", "destination": "/shopify-development-company-delhi/index.html" },
+    { "source": "/flutter-app-development-company-india", "destination": "/flutter-app-development-company-india/index.html" },
+    { "source": "/ai-chatbot-development-company-india", "destination": "/ai-chatbot-development-company-india/index.html" },
+    { "source": "/saas-development-company-india", "destination": "/saas-development-company-india/index.html" },
+    { "source": "/app-development-cost-india", "destination": "/app-development-cost-india/index.html" },
     {
       "source": "/((?!assets/|common/|customized/|home/|placeholders/|thumbnails/|.*\\..*).*)",
       "destination": "/index.html"

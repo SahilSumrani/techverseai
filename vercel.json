@@ -9,7 +9,7 @@
         }
       ],
       "destination": "https://www.techverseai.tech/:path*",
-      "permanent": true
+      "statusCode": 301
     }
   ],
   "rewrites": [

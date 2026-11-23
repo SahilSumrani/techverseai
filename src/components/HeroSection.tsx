@@ -103,18 +103,6 @@ export const HeroSection: React.FC = () => {
               </a>
             </div>
 
-            {/* Social Proof & Rating Bar */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 text-xs sm:text-sm text-gray-600 pt-4 border-t border-gray-200/80 w-full">
-              <div className="flex items-center gap-1">
-                <span className="text-amber-400 text-base">★★★★★</span>
-                <span className="font-bold text-gray-900 ml-1">4.9/5</span>
-              </div>
-              <span className="text-gray-300">•</span>
-              <span className="font-medium text-gray-700">100% On-Time Delivery</span>
-              <span className="text-gray-300">•</span>
-              <span className="font-medium text-gray-700">Trusted by <strong className="text-blue-600">5+ Brands</strong></span>
-            </div>
-
           </div>
 
           {/* Right Side: Responsive Layout (Horizontal Left-to-Right Scrolling on Mobile, Full-Height Vertical Marquee on Desktop) */}

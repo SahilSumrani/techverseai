@@ -29,14 +29,7 @@ export const FloatingActions: React.FC = () => {
         aria-label="WhatsApp"
       >
         <div className="w-14 h-14 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 min-w-[48px] min-h-[48px] relative flex items-center justify-center">
-          <img
-            alt="WhatsApp"
-            loading="lazy"
-            width="48"
-            height="48"
-            className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(0,255,70,0.25)] hover:drop-shadow-[0_0_15px_rgba(0,255,100,0.45)] transition-all duration-300"
-            src="/common/WhatsApp.svg"
-          />
+          <img alt="WhatsApp" loading="lazy" width="48" height="48" className="w-full h-full object-contain" src="/common/WhatsApp.svg" />
         </div>
       </a>
     </>

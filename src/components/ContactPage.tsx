@@ -21,6 +21,7 @@ export const ContactPage: React.FC = () => {
       ...formData,
       source: 'Contact Us Page'
     });
+    (window as Window & { dataLayer?: unknown[] }).dataLayer?.push({ event: 'enquiry_form_submit', page_location: window.location.pathname });
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
@@ -198,18 +199,6 @@ export const ContactPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Google Map Section - Laxmi Nagar, Delhi */}
-        <div className="mt-16 rounded-2xl overflow-hidden shadow-md h-[350px] sm:h-[420px] border border-gray-200">
-          <iframe
-            title="Google Map Location - Laxmi Nagar, Delhi"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14006.311746231908!2d77.2715003461476!3d28.63945417855395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfcadda080757%3A0x959950e32512f455!2sLaxmi%20Nagar%2C%20New%20Delhi%2C%20Delhi%20110092!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
       </section>
 
       <Footer />

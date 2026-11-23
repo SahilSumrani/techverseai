@@ -14,26 +14,26 @@ interface SecondaryService {
 
 const primaryServices: PrimaryService[] = [
   {
-    title: 'Product Strategy',
-    description: 'Defining clear roadmaps that set your product up for success.',
+    title: 'Custom Websites & Web Apps',
+    description: 'Custom websites and web applications planned around your business requirements.',
     svgIcon: '/home/strategy.svg',
     glowGradient: 'from-emerald-200/70 via-teal-200/50 to-transparent'
   },
   {
-    title: 'App Development',
-    description: 'iOS & Android apps built for performance and scale.',
+    title: 'Mobile App Development',
+    description: 'Mobile app development for Android, iOS and Flutter projects.',
     svgIcon: '/home/app-development.svg',
     glowGradient: 'from-pink-200/70 via-rose-200/50 to-transparent'
   },
   {
-    title: 'Product Design',
-    description: 'Human-centered, intuitive, and delightful experiences.',
+    title: 'E-commerce & Shopify',
+    description: 'E-commerce website and Shopify development scoped to your store needs.',
     svgIcon: '/home/product-design.svg',
     glowGradient: 'from-yellow-200/70 via-amber-200/50 to-transparent'
   },
   {
-    title: 'Backend & API Development',
-    description: 'Robust systems that keep your product running smoothly.',
+    title: 'Prebuilt SaaS',
+    description: 'Ready SaaS apps and websites, customised with your brand and content for the stated 48–72 hour delivery.',
     svgIcon: '/home/backend.svg',
     glowGradient: 'from-blue-200/70 via-indigo-200/50 to-transparent'
   }
@@ -41,33 +41,13 @@ const primaryServices: PrimaryService[] = [
 
 const secondaryServicesRow1: SecondaryService[] = [
   {
-    title: 'AI Development',
-    description: 'Custom AI solutions, from LLM-powered apps to intelligent automation tools.'
+    title: 'AI Software & Chatbots',
+    description: 'AI software and AI chatbot development, with project capabilities confirmed during scoping.'
   },
-  {
-    title: 'SaaS & Dashboards',
-    description: 'Complex data made simple with tailored SaaS solutions.'
-  },
-  {
-    title: 'Web App Development',
-    description: 'Modern, fast, and reliable web platforms.'
-  }
+  { title: 'Branding', description: 'Brand identity work for businesses and digital products.' }
 ];
 
-const secondaryServicesRow2: SecondaryService[] = [
-  {
-    title: 'MVP Build',
-    description: 'Defining clear roadmaps that set your product up for success.'
-  },
-  {
-    title: 'Product Growth & Support',
-    description: 'Long-term support to evolve your product with your business.'
-  },
-  {
-    title: 'Branding',
-    description: 'A brand that moves with your product — clear, modern, and made to scale.'
-  }
-];
+const secondaryServicesRow2: SecondaryService[] = [];
 
 export const ServicesGridSection: React.FC = () => {
   return (

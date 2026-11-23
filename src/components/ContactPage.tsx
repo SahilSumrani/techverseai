@@ -122,6 +122,7 @@ export const ContactPage: React.FC = () => {
                     <input
                       type="text"
                       required
+                      aria-label="Your name"
                       placeholder="Your Name"
                       className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 border border-gray-200 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 shadow-inner"
                       value={formData.name}
@@ -135,6 +136,7 @@ export const ContactPage: React.FC = () => {
                     <input
                       type="tel"
                       required
+                      aria-label="Phone number"
                       placeholder="Phone Number"
                       className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 border border-gray-200 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 shadow-inner"
                       value={formData.phone}
@@ -151,6 +153,7 @@ export const ContactPage: React.FC = () => {
                     <input
                       type="email"
                       required
+                      aria-label="Email address"
                       placeholder="Email Address"
                       className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 border border-gray-200 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 shadow-inner"
                       value={formData.email}
@@ -164,6 +167,7 @@ export const ContactPage: React.FC = () => {
                     <input
                       type="text"
                       required
+                      aria-label="Subject"
                       placeholder="Subject"
                       className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 border border-gray-200 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 shadow-inner"
                       value={formData.subject}
@@ -178,6 +182,7 @@ export const ContactPage: React.FC = () => {
                   </span>
                   <textarea
                     required
+                    aria-label="Message"
                     rows={6}
                     placeholder="Message"
                     className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 border border-gray-200 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 shadow-inner resize-none"

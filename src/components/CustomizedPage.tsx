@@ -15,7 +15,7 @@ interface Project {
 const projects: Project[] = [
   {
     title: 'Dyu Solar',
-    image: '/customized/work1.png',
+    image: '/customized/dyu-solar.webp',
     link: 'https://dyusolar.com/',
     imageOrder: 'md:order-1',
     textOrder: 'md:order-2',
@@ -28,7 +28,7 @@ const projects: Project[] = [
   },
   {
     title: 'University Updates',
-    image: '/customized/work3.png',
+    image: '/customized/university-updates.webp',
     link: 'https://universityupdates.co.in/',
     imageOrder: 'md:order-2',
     textOrder: 'md:order-1',
@@ -41,7 +41,7 @@ const projects: Project[] = [
   },
   {
     title: 'Vinayak Jyotish',
-    image: '/customized/work2.png',
+    image: '/customized/vinayak-jyotish.webp',
     link: 'https://vinayakjyotish.org/',
     imageOrder: 'md:order-1',
     textOrder: 'md:order-2',
@@ -54,7 +54,7 @@ const projects: Project[] = [
   },
   {
     title: 'Cycle Store Ecom',
-    image: '/customized/work4.png',
+    image: '/customized/cycle-store.webp',
     link: 'https://cycle-website-sage.vercel.app/',
     imageOrder: 'md:order-2',
     textOrder: 'md:order-1',
@@ -146,7 +146,7 @@ export const CustomizedPage: React.FC = () => {
           {projects.map((project, idx) => (
             <div key={idx} className="grid md:grid-cols-2 gap-12 items-center px-2 md:px-6">
               <div className={`flex justify-center p-4 rounded-2xl bg-gray-100 shadow-md ${project.imageOrder}`}>
-                <img src={project.image} alt={project.title} className="rounded-xl w-[90%] max-w-md hover:scale-105 transition-transform duration-500" />
+                <img src={project.image} srcSet={`${project.image} 1000w`} sizes="(max-width: 768px) 90vw, 448px" width="1000" height="472" loading="lazy" decoding="async" alt={`${project.title} website project preview`} className="rounded-xl w-[90%] max-w-md hover:scale-105 transition-transform duration-500" />
               </div>
               <div className={`rounded-xl text-left ${project.textOrder}`}>
                 <h3 className="text-2xl md:text-3xl text-gray-900 mb-6 text-center md:text-left font-medium" style={{ fontFamily: 'Matter, sans-serif' }}>

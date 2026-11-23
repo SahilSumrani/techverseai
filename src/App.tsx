@@ -23,17 +23,28 @@ const AdminPage = lazy(() => import('./components/AdminPage').then(m => ({ defau
 
 export const App: React.FC = () => {
   const [pathname, setPathname] = useState<string>(window.location.pathname);
+  const prerenderedPaths = new Set([
+    '/services/',
+    '/website-development-company-delhi/',
+    '/website-development-cost-delhi/',
+    '/mobile-app-development-company-delhi/',
+    '/shopify-development-company-delhi/',
+    '/flutter-app-development-company-india/',
+    '/ai-chatbot-development-company-india/',
+    '/saas-development-company-india/',
+    '/app-development-cost-india/'
+  ]);
 
   useEffect(() => {
     const updateTitle = (path: string) => {
       if (path === '/prebuilt') {
-        document.title = 'Prebuilt SaaS Solutions & Ready-to-Deploy Products | Techverse AI';
+        document.title = 'Prebuilt SaaS Delivery in 48–72 Hours | Techverse AI';
       } else if (path === '/customized') {
-        document.title = 'Custom AI Web Applications & Software Development | Techverse AI';
+        document.title = 'Custom Web and App Development | Techverse AI';
       } else if (path === '/about-us') {
-        document.title = 'About Us — AI Consulting & Development Agency | Techverse AI';
+        document.title = 'About Techverse AI | Delhi Development Agency';
       } else if (path === '/contact') {
-        document.title = 'Contact Us | Techverse AI Delhi';
+        document.title = 'Contact Techverse AI | Project Enquiries';
       } else if (path === '/privacy') {
         document.title = 'Privacy Policy | Techverse AI';
       } else if (path === '/terms') {
@@ -60,6 +71,7 @@ export const App: React.FC = () => {
       if (target) {
         const href = target.getAttribute('href');
         if (href && href.startsWith('/') && !href.startsWith('//')) {
+          if (prerenderedPaths.has(href)) return;
           e.preventDefault();
           window.history.pushState({}, '', href);
           setPathname(href);
@@ -111,6 +123,22 @@ export const App: React.FC = () => {
 
           {/* 2. Services Grid */}
           <ServicesGridSection />
+          <section aria-labelledby="priority-services-heading" className="max-w-7xl mx-auto px-6 py-12">
+            <h2 id="priority-services-heading" className="text-3xl font-semibold mb-6">Explore development services</h2>
+            <nav aria-label="Development service pages" className="flex flex-wrap gap-3">
+              <a href="/website-development-company-delhi/">Website development company in Delhi</a>
+              <a href="/website-development-cost-delhi/">Website development cost in Delhi</a>
+              <a href="/mobile-app-development-company-delhi/">Mobile app development in Delhi</a>
+              <a href="/shopify-development-company-delhi/">Shopify development in Delhi</a>
+              <a href="/flutter-app-development-company-india/">Flutter app development in India</a>
+              <a href="/ai-chatbot-development-company-india/">AI chatbot development in India</a>
+              <a href="/saas-development-company-india/">SaaS development in India</a>
+              <a href="/app-development-cost-india/">App development cost in India</a>
+              <a href="/prebuilt">Prebuilt SaaS products</a>
+              <a href="/customized">Selected custom projects</a>
+              <a href="/contact">Contact Techverse AI</a>
+            </nav>
+          </section>
 
           {/* 3. Case Studies / Selected Work */}
           <PortfolioSection />

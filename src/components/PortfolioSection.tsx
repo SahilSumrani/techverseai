@@ -2,50 +2,40 @@ import React from 'react';
 
 interface Project {
   title: string;
-  client: string;
   description: string;
   image: string;
   externalLink: string;
-  caseStudyHref: string;
   tag: string;
 }
 
 const projects: Project[] = [
   {
-    title: 'DYU Solar — Solar EPC Startup Portal',
-    client: 'DYU Solar (Delhi NCR)',
-    description: 'Webflow → Next.js 14 conversion for a Delhi-based Solar EPC startup. Applied brand design tokens and achieved government-tender-grade content accuracy.',
-    image: '/customized/work1.png',
+    title: 'Dyu Solar',
+    description: 'Solar energy website with a net-metering calculator and enquiry form.',
+    image: '/customized/dyu-solar.webp',
     externalLink: 'https://dyusolar.com/',
-    caseStudyHref: '/case-studies/dyu-solar',
-    tag: 'Webflow to Next.js 14'
+    tag: 'Solar energy'
   },
   {
-    title: 'Kisah.in — Men\'s Ethnic Ecommerce Storefront',
-    client: 'Kisah Wearables',
-    description: 'Custom Shopify/Next storefront for men\'s ethnic wear featuring interactive carousels, drawer navigation, and instant search overlay.',
-    image: '/customized/work4.png',
-    externalLink: 'https://cycle-website-sage.vercel.app/',
-    caseStudyHref: '/case-studies/kisah-ecommerce',
-    tag: 'Ecommerce / Shopify'
-  },
-  {
-    title: 'Scalient — Webflow to React Migration',
-    client: 'Scalient Inc.',
-    description: 'Vite + React migration reverse-engineering 447 Webflow animation events with GSAP scroll-scrubbed interactions and sub-second loading.',
-    image: '/customized/work3.png',
+    title: 'University Updates',
+    description: 'Exam results and notifications portal.',
+    image: '/customized/university-updates.webp',
     externalLink: 'https://universityupdates.co.in/',
-    caseStudyHref: '/case-studies/scalient',
-    tag: 'GSAP & React Migration'
+    tag: 'Education portal'
   },
   {
-    title: 'Edu.Link — Dashboard UI & Admin System',
-    client: 'Edu.Link Portal',
-    description: 'Comprehensive teacher & administrator dashboard UI system engineered for real-time analytics, exam result tracking, and quick management.',
-    image: '/customized/work2.png',
+    title: 'Vinayak Jyotish',
+    description: 'Astrology booking platform.',
+    image: '/customized/vinayak-jyotish.webp',
     externalLink: 'https://vinayakjyotish.org/',
-    caseStudyHref: '/case-studies/edu-link',
-    tag: 'SaaS & UI System'
+    tag: 'Booking platform'
+  },
+  {
+    title: 'Cycle Store Ecom',
+    description: 'Bicycle ecommerce store.',
+    image: '/customized/cycle-store.webp',
+    externalLink: 'https://cycle-website-sage.vercel.app/',
+    tag: 'Ecommerce'
   }
 ];
 
@@ -57,7 +47,7 @@ export const PortfolioSection: React.FC = () => {
           Selected Case Studies
         </div>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl text-center text-gray-900 mb-4 px-2 leading-tight font-bold">
-          Proven Engineering &amp; Client Success
+          Selected Project Work
         </h2>
         <p className="text-gray-600 text-center max-w-2xl mx-auto px-2 text-sm sm:text-base lg:text-lg mb-10 sm:mb-14">
           Explore real-world case studies detailing our problem-solving approach, technical execution, and client outcomes.
@@ -76,8 +66,10 @@ export const PortfolioSection: React.FC = () => {
                   <img
                     alt={item.title}
                     src={item.image}
-                    width="600"
-                    height="400"
+                    srcSet={`${item.image} 1000w`}
+                    sizes="(max-width: 768px) 90vw, 600px"
+                    width="1000"
+                    height="472"
                     decoding="async"
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -86,9 +78,7 @@ export const PortfolioSection: React.FC = () => {
                     {item.tag}
                   </span>
                 </div>
-                <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide block mb-1">
-                  {item.client}
-                </span>
+                <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide block mb-1">Selected project</span>
                 <h3 className="text-lg sm:text-xl font-bold mb-2.5 text-gray-900 group-hover:text-blue-600 transition-colors leading-snug">
                   {item.title}
                 </h3>
@@ -98,13 +88,6 @@ export const PortfolioSection: React.FC = () => {
               </div>
 
               <div className="flex items-center justify-between pt-4 border-t border-gray-100 gap-2">
-                <a
-                  href={item.caseStudyHref}
-                  className="text-xs sm:text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors flex items-center gap-1"
-                  aria-label={`Read ${item.client} case study`}
-                >
-                  Read {item.client} Case Study &rarr;
-                </a>
                 <a
                   target="_blank"
                   rel="noopener noreferrer"

@@ -58,7 +58,7 @@ export const FaqSection: React.FC = () => {
     <section
       className="py-16 bg-cover bg-center"
       style={{
-        backgroundImage: "url('/bg_footer.png')",
+        backgroundImage: "url('/bg-footer.webp')",
         fontFamily: 'Matter, sans-serif'
       }}
     >

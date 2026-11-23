@@ -5,26 +5,29 @@ const VideoTile: React.FC<{ src: string }> = ({ src }) => {
 
   useEffect(() => {
     const v = videoRef.current;
-    if (v) {
-      v.defaultMuted = true;
-      v.muted = true;
-      v.play().catch(() => { });
-    }
+    if (!v) return;
+    v.defaultMuted = true;
+    v.muted = true;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) v.play().catch(() => {});
+      else v.pause();
+    }, { rootMargin: '100px', threshold: 0.01 });
+    observer.observe(v);
+    return () => observer.disconnect();
   }, [src]);
 
   return (
     <video
       ref={videoRef}
-      src={src}
-      autoPlay
       loop
       muted
       playsInline
-      preload="metadata"
+      poster={src.replace(/\.mp4$/i, '.jpg')}
+      preload="none"
       aria-hidden="true"
       tabIndex={-1}
       className="w-full h-full object-cover rounded-xl sm:rounded-2xl pointer-events-none"
-    />
+    >{['/hero/col1_vid1.mp4','/hero/col2_vid1.mp4'].includes(src) && <source src={src.replace(/\.mp4$/i, '.webm')} type="video/webm" />}<source src={src} type="video/mp4" /></video>
   );
 };
 
@@ -75,13 +78,13 @@ export const HeroSection: React.FC = () => {
 
             {/* Headline */}
             <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold text-gray-900 tracking-tight leading-[1.12] mb-5">
-              <span className="block sm:whitespace-nowrap">Build your Startup</span>
-              <span className="block font-semibold text-gray-800">with Techverse AI</span>
+              <span className="block">Web and App Development</span>
+              <span className="block font-semibold text-gray-800">for Businesses in Delhi</span>
             </h1>
 
             {/* Supporting Subtitle */}
             <p className="text-sm sm:text-lg text-gray-600 font-normal leading-relaxed max-w-xl mb-7 px-1 sm:px-0">
-              We build scalable, AI-powered web applications for startups &amp; businesses globally. Let's transform your ideas into code.
+              Techverse AI builds custom websites, mobile apps, ecommerce, SaaS and AI software for businesses in Delhi NCR and across India.
             </p>
 
             {/* Call to Actions */}

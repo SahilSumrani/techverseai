@@ -23,10 +23,10 @@ export const PrebuiltPage: React.FC = () => {
               <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-gray-500/80 max-w-md sm:max-w-xl md:max-w-2xl mx-auto">
                 Skip the long wait and high costs. Our prebuilt platforms help you go digital faster without compromising on quality.
               </p>
-              <div className="mt-8 flex justify-center">
-                <span className="inline-block px-8 py-3 bg-black text-white text-base sm:text-lg font-semibold rounded-full shadow-lg tracking-wider uppercase animate-pulse">
-                  Coming Soon
-                </span>
+                <div className="mt-8 flex justify-center">
+                  <a href="/contact" className="inline-flex min-h-[48px] items-center px-8 py-3 bg-black text-white text-base sm:text-lg font-semibold rounded-full shadow-lg">
+                    Discuss 48–72 Hour Prebuilt SaaS
+                  </a>
               </div>
             </div>
           </section>

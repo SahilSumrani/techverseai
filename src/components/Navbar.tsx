@@ -18,7 +18,6 @@ export const Navbar: React.FC = () => {
               alt="Techverse Logo"
               width="80"
               height="80"
-              fetchPriority="high"
               decoding="async"
               className="h-16 w-auto max-w-[340px] object-contain scale-[1.8]"
             />

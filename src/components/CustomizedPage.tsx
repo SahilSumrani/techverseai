@@ -14,16 +14,16 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: 'DYU Solar',
+    title: 'Dyu Solar',
     image: '/customized/dyu-solar.webp',
     link: 'https://dyusolar.com/',
     imageOrder: 'md:order-1',
     textOrder: 'md:order-2',
     points: [
-      'Commercial and industrial solar EPC solutions serving Delhi NCR.',
-      'Clear overview of rooftop, utility-scale and open-access solar offerings.',
-      'Project enquiry paths connect businesses with the solar team.',
-      'Engineering, procurement, construction and operations are presented together.'
+      'Clean, sustainable solar energy solutions for residential & commercial needs.',
+      'Showcasing solar panel installations, net metering & energy savings calculator.',
+      'Fast inquiry form and seamless consultation booking for solar power.',
+      'Mobile-optimised responsive design highlighting green eco-friendly credentials.'
     ]
   },
   {
@@ -33,36 +33,36 @@ const projects: Project[] = [
     imageOrder: 'md:order-2',
     textOrder: 'md:order-1',
     points: [
-      'DU SOL resources are grouped in one student-focused destination.',
-      'Quick paths to study material, notes, previous papers and exam alerts.',
-      'Organized navigation helps students find academic resources.',
-      'The interface brings study tools and student information together.'
+      'Comprehensive educational news, exam results & university notifications portal.',
+      'Real-time updates on exam schedules, admit cards & academic syllabus.',
+      'Clean category hierarchy for universities, competitive exams & admission alerts.',
+      'Fast loading mobile-optimised portal designed for high traffic performance.'
     ]
   },
   {
-    title: 'Vinayak Jyotish Research Institution',
+    title: 'Vinayak Jyotish',
     image: '/customized/vinayak-jyotish.webp',
     link: 'https://vinayakjyotish.org/',
     imageOrder: 'md:order-1',
     textOrder: 'md:order-2',
     points: [
-      'A Hindi literary, cultural and Jyotish research institution.',
-      'Introduces the organization and its work promoting Hindi language and culture.',
-      'Connects visitors with the institution’s programs and contact information.',
-      'Highlights its educational support for students from under-resourced backgrounds.'
+      'Vedic astrology & spiritual consultation platform with online booking.',
+      'Detailed gemstone recommendations, horoscope matching & ritual guidance.',
+      'User-friendly layout designed for quick appointment scheduling.',
+      'Responsive mobile interface optimised for global visitors.'
     ]
   },
   {
-    title: 'Cyclen',
+    title: 'Cycle Store Ecom',
     image: '/customized/cycle-store.webp',
     link: 'https://cycle-website-sage.vercel.app/',
     imageOrder: 'md:order-2',
     textOrder: 'md:order-1',
     points: [
-      'An adventure-led cycling brand and rider community website.',
-      'A cinematic mountain-bike hero establishes the energetic visual direction.',
-      'Sections introduce the community, riding features and cycling experiences.',
-      'Bold black and orange styling carries through the page.'
+      'Modern online bicycle storefront with interactive gear & model selection.',
+      'Sleek product showcase for premium cycles, accessories & riding gear.',
+      'Optimised responsive shopping cart with seamless checkout flow.',
+      'Fast loading mobile UX designed for outdoor & fitness enthusiasts.'
     ]
   }
 ];

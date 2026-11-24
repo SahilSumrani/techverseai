@@ -97,7 +97,7 @@ export const ProcessSection: React.FC = () => {
             <div className="group bg-[#F4F4F4] rounded-[24px] p-6 sm:p-8 flex flex-col justify-between h-full min-h-[380px] hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="w-full mb-6 rounded-2xl overflow-hidden flex items-center justify-center">
                 <img
-                  src="/home/launch-and-grow.svg"
+                  src="/home/launch-and-grow.webp"
                   alt="Launch & Grow"
                   width="485"
                   height="419"

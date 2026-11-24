@@ -12,7 +12,7 @@ const techIcons: TechIcon[] = [
   { name: 'Supabase', iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg' },
   { name: 'Tailwind CSS', iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
   { name: 'Shopify', iconUrl: '/home/shopify.svg' },
-  { name: 'AWS', iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg' },
+  { name: 'AWS', iconUrl: '/home/aws.svg' },
   { name: 'TypeScript', iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
   { name: 'Vite', iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg' },
   { name: 'Node.js', iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
@@ -27,7 +27,7 @@ export const TechStackSection: React.FC = () => {
   const col3 = [...techIcons.slice(8, 12), ...techIcons.slice(8, 12), ...techIcons.slice(8, 12)];
 
   return (
-    <section style={{ fontFamily: 'Matter, sans-serif' }} className="py-20 sm:py-28 bg-white border-b border-gray-100 overflow-hidden">
+    <section id="tech-stack" style={{ fontFamily: 'Matter, sans-serif' }} className="py-20 sm:py-28 bg-white border-b border-gray-100 overflow-hidden">
       <div className="max-w-7xl 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 

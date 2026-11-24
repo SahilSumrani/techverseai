@@ -56,6 +56,7 @@ export const FaqSection: React.FC = () => {
 
   return (
     <section
+      id="faq"
       className="py-16 bg-cover bg-center"
       style={{
         backgroundImage: "url('/bg-footer.webp')",

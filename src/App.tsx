@@ -147,7 +147,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden selection:bg-black selection:text-white">
-      <FloatingActions />
+      <FloatingActions hasBottomDock={pathname === '/'} />
       <Suspense fallback={<div className="min-h-screen bg-white" />}>
         {renderContent()}
       </Suspense>

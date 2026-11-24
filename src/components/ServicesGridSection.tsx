@@ -52,7 +52,7 @@ const secondaryServicesRow2: SecondaryService[] = [];
 export const ServicesGridSection: React.FC = () => {
   return (
     <section id="services" style={{ fontFamily: 'Matter, sans-serif' }} className="py-20 sm:py-28 bg-white">
-      <div className="container mx-auto px-4 md:px-12 max-w-[1440px]">
+      <div className="container mx-auto px-4 md:px-12 max-w-[1440px] 2xl:max-w-[1680px]">
         <div className="bg-[#f7f7f7] rounded-[24px] px-4 py-10 md:px-[80px] md:py-[80px] flex flex-col items-center gap-8 md:gap-12">
           
           {/* Section Title matching Lume Agency */}

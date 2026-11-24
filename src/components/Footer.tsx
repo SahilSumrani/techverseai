@@ -1,117 +1,99 @@
 import React from 'react';
 
-export const Footer: React.FC = () => {
-  return (
-    <footer
-      className="relative border-t border-gray-200 w-full bg-cover bg-center"
-      style={{ fontFamily: 'Matter, sans-serif' }}
-    >
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-          <div className="flex flex-col justify-center space-y-4">
-            <div>
-              <h3 className="text-footer-text text-base text-gray-700">Contact us at</h3>
-              <p className="text-footer-text text-lg font-medium text-gray-900">
-                <a href="mailto:contact@techverseai.tech" className="hover:underline">
-                  contact@techverseai.tech
-                </a>
-              </p>
-            </div>
-            <form onSubmit={(e) => e.preventDefault()} className="relative w-full max-w-lg" aria-label="Subscribe to newsletter">
-              <div className="flex items-center bg-white rounded-full shadow-md overflow-hidden border border-gray-200 p-1">
-                <input
-                  type="email"
-                  id="newsletter-email"
-                  name="email"
-                  placeholder="Enter your email address"
-                  aria-label="Email address for newsletter subscription"
-                  className="grow min-w-0 pl-4 pr-2 py-3 text-sm text-gray-700 placeholder-gray-400 focus:outline-none md:px-7 md:py-4"
-                  required
-                />
-                <button
-                  type="submit"
-                  aria-label="Subscribe"
-                  className="bg-black text-white px-5 py-3 rounded-full hover:bg-gray-900 transition-colors shrink-0 text-sm md:px-8 font-medium"
-                >
-                  Subscribe
-                </button>
-              </div>
-            </form>
-            
-            {/* Social Media Links */}
-            <div className="flex items-center space-x-4 pt-2">
-              <span className="text-xs text-gray-600 font-medium">Follow Us:</span>
-              <a
-                href="https://www.instagram.com/techverseai00/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-gray-100 hover:bg-pink-600 hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
-                aria-label="Instagram"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-              </a>
-              <a
-                href="https://x.com/TechVerseAII"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-gray-100 hover:bg-black hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
-                aria-label="X (Twitter)"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/techverse-ai-digital-solution-37b998426/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-700 transition-all duration-300 transform hover:scale-110 shadow-xs min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
-                aria-label="LinkedIn"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
+const FooterLink: React.FC<{ href: string; children: React.ReactNode; external?: boolean }> = ({ href, children, external = false }) => (
+  <a
+    href={href}
+    className="inline-flex min-h-7 items-center text-[13px] leading-5 text-[#425761] transition-colors hover:text-blue-700"
+    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+  >
+    {children}
+  </a>
+);
 
-          <div className="lg:col-span-2 flex justify-end">
-            <div className="grid grid-cols-2 gap-12 text-left sm:text-right">
-              <div>
-                <h4 className="text-footer-muted text-base font-semibold mb-4 text-gray-700">Services &amp; Work</h4>
-                <nav className="space-y-3">
-                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/prebuilt">Prebuilt SaaS</a>
-                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/customized">Customized Dev</a>
-                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/about-us">About Us</a>
-                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/contact">Contact Us</a>
-                </nav>
-              </div>
-              <div>
-                <h4 className="text-footer-muted text-base font-semibold mb-4 text-gray-700">Legal</h4>
-                <nav className="space-y-3">
-                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/terms">Terms &amp; Conditions</a>
-                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/privacy">Privacy Policy</a>
-                  <a className="block text-footer-text text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors py-1" href="/refund">Refund Policy</a>
-                </nav>
-              </div>
-            </div>
-          </div>
+const FooterColumn: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
+  <nav aria-label={title} className="min-w-0">
+    <h2 className="text-[13px] font-semibold tracking-tight text-[#425761]">{title}</h2>
+    <ul className="mt-4 space-y-2.5">{children}</ul>
+  </nav>
+);
+
+export const Footer: React.FC = () => (
+  <>
+    <section className="bg-[#EBF3F7] px-4 pb-10 pt-6 sm:px-6 lg:px-8" aria-labelledby="footer-cta-title">
+      <div className="mx-auto flex max-w-7xl 2xl:max-w-[1680px] flex-col gap-7 rounded-[28px] bg-[#051A24] px-6 py-9 text-white sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-11">
+        <div>
+          <span className="text-xs font-medium uppercase tracking-[0.15em] text-white/60">Techverse AI</span>
+          <h2 id="footer-cta-title" className="mt-3 max-w-2xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl" style={{ fontFamily: 'Matter, sans-serif' }}>
+            Have a project in mind?
+          </h2>
+        </div>
+        <a href="/contact" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#051A24] transition hover:bg-[#E0EBF0]">
+          Tell us about it <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <footer className="w-full border-t border-[#C8D5DB] bg-[#EBF3F7] text-[#051A24]" style={{ fontFamily: 'Matter, sans-serif' }}>
+      <div className="mx-auto max-w-7xl 2xl:max-w-[1680px] px-5 pb-6 pt-12 sm:px-6 sm:pt-14 lg:px-8">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 xl:gap-x-5">
+          <FooterColumn title="Techverse AI">
+            <li><FooterLink href="/">Home</FooterLink></li>
+            <li><FooterLink href="/about-us">About us</FooterLink></li>
+            <li><FooterLink href="/customized">Custom development</FooterLink></li>
+            <li><FooterLink href="/prebuilt">Prebuilt SaaS</FooterLink></li>
+          </FooterColumn>
+
+          <FooterColumn title="Web &amp; apps">
+            <li><FooterLink href="/website-development-company-delhi/">Website development</FooterLink></li>
+            <li><FooterLink href="/mobile-app-development-company-delhi/">Mobile apps</FooterLink></li>
+            <li><FooterLink href="/flutter-app-development-company-india/">Flutter apps</FooterLink></li>
+            <li><FooterLink href="/shopify-development-company-delhi/">Shopify</FooterLink></li>
+          </FooterColumn>
+
+          <FooterColumn title="Software">
+            <li><FooterLink href="/saas-development-company-india/">SaaS development</FooterLink></li>
+            <li><FooterLink href="/ai-chatbot-development-company-india/">AI chatbots</FooterLink></li>
+            <li><FooterLink href="/website-development-cost-delhi/">Website cost guide</FooterLink></li>
+            <li><FooterLink href="/app-development-cost-india/">App cost guide</FooterLink></li>
+          </FooterColumn>
+
+          <FooterColumn title="Selected work">
+            <li><FooterLink external href="https://dyusolar.com/">DYU Solar</FooterLink></li>
+            <li><FooterLink external href="https://cycle-website-sage.vercel.app/">Cyclen</FooterLink></li>
+            <li><FooterLink external href="https://universityupdates.co.in/">University Updates</FooterLink></li>
+            <li><FooterLink external href="https://vinayakjyotish.org/">Vinayak Jyotish</FooterLink></li>
+          </FooterColumn>
+
+          <FooterColumn title="Contact">
+            <li><FooterLink href="/contact">Project enquiries</FooterLink></li>
+            <li><FooterLink href="mailto:contact@techverseai.tech">contact@techverseai.tech</FooterLink></li>
+            <li><FooterLink external href="https://wa.me/918700543448">WhatsApp</FooterLink></li>
+          </FooterColumn>
+
+          <FooterColumn title="Elsewhere">
+            <li><FooterLink external href="https://www.instagram.com/techverseai00/">Instagram</FooterLink></li>
+            <li><FooterLink external href="https://x.com/TechVerseAII">X</FooterLink></li>
+            <li><FooterLink external href="https://www.linkedin.com/in/techverse-ai-digital-solution-37b998426/">LinkedIn</FooterLink></li>
+          </FooterColumn>
+
+          <FooterColumn title="Legal">
+            <li><FooterLink href="/terms">Terms &amp; Conditions</FooterLink></li>
+            <li><FooterLink href="/privacy">Privacy policy</FooterLink></li>
+            <li><FooterLink href="/refund">Refund policy</FooterLink></li>
+          </FooterColumn>
+        </div>
+
+        <a href="/" aria-label="Techverse AI home" className="mt-14 block select-none overflow-hidden border-b border-[#C8D5DB] pb-5 text-center text-[clamp(52px,10.5vw,148px)] font-semibold leading-[0.88] tracking-[-0.075em] text-[#051A24] sm:mt-16">
+          TECHVERSE AI
+        </a>
+
+        <div className="flex flex-col gap-3 pt-5 text-xs text-[#425761] sm:flex-row sm:items-center sm:justify-between">
+          <span>© {new Date().getFullYear()} Techverse AI</span>
+          <a href="#top" className="inline-flex min-h-8 items-center gap-1 transition-colors hover:text-blue-700">
+            Back to top <span aria-hidden="true">↑</span>
+          </a>
         </div>
       </div>
-
-      {/* Large Unclipped Watermark Title */}
-      <div className="w-full flex justify-center pt-4 pb-8 overflow-visible">
-        <span
-          className="w-full text-center font-bold tracking-wider select-none whitespace-nowrap bg-clip-text text-transparent text-[40px] sm:text-[65px] md:text-[85px] lg:text-[105px] leading-tight block"
-          style={{
-            backgroundImage: 'linear-gradient(180deg, rgba(180, 180, 180, 0.45) 0%, rgba(235, 235, 235, 0.95) 100%)'
-          }}
-        >
-          TECHVERSE AI
-        </span>
-      </div>
     </footer>
-  );
-};
+  </>
+);

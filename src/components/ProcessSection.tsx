@@ -3,7 +3,7 @@ import React from 'react';
 export const ProcessSection: React.FC = () => {
   return (
     <section id="how-it-works" style={{ fontFamily: 'Matter, sans-serif' }} className="py-16 sm:py-24 bg-[#FAFAFA] border-t border-gray-100">
-      <div className="container mx-auto px-4 md:px-12 max-w-[1400px]">
+      <div className="container mx-auto px-4 md:px-12 max-w-[1400px] 2xl:max-w-[1680px]">
         {/* Section Header */}
         <div className="mb-12 md:mb-16">
           <h2 className="text-[44px] md:text-[56px] font-medium tracking-tight text-[#111111] leading-[1.1]">
@@ -97,7 +97,7 @@ export const ProcessSection: React.FC = () => {
             <div className="group bg-[#F4F4F4] rounded-[24px] p-6 sm:p-8 flex flex-col justify-between h-full min-h-[380px] hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="w-full mb-6 rounded-2xl overflow-hidden flex items-center justify-center">
                 <img
-                  src="/home/launch-and-grow.webp"
+                  src="/home/launch-and-grow.svg"
                   alt="Launch & Grow"
                   width="485"
                   height="419"

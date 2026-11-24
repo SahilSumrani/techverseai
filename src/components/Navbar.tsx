@@ -4,9 +4,9 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="relative flex justify-center items-center py-3 bg-transparent z-40" style={{ fontFamily: 'Matter, sans-serif' }}>
+    <nav className="relative flex w-full justify-center items-center py-3 bg-transparent z-40" style={{ fontFamily: 'Matter, sans-serif' }}>
       {/* Desktop Navigation Pill - Thicker Bar with Prominent Logo */}
-      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-2 border border-gray-200 min-w-[720px] max-w-[850px] bg-white/95 backdrop-blur-md shadow-md h-20 overflow-hidden">
+      <div className="hidden md:grid grid-cols-3 items-center rounded-full px-8 py-2 border border-gray-200 min-w-[720px] max-w-[850px] xl:w-[min(82vw,1040px)] xl:max-w-[1040px] bg-white/95 backdrop-blur-md shadow-md h-20 overflow-hidden">
         <div className="flex justify-center items-center space-x-8">
           <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/prebuilt">Prebuilt</a>
           <a className="hover:text-blue-600 font-medium text-base text-gray-800 transition-colors" href="/customized">Customized</a>

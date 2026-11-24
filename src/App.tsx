@@ -103,7 +103,7 @@ export const App: React.FC = () => {
     // Homepage Render
     return (
       <div className="relative">
-        <header className="w-full bg-cover bg-center relative" style={{ backgroundImage: "url('/common/Bg2.webp')" }}>
+        <header id="top" className="w-full bg-cover bg-center relative" style={{ backgroundImage: "url('/common/Bg2.webp')" }}>
           <Navbar />
         </header>
 
@@ -123,23 +123,6 @@ export const App: React.FC = () => {
 
           {/* 2. Services Grid */}
           <ServicesGridSection />
-          <section aria-labelledby="priority-services-heading" className="max-w-7xl mx-auto px-6 py-12">
-            <h2 id="priority-services-heading" className="text-3xl font-semibold mb-6">Explore development services</h2>
-            <nav aria-label="Development service pages" className="flex flex-wrap gap-3">
-              <a href="/website-development-company-delhi/">Website development company in Delhi</a>
-              <a href="/website-development-cost-delhi/">Website development cost in Delhi</a>
-              <a href="/mobile-app-development-company-delhi/">Mobile app development in Delhi</a>
-              <a href="/shopify-development-company-delhi/">Shopify development in Delhi</a>
-              <a href="/flutter-app-development-company-india/">Flutter app development in India</a>
-              <a href="/ai-chatbot-development-company-india/">AI chatbot development in India</a>
-              <a href="/saas-development-company-india/">SaaS development in India</a>
-              <a href="/app-development-cost-india/">App development cost in India</a>
-              <a href="/prebuilt">Prebuilt SaaS products</a>
-              <a href="/customized">Selected custom projects</a>
-              <a href="/contact">Contact Techverse AI</a>
-            </nav>
-          </section>
-
           {/* 3. Case Studies / Selected Work */}
           <PortfolioSection />
 

@@ -66,7 +66,7 @@ export const FaqSection: React.FC = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <div className="max-w-6xl 2xl:max-w-[1600px] mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
         <div>
           <h2 className="text-3xl sm:text-5xl text-gray-900 leading-snug font-medium">
             Frequently Asked <br />Questions

@@ -54,7 +54,7 @@ export const PortfolioSection: React.FC = () => {
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-6 lg:gap-8 grid-cols-1 md:grid-cols-2">
           {projects.map((item, idx) => (
             <div

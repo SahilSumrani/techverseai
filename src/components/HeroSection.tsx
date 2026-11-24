@@ -62,7 +62,7 @@ export const HeroSection: React.FC = () => {
   return (
     <section className="font-poppins w-full relative pt-2 pb-10 lg:pt-4 lg:pb-16 min-h-[85vh] flex items-center overflow-visible bg-transparent">
 
-      <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-10">
+      <div className="max-w-[1440px] 2xl:max-w-[1680px] w-full mx-auto px-4 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
 
           {/* Left Side: Clean Typography, Description & CTAs */}

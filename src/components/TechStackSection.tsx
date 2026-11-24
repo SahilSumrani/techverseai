@@ -28,7 +28,7 @@ export const TechStackSection: React.FC = () => {
 
   return (
     <section style={{ fontFamily: 'Matter, sans-serif' }} className="py-20 sm:py-28 bg-white border-b border-gray-100 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
           {/* Left Side Column: Clean Typography & CTA Button matching Dribbble reference */}

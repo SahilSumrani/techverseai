@@ -1,3 +1,5 @@
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+
 export interface ContactQuery {
   id: string;
   name: string;
@@ -10,105 +12,124 @@ export interface ContactQuery {
   status: 'new' | 'contacted' | 'resolved';
 }
 
-const QUERIES_KEY = 'techverse_contact_queries';
-const AUTH_KEY = 'techverse_admin_token';
+type NewContactQuery = Omit<ContactQuery, 'id' | 'date' | 'status'>;
 
-// Initial sample queries if none exist
-const initialQueries: ContactQuery[] = [
-  {
-    id: 'q-101',
-    name: 'Rahul Sharma',
-    phone: '+91 9876543210',
-    email: 'rahul@example.com',
-    subject: 'Prebuilt SaaS Demo Inquiry',
-    message: 'Interested in purchasing the Prebuilt SaaS software for my grocery delivery startup.',
-    source: 'Prebuilt Page',
-    date: new Date(Date.now() - 3600000 * 2).toISOString(),
-    status: 'new'
-  },
-  {
-    id: 'q-102',
-    name: 'Priya Verma',
-    phone: '+91 9123456789',
-    email: 'priya@techfirm.io',
-    subject: 'Custom Web Application Development',
-    message: 'We need a customized enterprise SaaS platform built from scratch with custom AI integrations.',
-    source: 'Customized Page',
-    date: new Date(Date.now() - 3600000 * 24).toISOString(),
-    status: 'contacted'
+const env = (import.meta as ImportMeta & { env: Record<string, string | undefined> }).env;
+const SUPABASE_URL = env.VITE_SUPABASE_URL;
+const SUPABASE_PUBLISHABLE_KEY = env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+export const supabaseClient: SupabaseClient | null = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY
+  ? createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+      auth: typeof window === 'undefined'
+        ? { persistSession: false }
+        : {
+            storage: window.sessionStorage,
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+    })
+  : null;
+
+function getSupabase(): SupabaseClient {
+  if (!supabaseClient) {
+    throw new Error('Supabase is not configured. Add the project URL and publishable key to the deployment environment.');
   }
-];
-
-export const getStoredQueries = (): ContactQuery[] => {
-  try {
-    const data = localStorage.getItem(QUERIES_KEY);
-    if (!data) {
-      localStorage.setItem(QUERIES_KEY, JSON.stringify(initialQueries));
-      return initialQueries;
-    }
-    return JSON.parse(data);
-  } catch (err) {
-    console.error('Error reading queries:', err);
-    return initialQueries;
-  }
-};
-
-export const saveQuery = (query: Omit<ContactQuery, 'id' | 'date' | 'status'> & { source?: string }): ContactQuery => {
-  const current = getStoredQueries();
-  const newQuery: ContactQuery = {
-    ...query,
-    id: `q-${Date.now()}`,
-    date: new Date().toISOString(),
-    status: 'new'
-  };
-  const updated = [newQuery, ...current];
-  localStorage.setItem(QUERIES_KEY, JSON.stringify(updated));
-  return newQuery;
-};
-
-export const updateQueryStatus = (id: string, status: 'new' | 'contacted' | 'resolved'): ContactQuery[] => {
-  const current = getStoredQueries();
-  const updated = current.map((q) => (q.id === id ? { ...q, status } : q));
-  localStorage.setItem(QUERIES_KEY, JSON.stringify(updated));
-  return updated;
-};
-
-export const deleteQuery = (id: string): ContactQuery[] => {
-  const current = getStoredQueries();
-  const updated = current.filter((q) => q.id !== id);
-  localStorage.setItem(QUERIES_KEY, JSON.stringify(updated));
-  return updated;
-};
-
-// SHA-256 Hash helper to avoid plain-text credentials in client bundle
-async function hashSHA256(text: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(text);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  return supabaseClient;
 }
 
-// Environment Variables configured in Vercel / .env
-const metaEnv = (import.meta as any).env || {};
-const TARGET_PASS_HASH = metaEnv.VITE_ADMIN_PASS_HASH;
-const TARGET_USER = metaEnv.VITE_ADMIN_USER;
+async function isAdmin(): Promise<boolean> {
+  const { data, error } = await getSupabase().rpc('is_techverse_admin');
+  if (error) throw error;
+  return data === true;
+}
 
-export const isAuthenticated = (): boolean => {
-  return localStorage.getItem(AUTH_KEY) === 'true';
+export const getStoredQueries = async (): Promise<ContactQuery[]> => {
+  const { data, error } = await getSupabase()
+    .from('contact_queries')
+    .select('id, name, phone, email, subject, message, source, date, status')
+    .order('date', { ascending: false });
+
+  if (error) throw error;
+  return (data ?? []) as ContactQuery[];
 };
 
-export const loginAdminSecure = async (username: string, pass: string): Promise<boolean> => {
-  const trimmedUser = username.trim();
-  const inputHash = await hashSHA256(pass.trim());
+export const saveQuery = async (query: NewContactQuery): Promise<ContactQuery> => {
+  const normalized = {
+    name: query.name.trim(),
+    phone: query.phone.trim(),
+    email: query.email.trim(),
+    subject: query.subject.trim(),
+    message: query.message.trim(),
+    source: query.source?.trim() || null
+  };
 
-  if (trimmedUser === TARGET_USER && inputHash === TARGET_PASS_HASH) {
-    localStorage.setItem(AUTH_KEY, 'true');
-    return true;
+  const { data, error } = await getSupabase()
+    .from('contact_queries')
+    .insert(normalized)
+    .select('id, name, phone, email, subject, message, source, date, status')
+    .single();
+
+  if (error) throw error;
+  return data as ContactQuery;
+};
+
+export const updateQueryStatus = async (
+  id: string,
+  status: ContactQuery['status']
+): Promise<ContactQuery[]> => {
+  const { error } = await getSupabase()
+    .from('contact_queries')
+    .update({ status })
+    .eq('id', id);
+
+  if (error) throw error;
+  return getStoredQueries();
+};
+
+export const deleteQuery = async (id: string): Promise<ContactQuery[]> => {
+  const { error } = await getSupabase()
+    .from('contact_queries')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+  return getStoredQueries();
+};
+
+export const isAuthenticated = async (): Promise<boolean> => {
+  const client = getSupabase();
+  const { data, error } = await client.auth.getSession();
+
+  if (error || !data.session) return false;
+
+  try {
+    return await isAdmin();
+  } catch {
+    return false;
   }
+};
+
+export const loginAdminSecure = async (email: string, password: string): Promise<boolean> => {
+  const client = getSupabase();
+  const { error } = await client.auth.signInWithPassword({
+    email: email.trim(),
+    password
+  });
+
+  if (error) return false;
+
+  try {
+    if (await isAdmin()) return true;
+  } catch {
+    // Sign out below when the database has no admin allowlist entry for this user.
+  }
+
+  await client.auth.signOut();
   return false;
 };
 
-export const logoutAdmin = (): void => {
-  localStorage.removeItem(AUTH_KEY);
+export const logoutAdmin = async (): Promise<void> => {
+  const { error } = await getSupabase().auth.signOut();
+  if (error) throw error;
 };

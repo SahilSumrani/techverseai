@@ -27,6 +27,11 @@ import {
   ShieldCheck,
   Calendar
 } from 'lucide-react';
+import {
+  createNotification, createPayroll, createTask, getTeamRole, listMembers, listNotifications,
+  listPayroll, listTasks, listWorkLogs, sendTeamInvite, signOut as signOutTeam, subscribeToTeamChanges,
+  sendTeamEmail, type PayrollRecord, type TeamMember, type TeamNotification, type TeamRole, type TeamTask, type WorkLog
+} from '../services/teamService';
 
 export const AdminPage: React.FC = () => {
   const [authed, setAuthed] = useState<boolean>(false);
@@ -37,54 +42,121 @@ export const AdminPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedQuery, setSelectedQuery] = useState<ContactQuery | null>(null);
+  const [teamRole, setTeamRole] = useState<TeamRole | null>(null);
+  const [tab, setTab] = useState<'leads' | 'team' | 'tasks' | 'payroll'>('leads');
+  const [members, setMembers] = useState<TeamMember[]>([]);
+  const [tasks, setTasks] = useState<TeamTask[]>([]);
+  const [payroll, setPayroll] = useState<PayrollRecord[]>([]);
+  const [logs, setLogs] = useState<WorkLog[]>([]);
+  const [notifications, setNotifications] = useState<TeamNotification[]>([]);
+  const [teamBusy, setTeamBusy] = useState(false);
+  const [teamMessage, setTeamMessage] = useState('');
+  const [inviteForm, setInviteForm] = useState({ email: '', full_name: '', title: '', department: '' });
+  const [taskForm, setTaskForm] = useState({ title: '', description: '', assignee_id: '', priority: 'normal' as TeamTask['priority'], due_at: '' });
+  const [payForm, setPayForm] = useState({ employee_id: '', period: new Date().toISOString().slice(0, 7) + '-01', amount: '', status: 'draft' as PayrollRecord['status'], note: '' });
+  const [noticeForm, setNoticeForm] = useState({ recipient_id: '', title: '', body: '' });
+
+  const refreshTeam = async () => {
+    const [nextRole, nextMembers, nextTasks, nextPayroll, nextLogs, nextNotifications] = await Promise.all([
+      getTeamRole(), listMembers(), listTasks(), listPayroll(), listWorkLogs(), listNotifications()
+    ]);
+    if (nextRole === 'none' || nextRole === 'employee') throw new Error('This account is not an administrator.');
+    setTeamRole(nextRole); setMembers(nextMembers); setTasks(nextTasks); setPayroll(nextPayroll); setLogs(nextLogs); setNotifications(nextNotifications);
+  };
 
   useEffect(() => {
-    setAuthed(isAuthenticated());
-    if (isAuthenticated()) {
-      setQueries(getStoredQueries());
-    }
+    let active = true;
+    let teamChannel: ReturnType<typeof subscribeToTeamChanges> | undefined;
+
+    const loadAdminSession = async () => {
+      try {
+        const authenticated = await isAuthenticated();
+        if (!active) return;
+        setAuthed(authenticated);
+        if (authenticated) {
+          setQueries(await getStoredQueries());
+          try {
+            await refreshTeam();
+            teamChannel = subscribeToTeamChanges(() => { void refreshTeam().catch(() => undefined); });
+          } catch (teamError) { console.error('Could not load team workspace. Run the team portal SQL migration.', teamError); }
+        }
+      } catch (error) {
+        console.error('Could not load the admin session:', error);
+        if (active) setLoginError('Admin service is unavailable. Please try again later.');
+      }
+    };
+
+    void loadAdminSession();
+    return () => { active = false; if (teamChannel) void teamChannel.unsubscribe(); };
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await loginAdminSecure(username, password);
-    if (success) {
+    try {
+      const success = await loginAdminSecure(username, password);
+      if (!success) {
+        setLoginError('Invalid Username or Password! Access Denied.');
+        return;
+      }
+
+      const storedQueries = await getStoredQueries();
       setAuthed(true);
       setLoginError('');
       setPassword('');
       setUsername('');
-      setQueries(getStoredQueries());
-    } else {
-      setLoginError('Invalid Username or Password! Access Denied.');
+      setQueries(storedQueries);
+      try { await refreshTeam(); } catch (teamError) { console.error('Could not load team workspace. Run the team portal SQL migration.', teamError); }
+    } catch (error) {
+      console.error('Admin sign in failed:', error);
+      setLoginError('Admin service is unavailable. Please try again later.');
     }
   };
 
-  const handleLogout = () => {
-    logoutAdmin();
+  const handleLogout = async () => {
+    try {
+      await signOutTeam();
+    } catch (error) {
+      console.error('Admin sign out failed:', error);
+    }
     setAuthed(false);
     setSelectedQuery(null);
   };
 
-  const handleStatusChange = (id: string, status: 'new' | 'contacted' | 'resolved') => {
-    const updated = updateQueryStatus(id, status);
-    setQueries(updated);
-    if (selectedQuery && selectedQuery.id === id) {
-      setSelectedQuery({ ...selectedQuery, status });
+  const handleStatusChange = async (id: string, status: 'new' | 'contacted' | 'resolved') => {
+    try {
+      const updated = await updateQueryStatus(id, status);
+      setQueries(updated);
+      if (selectedQuery && selectedQuery.id === id) {
+        setSelectedQuery({ ...selectedQuery, status });
+      }
+    } catch (error) {
+      console.error('Could not update the lead status:', error);
+      window.alert('Could not update this inquiry. Please try again.');
     }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this query?')) {
-      const updated = deleteQuery(id);
-      setQueries(updated);
-      if (selectedQuery && selectedQuery.id === id) {
-        setSelectedQuery(null);
+      try {
+        const updated = await deleteQuery(id);
+        setQueries(updated);
+        if (selectedQuery && selectedQuery.id === id) {
+          setSelectedQuery(null);
+        }
+      } catch (error) {
+        console.error('Could not delete the lead:', error);
+        window.alert('Could not delete this inquiry. Please try again.');
       }
     }
   };
 
-  const refreshQueries = () => {
-    setQueries(getStoredQueries());
+  const refreshQueries = async () => {
+    try {
+      setQueries(await getStoredQueries());
+    } catch (error) {
+      console.error('Could not refresh inquiries:', error);
+      window.alert('Could not refresh inquiries. Please try again.');
+    }
   };
 
   const filteredQueries = queries.filter((q) => {
@@ -213,8 +285,54 @@ export const AdminPage: React.FC = () => {
         </div>
       </div>
 
+      <nav className="border-b border-slate-800 bg-slate-900/70 px-4 sm:px-8">
+        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto py-3">
+          {([['leads','Leads'], ['team','Team'], ['tasks','Tasks'], ['payroll','Payroll']] as const).map(([key,label]) => (
+            <button key={key} onClick={() => setTab(key)} className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${tab === key ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}>{label}</button>
+          ))}
+          <a href="/employee" className="ml-auto shrink-0 rounded-xl border border-slate-700 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800">Employee portal ↗</a>
+        </div>
+      </nav>
+
+      {tab !== 'leads' && (
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-7 sm:px-6 lg:px-8">
+          <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+            <div><p className="text-xs font-semibold uppercase tracking-[.18em] text-blue-400">Company workspace</p><h1 className="mt-1 text-3xl font-semibold text-white">{tab === 'team' ? 'People & access' : tab === 'tasks' ? 'Work management' : 'Payroll records'}</h1><p className="mt-2 text-sm text-slate-400">Manage active staff, assignments, workload and private salary records.</p></div>
+            <button onClick={() => { setTeamBusy(true); void refreshTeam().then(()=>setTeamMessage('Workspace refreshed.')).catch(e=>setTeamMessage(e instanceof Error?e.message:'Refresh failed.')).finally(()=>setTeamBusy(false)); }} className="flex items-center gap-2 self-start rounded-xl border border-slate-700 px-4 py-2 text-sm text-slate-200"><RefreshCw className={`h-4 w-4 ${teamBusy?'animate-spin':''}`} /> Refresh</button>
+          </div>
+          {teamMessage && <div role="status" className="mb-5 rounded-xl border border-blue-500/20 bg-blue-500/10 p-3 text-sm text-blue-200">{teamMessage}</div>}
+          {!teamRole && <div className="mb-5 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">Apply <code>supabase/techverse_team_portal.sql</code> in Supabase SQL Editor to enable team tools. Admin login and leads remain available.</div>}
+          {teamRole && <>
+            <section className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{[
+              ['Active team', members.filter(m=>m.active).length], ['Open work', tasks.filter(t=>t.status!=='done').length], ['Completed tasks', tasks.filter(t=>t.status==='done').length], ['Unread updates', notifications.filter(n=>!n.read_at).length]
+            ].map(([label,value])=><div key={label} className="rounded-2xl border border-slate-800 bg-slate-900 p-5"><p className="text-sm text-slate-400">{label}</p><p className="mt-2 text-3xl font-semibold text-white">{value}</p></div>)}</section>
+            {tab === 'team' && <div className="grid gap-5 xl:grid-cols-[.85fr_1.15fr]">
+              <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 sm:p-6">
+                <form onSubmit={async e=>{e.preventDefault();setTeamBusy(true);setTeamMessage('');try{await sendTeamInvite(inviteForm.email,inviteForm.full_name,inviteForm.title,inviteForm.department);setInviteForm({email:'',full_name:'',title:'',department:''});setTeamMessage('Secure account invitation sent. The employee sets their own password from the link.');await refreshTeam();}catch(err){setTeamMessage(err instanceof Error?err.message:'Invitation failed. Check the server function and email provider setup.');}finally{setTeamBusy(false);}}}>
+                <h2 className="text-lg font-semibold text-white">Invite a teammate</h2><p className="mt-1 text-sm text-slate-400">We send a secure account setup link; no password is shared by email.</p>
+                {(['full_name','email','title','department'] as const).map(field=><label key={field} className="mt-4 block text-xs font-medium capitalize text-slate-300">{field.replace('_',' ')}<input required={field==='full_name'||field==='email'} type={field==='email'?'email':'text'} value={inviteForm[field]} onChange={e=>setInviteForm({...inviteForm,[field]:e.target.value})} className="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-800 px-3.5 py-2.5 text-sm text-white outline-none focus:border-blue-500" /></label>)}
+                <button disabled={teamBusy} className="mt-5 w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white disabled:opacity-50">Send invite</button>
+                </form>
+                <form className="mt-6 border-t border-slate-800 pt-5" onSubmit={async e=>{e.preventDefault();setTeamBusy(true);try{await createNotification(noticeForm.recipient_id,noticeForm.title,noticeForm.body);let emailSent=false;try{emailSent=await sendTeamEmail(noticeForm.recipient_id,noticeForm.title,noticeForm.body);}catch(emailError){console.error('Could not email employee update:',emailError);}setNoticeForm({recipient_id:'',title:'',body:''});setTeamMessage(emailSent?'In-app notification and email sent.':'In-app notification sent. Email needs verified Resend setup (RESEND_API_KEY and EMAIL_FROM).');await refreshTeam();}catch(err){setTeamMessage(err instanceof Error?err.message:'Could not send update.');}finally{setTeamBusy(false);}}}>
+                  <h3 className="font-medium text-white">Send an in-app update</h3><select required value={noticeForm.recipient_id} onChange={e=>setNoticeForm({...noticeForm,recipient_id:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"><option value="">Choose a teammate</option>{members.filter(m=>m.active&&m.role==='employee').map(m=><option key={m.user_id} value={m.user_id}>{m.full_name} · {m.email}</option>)}</select><input required placeholder="Title" value={noticeForm.title} onChange={e=>setNoticeForm({...noticeForm,title:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"/><textarea required placeholder="Message" rows={3} value={noticeForm.body} onChange={e=>setNoticeForm({...noticeForm,body:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"/><button className="mt-3 rounded-xl border border-slate-700 px-4 py-2 text-sm text-white">Send notification</button>
+                </form>
+              </div>
+              <div className="space-y-3">{members.map(member=><article key={member.user_id} className="rounded-2xl border border-slate-800 bg-slate-900 p-5"><div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-semibold text-white">{member.full_name}</h3><p className="mt-1 text-sm text-slate-400">{member.email}</p><p className="mt-2 text-xs text-slate-500">{[member.title,member.department].filter(Boolean).join(' · ')||'Role not set'}</p></div><span className="rounded-full bg-slate-800 px-3 py-1 text-xs capitalize text-slate-300">{member.role} · {member.active?'active':'inactive'}</span></div><div className="mt-4 flex gap-4 border-t border-slate-800 pt-3 text-xs text-slate-400"><span>{tasks.filter(t=>t.assignee_id===member.user_id&&t.status!=='done').length} open assignments</span><span>{logs.filter(l=>l.employee_id===member.user_id).reduce((s,l)=>s+l.minutes,0)/60} hours logged</span><a href={`mailto:${member.email}`} className="ml-auto text-blue-300">Email</a></div></article>)}{members.length===0&&<div className="rounded-2xl border border-slate-800 bg-slate-900 p-10 text-center text-slate-400">No team members have joined yet.</div>}</div>
+            </div>}
+            {tab === 'tasks' && <div className="grid gap-5 xl:grid-cols-[.8fr_1.2fr]">
+              <form onSubmit={async e=>{e.preventDefault();setTeamBusy(true);try{await createTask({...taskForm,due_at:taskForm.due_at||null});let emailSent=false;try{emailSent=await sendTeamEmail(taskForm.assignee_id,`New task: ${taskForm.title}`,`${taskForm.description||'A new task has been assigned to you.'}${taskForm.due_at?`\nDue date: ${taskForm.due_at}`:''}\nOpen your workspace: ${window.location.origin}/employee`);}catch(emailError){console.error('Could not email task assignment:',emailError);}setTaskForm({title:'',description:'',assignee_id:'',priority:'normal',due_at:''});setTeamMessage(emailSent?'Task assigned; employee received an in-app alert and email.':'Task assigned; in-app alert is ready. Email requires verified Resend configuration.');await refreshTeam();}catch(err){setTeamMessage(err instanceof Error?err.message:'Could not assign task.');}finally{setTeamBusy(false);}}} className="h-fit rounded-2xl border border-slate-800 bg-slate-900 p-5 sm:p-6"><h2 className="text-lg font-semibold text-white">Assign work</h2><input required placeholder="Task name" value={taskForm.title} onChange={e=>setTaskForm({...taskForm,title:e.target.value})} className="mt-4 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"/><textarea placeholder="What needs to be done?" rows={4} value={taskForm.description} onChange={e=>setTaskForm({...taskForm,description:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"/><select required value={taskForm.assignee_id} onChange={e=>setTaskForm({...taskForm,assignee_id:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"><option value="">Assign to</option>{members.filter(m=>m.active&&m.role==='employee').map(m=><option key={m.user_id} value={m.user_id}>{m.full_name}</option>)}</select><div className="mt-3 grid grid-cols-2 gap-3"><select value={taskForm.priority} onChange={e=>setTaskForm({...taskForm,priority:e.target.value as TeamTask['priority']})} className="rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"><option value="low">Low priority</option><option value="normal">Normal priority</option><option value="high">High priority</option><option value="urgent">Urgent</option></select><input type="date" value={taskForm.due_at} onChange={e=>setTaskForm({...taskForm,due_at:e.target.value})} className="rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"/></div><button disabled={teamBusy} className="mt-4 w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white disabled:opacity-50">Assign task</button></form>
+              <div className="space-y-3">{tasks.map(task=><article key={task.id} className="rounded-2xl border border-slate-800 bg-slate-900 p-5"><div className="flex flex-wrap justify-between gap-2"><div><p className="text-xs font-medium uppercase tracking-wider text-blue-300">{members.find(m=>m.user_id===task.assignee_id)?.full_name||'Former member'}</p><h3 className="mt-1 font-semibold text-white">{task.title}</h3></div><span className="text-xs capitalize text-slate-400">{task.priority} · {task.status.replace('_',' ')}</span></div>{task.description&&<p className="mt-2 text-sm text-slate-400">{task.description}</p>}<div className="mt-4 flex items-center gap-3"><div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-800"><div className="h-full rounded-full bg-blue-500" style={{width:`${task.progress}%`}}/></div><span className="text-xs text-slate-400">{task.progress}%</span>{task.due_at&&<span className="text-xs text-slate-500">Due {task.due_at}</span>}</div></article>)}{tasks.length===0&&<div className="rounded-2xl border border-slate-800 bg-slate-900 p-10 text-center text-slate-400">No assignments yet.</div>}</div>
+            </div>}
+            {tab === 'payroll' && <div className="grid gap-5 xl:grid-cols-[.8fr_1.2fr]">
+              <form onSubmit={async e=>{e.preventDefault();setTeamBusy(true);try{await createPayroll({...payForm,amount:Number(payForm.amount),currency:'INR'});setTeamMessage('Salary record saved. It is visible only to managers and that employee.');await refreshTeam();}catch(err){setTeamMessage(err instanceof Error?err.message:'Could not save payroll record.');}finally{setTeamBusy(false);}}} className="h-fit rounded-2xl border border-slate-800 bg-slate-900 p-5 sm:p-6"><h2 className="text-lg font-semibold text-white">Add salary record</h2><select required value={payForm.employee_id} onChange={e=>setPayForm({...payForm,employee_id:e.target.value})} className="mt-4 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"><option value="">Select employee</option>{members.filter(m=>m.active&&m.role==='employee').map(m=><option key={m.user_id} value={m.user_id}>{m.full_name}</option>)}</select><label className="mt-3 block text-xs text-slate-400">Salary month<input required type="month" value={payForm.period.slice(0,7)} onChange={e=>setPayForm({...payForm,period:`${e.target.value}-01`})} className="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"/></label><label className="mt-3 block text-xs text-slate-400">Amount (INR)<input required min="0" step="0.01" type="number" value={payForm.amount} onChange={e=>setPayForm({...payForm,amount:e.target.value})} className="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"/></label><select value={payForm.status} onChange={e=>setPayForm({...payForm,status:e.target.value as PayrollRecord['status']})} className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"><option value="draft">Draft</option><option value="approved">Approved</option><option value="paid">Marked paid</option></select><textarea placeholder="Private note (optional)" value={payForm.note} onChange={e=>setPayForm({...payForm,note:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-sm text-white"/><button className="mt-4 w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white">Save record</button><p className="mt-3 text-xs text-slate-500">Records only: this does not transfer money or file taxes.</p></form>
+              <div className="space-y-3">{payroll.map(record=><article key={record.id} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-800 bg-slate-900 p-5"><div><p className="font-medium text-white">{members.find(m=>m.user_id===record.employee_id)?.full_name||'Employee'}</p><p className="mt-1 text-sm text-slate-400">{record.period.slice(0,7)} · {record.status}{record.note?` · ${record.note}`:''}</p></div><strong className="text-lg text-white">₹{Number(record.amount).toLocaleString('en-IN')}</strong></article>)}{payroll.length===0&&<div className="rounded-2xl border border-slate-800 bg-slate-900 p-10 text-center text-slate-400">No salary records yet.</div>}</div>
+            </div>}
+          </>}
+        </main>
+      )}
+
       {/* Main Admin Dashboard Body */}
-      <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {tab === 'leads' && <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Top Header & Stats */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -485,7 +603,7 @@ export const AdminPage: React.FC = () => {
             )}
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };

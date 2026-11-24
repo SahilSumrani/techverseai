@@ -15,18 +15,23 @@ export const ContactPage: React.FC = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    saveQuery({
-      ...formData,
-      source: 'Contact Us Page'
-    });
-    (window as Window & { dataLayer?: unknown[] }).dataLayer?.push({ event: 'enquiry_form_submit', page_location: window.location.pathname });
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', phone: '', email: '', subject: '', message: '' });
-    }, 4000);
+    try {
+      await saveQuery({
+        ...formData,
+        source: 'Contact Us Page'
+      });
+      (window as Window & { dataLayer?: unknown[] }).dataLayer?.push({ event: 'enquiry_form_submit', page_location: window.location.pathname });
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', phone: '', email: '', subject: '', message: '' });
+      }, 4000);
+    } catch (error) {
+      console.error('Could not submit the contact inquiry:', error);
+      window.alert('Your inquiry could not be submitted. Please try again or contact us by email.');
+    }
   };
 
   return (

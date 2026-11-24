@@ -20,23 +20,28 @@ export const GetInTouchSection: React.FC<GetInTouchSectionProps> = ({
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    saveQuery({
-      ...formData,
-      source: sourceTitle
-    });
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        subject: defaultSubject,
-        message: ''
+    try {
+      await saveQuery({
+        ...formData,
+        source: sourceTitle
       });
-    }, 4000);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          subject: defaultSubject,
+          message: ''
+        });
+      }, 4000);
+    } catch (error) {
+      console.error('Could not submit the inquiry:', error);
+      window.alert('Your inquiry could not be submitted. Please try again or contact us by email.');
+    }
   };
 
   return (

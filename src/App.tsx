@@ -20,6 +20,7 @@ const TermsPage = lazy(() => import('./components/TermsPage').then(m => ({ defau
 const PrivacyPage = lazy(() => import('./components/PrivacyPage').then(m => ({ default: m.PrivacyPage })));
 const RefundPage = lazy(() => import('./components/RefundPage').then(m => ({ default: m.RefundPage })));
 const AdminPage = lazy(() => import('./components/AdminPage').then(m => ({ default: m.AdminPage })));
+const EmployeePortal = lazy(() => import('./components/EmployeePortal').then(m => ({ default: m.EmployeePortal })));
 
 export const App: React.FC = () => {
   const [pathname, setPathname] = useState<string>(window.location.pathname);
@@ -53,6 +54,8 @@ export const App: React.FC = () => {
         document.title = 'Refund Policy | Techverse AI';
       } else if (path === '/admin') {
         document.title = 'Admin Portal | Techverse AI';
+      } else if (path === '/employee') {
+        document.title = 'Team Workspace | TechVerse AI';
       } else {
         document.title = 'AI Consulting & Development Company in Delhi | Techverse AI';
       }
@@ -92,6 +95,7 @@ export const App: React.FC = () => {
 
   const renderContent = () => {
     if (pathname === '/admin') return <AdminPage />;
+    if (pathname === '/employee') return <EmployeePortal />;
     if (pathname === '/terms') return <TermsPage />;
     if (pathname === '/privacy') return <PrivacyPage />;
     if (pathname === '/refund') return <RefundPage />;

@@ -20,6 +20,7 @@ export const EmployeePortal: React.FC = () => {
   const [notifications, setNotifications] = useState<TeamNotification[]>([]);
   const [payroll, setPayroll] = useState<PayrollRecord[]>([]);
   const [error, setError] = useState('');
+  const [sessionChecking, setSessionChecking] = useState(true);
   const [busy, setBusy] = useState(false);
   const [activeTab, setActiveTab] = useState<'tasks' | 'pay' | 'updates'>('tasks');
   const [setupMode, setSetupMode] = useState(() => needsPasswordSetup(window.location.search, window.location.hash));
@@ -39,6 +40,7 @@ export const EmployeePortal: React.FC = () => {
       const nextRole = await getTeamRole();
       if (nextRole === 'none') { setRole('none'); return; }
       setRole(nextRole);
+      if (nextRole !== 'employee') return;
       const [nextTasks, nextNotifications, nextPayroll] = await Promise.all([listTasks(), listNotifications(), listPayroll()]);
       setTasks(nextTasks); setNotifications(nextNotifications); setPayroll(nextPayroll);
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Could not load your workspace.'); }
@@ -51,7 +53,8 @@ export const EmployeePortal: React.FC = () => {
         await getCurrentUserId();
         await refresh();
         channel = subscribeToTeamChanges(() => { void refresh(); });
-      } catch { setRole(null); }
+      } catch (cause) { setRole(null); setError(cause instanceof Error ? cause.message : 'Please sign in to continue.'); }
+      finally { setSessionChecking(false); }
     })();
     return () => { if (channel) void channel.unsubscribe(); };
   }, [refresh]);
@@ -93,6 +96,9 @@ export const EmployeePortal: React.FC = () => {
     <button type="button" onClick={()=>{setForgotMode(!forgotMode);setRecoverySent(false);setError('');}} className="mt-4 w-full text-sm font-medium text-blue-700">{forgotMode?'Back to sign in':'Forgot password?'}</button>
   </form></main></div>;
   if (role === 'none') return <div className="min-h-screen bg-slate-50 dashboard-enter"><WorkspaceHeader /><main className="mx-auto min-h-[calc(100vh-73px)] max-w-xl px-5 py-28 text-center"><ShieldCheck className="mx-auto h-12 w-12 text-amber-500" /><h1 className="mt-4 text-3xl font-semibold">Workspace access pending</h1><p className="mt-3 text-slate-600">Your account is signed in, but it is not active in the TechVerse team yet. Contact your administrator.</p><button onClick={onLogout} className="mt-6 rounded-xl border px-5 py-3">Sign out</button></main></div>;
+
+  if (sessionChecking) return <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-600"><div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm"><RefreshCw className="h-5 w-5 animate-spin text-blue-600"/><span className="text-sm font-medium">Checking your workspace access…</span></div></div>;
+  if (role === 'owner' || role === 'admin') return <div className="min-h-screen bg-slate-50 text-slate-900"><WorkspaceHeader/><main className="mx-auto flex min-h-[calc(100vh-73px)] max-w-xl flex-col items-center justify-center px-5 py-20 text-center"><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-700"><ShieldCheck/></div><p className="mt-5 text-xs font-semibold uppercase tracking-[.18em] text-blue-700">{role === 'owner' ? 'Workspace owner' : 'Workspace admin'}</p><h1 className="mt-2 text-3xl font-semibold">This is the employee workspace</h1><p className="mt-3 text-slate-600">Your account has {role} access. Use the management workspace to manage the team and assignments.</p><a href="/admin" className="mt-6 rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700">Open management workspace</a><button onClick={()=>void onLogout()} className="mt-4 text-sm font-medium text-slate-500 hover:text-slate-900">Sign out</button></main></div>;
 
   if (setupMode) return <div className="min-h-screen bg-slate-50 text-slate-900 dashboard-enter"><WorkspaceHeader /><main className="mx-auto flex min-h-[calc(100vh-73px)] max-w-lg items-center px-5 py-14"><form onSubmit={onSetPassword} className={`${panel} w-full p-7 sm:p-9`}><div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><ShieldCheck /></div><p className="text-xs font-semibold uppercase tracking-[.18em] text-blue-600">Secure account setup</p><h1 className="mt-2 text-3xl font-semibold">Choose your password</h1><p className="mt-2 text-sm text-slate-500">Create a private password for your employee workspace.</p>{error&&<p role="alert" className="mt-4 rounded-lg bg-rose-50 p-3 text-sm text-rose-700">{error}</p>}<label className="mt-6 block text-sm font-medium">New password<input required minLength={10} type="password" autoComplete="new-password" value={newPassword} onChange={e=>setNewPassword(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500" /></label><p className="mt-2 text-xs text-slate-500">Use at least 10 characters.</p><button disabled={busy} className="mt-6 w-full rounded-xl bg-slate-950 px-4 py-3 font-semibold text-white disabled:opacity-60">{busy?'Saving…':'Set password & continue'}</button></form></main></div>;
 

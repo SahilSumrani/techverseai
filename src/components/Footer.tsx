@@ -31,14 +31,14 @@ export const Footer: React.FC = () => (
           </FooterColumn>
 
           <FooterColumn title="Product">
-            <li><FooterLink href="/website-development-company-delhi/">Website development</FooterLink></li>
-            <li><FooterLink href="/mobile-app-development-company-delhi/">Mobile apps</FooterLink></li>
-            <li><FooterLink href="/saas-development-company-india/">SaaS development</FooterLink></li>
-            <li><FooterLink href="/ai-chatbot-development-company-india/">AI systems</FooterLink></li>
+            <li><FooterLink href="/services/">Development services</FooterLink></li>
+            <li><FooterLink href="/customized">Custom websites and apps</FooterLink></li>
+            <li><FooterLink href="/prebuilt">SaaS products</FooterLink></li>
+            <li><FooterLink href="/contact">Discuss an AI project</FooterLink></li>
           </FooterColumn>
 
           <FooterColumn title="Brand and launch">
-            <li><FooterLink href="/shopify-development-company-delhi/">Shopify stores</FooterLink></li>
+            <li><FooterLink href="/customized">Ecommerce stores</FooterLink></li>
             <li><FooterLink href="/customized">Brand identity</FooterLink></li>
             <li><FooterLink href="/prebuilt">Launch-ready products</FooterLink></li>
             <li><FooterLink href="/contact">Project launch support</FooterLink></li>
@@ -54,8 +54,8 @@ export const Footer: React.FC = () => (
           <FooterColumn title="Tools">
             <li><FooterLink href="/prebuilt">Prebuilt SaaS</FooterLink></li>
             <li><FooterLink href="/#tech-stack">Technology stack</FooterLink></li>
-            <li><FooterLink href="/website-development-cost-delhi/">Website cost guide</FooterLink></li>
-            <li><FooterLink href="/app-development-cost-india/">App cost guide</FooterLink></li>
+            <li><FooterLink href="/#how-it-works">How it works</FooterLink></li>
+            <li><FooterLink href="/contact">Get a project estimate</FooterLink></li>
           </FooterColumn>
 
           <FooterColumn title="Contact" description="Web, mobile and AI products for businesses in Delhi NCR and across India.">

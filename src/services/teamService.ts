@@ -90,6 +90,11 @@ export async function setCurrentPassword(password: string): Promise<void> {
   const { error } = await db().auth.updateUser({ password });
   if (error) throw error;
 }
+export async function sendPasswordRecovery(email: string): Promise<void> {
+  const redirectTo = `${window.location.origin}/employee?recovery=1`;
+  const { error } = await db().auth.resetPasswordForEmail(email.trim(), { redirectTo });
+  if (error) throw error;
+}
 export async function sendTeamInvite(email: string, full_name: string, title: string, department: string): Promise<void> {
   const { data: { session } } = await db().auth.getSession();
   if (!session) throw new Error('Please sign in again.');

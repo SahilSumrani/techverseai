@@ -5,7 +5,7 @@ import { Navbar } from './Navbar';
 import {
   getCurrentUserId, getTeamRole, listNotifications, listPayroll, listTasks,
   createWorkLog, markNotificationRead, signIn, signOut, subscribeToTeamChanges, updateTask,
-  setCurrentPassword,
+  setCurrentPassword, sendPasswordRecovery,
   type PayrollRecord, type TeamNotification, type TeamRole, type TeamTask
 } from '../services/teamService';
 
@@ -21,7 +21,20 @@ export const EmployeePortal: React.FC = () => {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const [activeTab, setActiveTab] = useState<'tasks' | 'pay' | 'updates'>('tasks');
-  const [setupMode, setSetupMode] = useState(() => new URLSearchParams(window.location.search).get('setup') === '1');
+  const [setupMode, setSetupMode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const hash = new URLSearchParams(window.location.hash.slice(1));
+    return params.get('setup') === '1' || params.get('recovery') === '1' || hash.get('type') === 'recovery' || hash.has('error_code');
+  });
+  const [recoveryMode, setRecoveryMode] = useState(() => new URLSearchParams(window.location.search).get('recovery') === '1' || (() => { const hash = new URLSearchParams(window.location.hash.slice(1)); return hash.get('type') === 'recovery' || hash.has('error_code'); })());
+  const [forgotMode, setForgotMode] = useState(false);
+  const [recoverySent, setRecoverySent] = useState(false);
+
+  useEffect(() => {
+    const hash = new URLSearchParams(window.location.hash.slice(1));
+    const authError = hash.get('error_description');
+    if (authError) setError(authError);
+  }, []);
   const [newPassword, setNewPassword] = useState('');
 
   const refresh = useCallback(async () => {
@@ -55,8 +68,14 @@ export const EmployeePortal: React.FC = () => {
   const onLogout = async () => { await signOut(); setRole(null); setTasks([]); setNotifications([]); setPayroll([]); };
   const onSetPassword = async (event: React.FormEvent) => {
     event.preventDefault(); setBusy(true); setError('');
-    try { await setCurrentPassword(newPassword); setNewPassword(''); setSetupMode(false); window.history.replaceState({}, '', '/employee'); await refresh(); }
+    try { await setCurrentPassword(newPassword); setNewPassword(''); setSetupMode(false); setRecoveryMode(false); window.history.replaceState({}, '', '/employee'); await refresh(); }
     catch (cause) { setError(cause instanceof Error ? cause.message : 'Could not set your password.'); }
+    finally { setBusy(false); }
+  };
+  const onSendRecovery = async (event: React.FormEvent) => {
+    event.preventDefault(); setBusy(true); setError('');
+    try { await sendPasswordRecovery(email); setRecoverySent(true); }
+    catch (cause) { setError(cause instanceof Error ? cause.message : 'Could not send a password reset email.'); }
     finally { setBusy(false); }
   };
   const changeProgress = async (task: TeamTask, progress: number) => {
@@ -65,13 +84,16 @@ export const EmployeePortal: React.FC = () => {
     catch (cause) { setError(cause instanceof Error ? cause.message : 'Could not update task.'); }
   };
 
-  if (!role) return <div className="min-h-screen bg-slate-50 text-slate-900"><Navbar /><main className="mx-auto flex min-h-[70vh] max-w-lg items-center px-5 py-14"><form onSubmit={onLogin} className={`${panel} w-full p-7 sm:p-9`}>
+  if (setupMode || recoveryMode) return <div className="min-h-screen bg-slate-50 text-slate-900"><Navbar /><main className="mx-auto flex min-h-[70vh] max-w-lg items-center px-5 py-14"><form onSubmit={onSetPassword} className={`${panel} w-full p-7 sm:p-9`}><div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><ShieldCheck /></div><p className="text-xs font-semibold uppercase tracking-[.18em] text-blue-600">TechVerse AI · Secure account</p><h1 className="mt-2 text-3xl font-semibold">{recoveryMode ? 'Reset your password' : 'Choose your password'}</h1><p className="mt-2 text-sm text-slate-500">{recoveryMode ? 'Choose a new password for your workspace account.' : 'Create a private password for your employee workspace.'}</p>{error&&<p role="alert" className="mt-4 rounded-lg bg-rose-50 p-3 text-sm text-rose-700">{error}</p>}<label className="mt-6 block text-sm font-medium">New password<input required minLength={10} type="password" autoComplete="new-password" value={newPassword} onChange={e=>setNewPassword(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500" /></label><p className="mt-2 text-xs text-slate-500">Use at least 10 characters.</p><button disabled={busy} className="mt-6 w-full rounded-xl bg-slate-950 px-4 py-3 font-semibold text-white disabled:opacity-60">{busy?'Saving…':recoveryMode?'Save new password':'Set password & continue'}</button></form></main><Footer /></div>;
+  if (!role) return <div className="min-h-screen bg-slate-50 text-slate-900"><Navbar /><main className="mx-auto flex min-h-[70vh] max-w-lg items-center px-5 py-14"><form onSubmit={forgotMode ? onSendRecovery : onLogin} className={`${panel} w-full p-7 sm:p-9`}>
     <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><ShieldCheck /></div>
-    <p className="text-xs font-semibold uppercase tracking-[.18em] text-blue-600">TechVerse AI · Team</p><h1 className="mt-2 text-3xl font-semibold tracking-tight">Employee sign in</h1><p className="mt-2 text-sm text-slate-500">Sign in with the account invited by your administrator.</p>
+    <p className="text-xs font-semibold uppercase tracking-[.18em] text-blue-600">TechVerse AI · Team</p><h1 className="mt-2 text-3xl font-semibold tracking-tight">{forgotMode?'Reset your password':'Employee sign in'}</h1><p className="mt-2 text-sm text-slate-500">{forgotMode?'We’ll email you a secure link to choose a new password.':'Sign in with the account invited by your administrator.'}</p>
+    {recoverySent && <p role="status" className="mt-4 rounded-lg bg-emerald-50 p-3 text-sm text-emerald-700">If that account exists, a password reset email is on its way.</p>}
     {error && <p role="alert" className="mt-4 rounded-lg bg-rose-50 p-3 text-sm text-rose-700">{error}</p>}
     <label className="mt-6 block text-sm font-medium">Work email<input required type="email" autoComplete="username" value={email} onChange={e => setEmail(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500" /></label>
-    <label className="mt-4 block text-sm font-medium">Password<input required type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500" /></label>
-    <button disabled={busy} className="mt-6 w-full rounded-xl bg-slate-950 px-4 py-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-60">{busy ? 'Signing in…' : 'Sign in to workspace'}</button>
+    {!forgotMode && <label className="mt-4 block text-sm font-medium">Password<input required type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500" /></label>}
+    <button disabled={busy} className="mt-6 w-full rounded-xl bg-slate-950 px-4 py-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-60">{busy ? 'Please wait…' : forgotMode?'Send reset link':'Sign in to workspace'}</button>
+    <button type="button" onClick={()=>{setForgotMode(!forgotMode);setRecoverySent(false);setError('');}} className="mt-4 w-full text-sm font-medium text-blue-700">{forgotMode?'Back to sign in':'Forgot password?'}</button>
   </form></main><Footer /></div>;
   if (role === 'none') return <div className="min-h-screen bg-slate-50"><Navbar /><main className="mx-auto max-w-xl px-5 py-28 text-center"><ShieldCheck className="mx-auto h-12 w-12 text-amber-500" /><h1 className="mt-4 text-3xl font-semibold">Workspace access pending</h1><p className="mt-3 text-slate-600">Your account is signed in, but it is not active in the TechVerse team yet. Contact your administrator.</p><button onClick={onLogout} className="mt-6 rounded-xl border px-5 py-3">Sign out</button></main><Footer /></div>;
 

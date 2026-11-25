@@ -23,7 +23,12 @@ const AdminPage = lazy(() => import('./components/AdminPage').then(m => ({ defau
 const EmployeePortal = lazy(() => import('./components/EmployeePortal').then(m => ({ default: m.EmployeePortal })));
 
 export const App: React.FC = () => {
-  const [pathname, setPathname] = useState<string>(window.location.pathname);
+  const [pathname, setPathname] = useState<string>(() => {
+    // Supabase recovery links may redirect to the Site URL with the recovery
+    // session in the URL hash. Route those links into the password form.
+    const authParams = new URLSearchParams(window.location.hash.slice(1));
+    return authParams.get('type') === 'recovery' || authParams.has('error_code') ? '/employee' : window.location.pathname;
+  });
   const prerenderedPaths = new Set([
     '/services/',
     '/website-development-company-delhi/',

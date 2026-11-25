@@ -22,7 +22,11 @@ import {
   Mail,
   User,
   ShieldCheck,
-  Calendar
+  Calendar,
+  LayoutDashboard,
+  Users,
+  ListTodo,
+  WalletCards
 } from 'lucide-react';
 import {
   createNotification, createPayroll, createTask, getTeamRole, listMembers, listNotifications, setMemberRole,
@@ -291,53 +295,20 @@ export const AdminPage: React.FC = () => {
 
   // Admin Dashboard Screen
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-poppins selection:bg-blue-100 selection:text-blue-900 dashboard-enter">
-      
-      {/* Custom Admin Nav Header */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-40 px-4 sm:px-8 py-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <a href="/">
-              <img src="/logo.png" alt="Techverse" className="h-10 w-auto bg-white/90 rounded-lg p-1" />
-            </a>
-            <span className="bg-blue-50 border border-blue-200 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
-              {teamRole === 'owner' ? 'Owner workspace' : 'Admin workspace'}
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => void refreshWorkspace()}
-              disabled={teamBusy}
-              className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 transition-colors flex items-center gap-1.5 text-xs"
-              title="Refresh Queries"
-            >
-              <RefreshCw className={`w-4 h-4 ${teamBusy ? 'animate-spin' : ''}`} />
-              <span className="hidden sm:inline">{teamBusy ? 'Updating…' : 'Refresh'}</span>
-            </button>
-
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-medium text-xs flex items-center gap-2 shadow-sm transition-all"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Logout</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <nav className="border-b border-slate-200 bg-white px-4 sm:px-8">
-        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto py-3">
-          {([['overview','Overview'], ['leads','Leads'], ['team','Team'], ['tasks','Tasks'], ['payroll','Payroll']] as const).map(([key,label]) => (
-            <button key={key} onClick={() => setTab(key)} className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${tab === key ? 'bg-blue-600 text-white' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'}`}>{label}</button>
-          ))}
-          <a href="/employee" className="ml-auto shrink-0 rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Employee portal ↗</a>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-poppins selection:bg-blue-100 selection:text-blue-900 dashboard-enter lg:pl-[264px]">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[264px] flex-col border-r border-slate-200 bg-white lg:flex">
+        <a href="/" className="flex h-[78px] items-center gap-3 border-b border-slate-100 px-6"><img src="/logo.png" alt="Techverse" className="h-10 w-10 rounded-xl border border-slate-100 bg-white p-1" /><span className="text-sm font-semibold tracking-tight text-slate-900">TechVerse AI<span className="mt-0.5 block text-[10px] font-medium uppercase tracking-[.16em] text-slate-400">Workspace</span></span></a>
+        <div className="px-5 pt-6"><p className="text-[10px] font-semibold uppercase tracking-[.18em] text-slate-400">Workspace</p><span className="mt-3 inline-flex rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[.12em] text-blue-700">{teamRole === 'owner' ? 'Owner access' : 'Admin access'}</span></div>
+        <nav aria-label="Admin navigation" className="mt-5 flex-1 space-y-1 px-3">
+          {([['overview','Overview',LayoutDashboard], ['leads','Leads',MessageSquare], ['team','Team & access',Users], ['tasks','Tasks',ListTodo], ['payroll','Payroll',WalletCards]] as const).map(([key,label,Icon]) => <button key={key} onClick={() => setTab(key)} aria-current={tab===key?'page':undefined} className={`group flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm font-medium transition-all ${tab===key?'bg-blue-50 text-blue-700 shadow-sm ring-1 ring-blue-100':'text-slate-600 hover:bg-slate-50 hover:text-slate-950'}`}><Icon className={`h-[18px] w-[18px] ${tab===key?'text-blue-600':'text-slate-400 group-hover:text-slate-600'}`}/>{label}{key==='leads'&&queries.filter(q=>q.status==='new').length>0&&<span className="ml-auto rounded-full bg-blue-600 px-2 py-0.5 text-[10px] font-semibold text-white">{queries.filter(q=>q.status==='new').length}</span>}</button>)}
+        </nav>
+        <div className="space-y-2 border-t border-slate-100 p-4"><a href="/employee" className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50">Employee portal <span aria-hidden="true">↗</span></a><div className="flex items-center gap-3 rounded-xl bg-slate-50 p-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-700">{teamRole==='owner'?'O':'A'}</span><div className="min-w-0 flex-1"><p className="truncate text-xs font-semibold text-slate-800">{teamRole==='owner'?'Workspace owner':'Workspace admin'}</p><p className="text-[10px] capitalize text-slate-500">{teamRole} account</p></div></div></div>
+      </aside>
+      <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 px-4 backdrop-blur-xl sm:px-7"><div className="mx-auto flex h-[78px] max-w-[1500px] items-center justify-between"><div className="min-w-0"><p className="text-[10px] font-semibold uppercase tracking-[.18em] text-blue-600 lg:hidden">TechVerse AI</p><h1 className="truncate text-lg font-semibold tracking-tight text-slate-900 sm:text-xl">{tab==='overview'?'Workspace overview':tab==='leads'?'Customer leads':tab==='team'?'People & access':tab==='tasks'?'Work management':'Payroll records'}</h1></div><div className="flex items-center gap-2"><span className="hidden items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 sm:flex"><span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500"/>Live workspace</span><button onClick={() => void refreshWorkspace()} disabled={teamBusy} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-600 shadow-sm transition hover:bg-slate-50 disabled:opacity-60" title="Refresh workspace"><RefreshCw className={`h-4 w-4 ${teamBusy?'animate-spin':''}`} /><span className="hidden sm:inline">{teamBusy?'Updating…':'Refresh'}</span></button><button onClick={handleLogout} className="flex items-center gap-2 rounded-xl bg-slate-900 px-3.5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700"><LogOut className="h-4 w-4"/><span className="hidden sm:inline">Sign out</span></button></div></div></header>
+      <nav aria-label="Admin navigation" className="border-b border-slate-200 bg-white px-3 py-2 lg:hidden"><div className="flex gap-1 overflow-x-auto">{([['overview','Overview',LayoutDashboard], ['leads','Leads',MessageSquare], ['team','Team',Users], ['tasks','Tasks',ListTodo], ['payroll','Payroll',WalletCards]] as const).map(([key,label,Icon])=><button key={key} onClick={()=>setTab(key)} aria-current={tab===key?'page':undefined} className={`flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium ${tab===key?'bg-blue-50 text-blue-700':'text-slate-500 hover:bg-slate-50'}`}><Icon className="h-4 w-4"/>{label}</button>)}</div></nav>
 
       {tab !== 'leads' && (
-        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-7 sm:px-6 lg:px-8">
+        <main className="mx-auto w-full max-w-[1500px] flex-1 px-4 py-7 sm:px-6 lg:px-8">
           <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div><p className="text-xs font-semibold uppercase tracking-[.18em] text-blue-700">Company workspace</p><h1 className="mt-1 text-3xl font-semibold text-slate-900">{tab === 'overview' ? 'Team overview' : tab === 'team' ? 'People & access' : tab === 'tasks' ? 'Work management' : 'Payroll records'}</h1><p className="mt-2 text-sm text-slate-500">{tab === 'overview' ? 'A live snapshot of team capacity and assigned work.' : 'Manage active staff, assignments, workload and private salary records.'}</p></div>
             <button onClick={() => void refreshWorkspace()} disabled={teamBusy} className="flex items-center gap-2 self-start rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-60"><RefreshCw className={`h-4 w-4 ${teamBusy?'animate-spin':''}`} /> {teamBusy ? 'Updating…' : 'Refresh'}</button>
@@ -381,7 +352,7 @@ export const AdminPage: React.FC = () => {
       )}
 
       {/* Main Admin Dashboard Body */}
-      {tab === 'leads' && <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {tab === 'leads' && <div className="flex-1 max-w-[1500px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Top Header & Stats */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>

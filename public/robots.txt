@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /admin
 
 # Allow AI Search Bots (ChatGPT, Gemini, Perplexity, Claude)
 User-agent: GPTBot

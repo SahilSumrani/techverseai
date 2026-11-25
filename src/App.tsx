@@ -52,11 +52,13 @@ export const App: React.FC = () => {
       } else if (path === '/terms') {
         document.title = 'Terms & Conditions | Techverse AI';
       } else if (path === '/refund') {
-        document.title = 'Refund Policy | Techverse AI';
+        document.title = 'Refund and Cancellation Policy | Techverse AI';
       } else if (path === '/admin') {
         document.title = 'Admin Portal | Techverse AI';
       } else if (path === '/employee') {
         document.title = 'Team Workspace | TechVerse AI';
+      } else if (path === '/') {
+        document.title = 'Web & App Development Agency in Delhi | Techverse AI';
       } else {
         document.title = 'AI Consulting & Development Company in Delhi | Techverse AI';
       }

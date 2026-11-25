@@ -196,7 +196,7 @@ for (const [file,html] of pageFiles) { const target=join('dist',file); await mkd
 const staticRoutes=['/','/services/',...services.map(s=>`/${s.slug}/`),...legacyPages.map(page=>page.path)];
 const sitemap=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${staticRoutes.map(route=>`<url><loc>${origin}${route}</loc></url>`).join('')}</urlset>`;
 await writeFile('dist/sitemap.xml',sitemap);
-await writeFile('dist/robots.txt',`User-agent: *\nAllow: /\nDisallow: /admin\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`);
+await writeFile('dist/robots.txt',`User-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`);
 const generatedHtml = pageFiles.map(([, html]) => html).join('\n');
 const forbiddenCanonicalUrls = generatedHtml.match(/https?:\/\/(?:www\.)?techverseai\.tech(?:[/:#?"']|$)/gi) || [];
 if (forbiddenCanonicalUrls.length) {

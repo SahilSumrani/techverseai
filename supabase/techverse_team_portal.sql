@@ -5,8 +5,11 @@ alter table public.techverse_admins add column if not exists role text not null 
   check (role in ('owner', 'admin'));
 
 insert into public.techverse_admins (email, role)
-values ('admin@techverseai.in', 'owner')
+values ('officialsahilarora05@gmail.com', 'owner')
 on conflict (email) do update set role = 'owner';
+
+delete from public.techverse_admins
+where lower(btrim(email)) = 'admin@techverseai.in';
 
 create table if not exists public.company_members (
   user_id uuid primary key references auth.users(id) on delete cascade,
@@ -92,10 +95,41 @@ returns text language sql stable security definer set search_path = '' as $funct
   );
 $function$;
 
+create or replace function public.techverse_set_member_role(p_user_id uuid, p_role text)
+returns void language plpgsql security definer set search_path = '' as $function$
+begin
+  if auth.uid() is null then
+    raise exception 'Sign in required.' using errcode = '42501';
+  end if;
+  if p_role is null or p_role not in ('employee', 'admin') then
+    raise exception 'Only employee or admin access can be assigned.' using errcode = '22023';
+  end if;
+  if not exists (
+    select 1 from public.techverse_admins a
+    where lower(btrim(a.email)) = lower(coalesce(auth.jwt() ->> 'email', '')) and a.role = 'owner'
+  ) and not exists (
+    select 1 from public.company_members m
+    where m.user_id = auth.uid() and m.active and m.role = 'owner'
+  ) then
+    raise exception 'Only the owner can change team roles.' using errcode = '42501';
+  end if;
+  if p_user_id = auth.uid() then
+    raise exception 'You cannot change your own owner access.' using errcode = '42501';
+  end if;
+  update public.company_members set role = p_role, updated_at = now()
+  where user_id = p_user_id and role <> 'owner';
+  if not found then
+    raise exception 'Member not found or owner access cannot be changed.' using errcode = 'P0002';
+  end if;
+end;
+$function$;
+
 revoke all on function public.is_techverse_manager() from public, anon;
 revoke all on function public.techverse_current_role() from public, anon;
+revoke all on function public.techverse_set_member_role(uuid, text) from public, anon;
 grant execute on function public.is_techverse_manager() to authenticated;
 grant execute on function public.techverse_current_role() to authenticated;
+grant execute on function public.techverse_set_member_role(uuid, text) to authenticated;
 
 create or replace function public.techverse_bootstrap_owner()
 returns trigger language plpgsql security definer set search_path = '' as $function$
@@ -125,6 +159,10 @@ select u.id, u.email, coalesce(nullif(u.raw_user_meta_data ->> 'full_name', ''),
 from auth.users u join public.techverse_admins a on lower(a.email) = lower(u.email)
 on conflict (user_id) do update set role = excluded.role, email = excluded.email, updated_at = now();
 
+update public.company_members
+set role = 'employee', updated_at = now()
+where lower(btrim(email)) = 'admin@techverseai.in' and role = 'owner';
+
 alter table public.company_members enable row level security;
 alter table public.company_tasks enable row level security;
 alter table public.work_logs enable row level security;
@@ -133,8 +171,9 @@ alter table public.company_notifications enable row level security;
 
 revoke all on public.company_members, public.company_tasks, public.work_logs, public.payroll_records, public.company_notifications from anon, authenticated;
 grant select on public.company_members to authenticated;
-grant insert (email, full_name, title, department, role, active) on public.company_members to authenticated;
 grant update (full_name, title, department, active) on public.company_members to authenticated;
+revoke insert on public.company_members from authenticated;
+revoke update (role) on public.company_members from authenticated;
 grant select on public.company_tasks to authenticated;
 grant insert (title, description, assignee_id, status, priority, due_at) on public.company_tasks to authenticated;
 grant update (title, description, assignee_id, status, priority, due_at, progress) on public.company_tasks to authenticated;
@@ -255,6 +294,24 @@ $block$;
 do $block$
 begin
   alter publication supabase_realtime add table public.company_notifications;
+exception when duplicate_object then null;
+end;
+$block$;
+do $block$
+begin
+  alter publication supabase_realtime add table public.company_members;
+exception when duplicate_object then null;
+end;
+$block$;
+do $block$
+begin
+  alter publication supabase_realtime add table public.work_logs;
+exception when duplicate_object then null;
+end;
+$block$;
+do $block$
+begin
+  alter publication supabase_realtime add table public.payroll_records;
 exception when duplicate_object then null;
 end;
 $block$;

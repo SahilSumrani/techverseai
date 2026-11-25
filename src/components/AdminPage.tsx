@@ -25,7 +25,7 @@ import {
   Calendar
 } from 'lucide-react';
 import {
-  createNotification, createPayroll, createTask, getTeamRole, listMembers, listNotifications,
+  createNotification, createPayroll, createTask, getTeamRole, listMembers, listNotifications, setMemberRole,
   listPayroll, listTasks, listWorkLogs, sendTeamInvite, signOut as signOutTeam, subscribeToTeamChanges,
   sendTeamEmail, type PayrollRecord, type TeamMember, type TeamNotification, type TeamRole, type TeamTask, type WorkLog
 } from '../services/teamService';
@@ -35,6 +35,7 @@ export const AdminPage: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
+  const [authLoading, setAuthLoading] = useState(true);
   const [queries, setQueries] = useState<ContactQuery[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -63,7 +64,6 @@ export const AdminPage: React.FC = () => {
 
   useEffect(() => {
     let active = true;
-    let teamChannel: ReturnType<typeof subscribeToTeamChanges> | undefined;
 
     const loadAdminSession = async () => {
       try {
@@ -74,18 +74,30 @@ export const AdminPage: React.FC = () => {
           setQueries(await getStoredQueries());
           try {
             await refreshTeam();
-            teamChannel = subscribeToTeamChanges(() => { void refreshTeam().catch(() => undefined); });
-          } catch (teamError) { console.error('Could not load team workspace. Run the team portal SQL migration.', teamError); }
+          } catch (teamError) { console.error('Could not load team workspace.', teamError); setTeamMessage(teamError instanceof Error ? teamError.message : 'Could not load team workspace.'); }
         }
       } catch (error) {
         console.error('Could not load the admin session:', error);
         if (active) setLoginError('Admin service is unavailable. Please try again later.');
+      } finally {
+        if (active) setAuthLoading(false);
       }
     };
 
     void loadAdminSession();
-    return () => { active = false; if (teamChannel) void teamChannel.unsubscribe(); };
+    return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    if (!authed) return;
+    const teamChannel = subscribeToTeamChanges(() => {
+      void Promise.all([refreshTeam(), getStoredQueries().then(setQueries)]).catch((error) => {
+        console.error('Could not sync workspace updates:', error);
+        setTeamMessage(error instanceof Error ? error.message : 'Live workspace sync failed.');
+      });
+    });
+    return () => { void teamChannel.unsubscribe(); };
+  }, [authed]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,7 +114,7 @@ export const AdminPage: React.FC = () => {
       setPassword('');
       setUsername('');
       setQueries(storedQueries);
-      try { await refreshTeam(); } catch (teamError) { console.error('Could not load team workspace. Run the team portal SQL migration.', teamError); }
+      try { await refreshTeam(); } catch (teamError) { console.error('Could not load team workspace.', teamError); setTeamMessage(teamError instanceof Error ? teamError.message : 'Could not load team workspace.'); }
     } catch (error) {
       console.error('Admin sign in failed:', error);
       setLoginError('Admin service is unavailable. Please try again later.');
@@ -147,12 +159,32 @@ export const AdminPage: React.FC = () => {
     }
   };
 
-  const refreshQueries = async () => {
+  const refreshWorkspace = async () => {
+    setTeamBusy(true);
+    setTeamMessage('');
     try {
-      setQueries(await getStoredQueries());
+      const [nextQueries] = await Promise.all([getStoredQueries(), refreshTeam()]);
+      setQueries(nextQueries);
+      setTeamMessage('Workspace data is up to date.');
     } catch (error) {
-      console.error('Could not refresh inquiries:', error);
-      window.alert('Could not refresh inquiries. Please try again.');
+      console.error('Could not refresh the full workspace:', error);
+      setTeamMessage(error instanceof Error ? error.message : 'Could not refresh workspace data. Please try again.');
+    } finally {
+      setTeamBusy(false);
+    }
+  };
+
+  const changeMemberRole = async (userId: string, role: Exclude<TeamRole, 'owner'>) => {
+    setTeamBusy(true);
+    setTeamMessage('');
+    try {
+      await setMemberRole(userId, role);
+      await refreshTeam();
+      setTeamMessage(`Team access updated to ${role}.`);
+    } catch (error) {
+      setTeamMessage(error instanceof Error ? error.message : 'Could not update team access.');
+    } finally {
+      setTeamBusy(false);
     }
   };
 
@@ -183,6 +215,10 @@ export const AdminPage: React.FC = () => {
   ];
 
   // Login Screen
+  if (authLoading) {
+    return <div className="flex min-h-screen items-center justify-center bg-slate-50 px-5 text-slate-700"><div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm"><RefreshCw className="h-5 w-5 animate-spin text-blue-600" /><span className="text-sm font-medium">Checking your secure workspace…</span></div></div>;
+  }
+
   if (!authed) {
     return (
       <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-poppins selection:bg-blue-100 selection:text-blue-900 dashboard-enter">
@@ -264,19 +300,20 @@ export const AdminPage: React.FC = () => {
             <a href="/">
               <img src="/logo.png" alt="Techverse" className="h-10 w-auto bg-white/90 rounded-lg p-1" />
             </a>
-            <span className="bg-blue-500/10 border border-blue-500/30 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
-              Admin Portal
+            <span className="bg-blue-50 border border-blue-200 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+              {teamRole === 'owner' ? 'Owner workspace' : 'Admin workspace'}
             </span>
           </div>
 
           <div className="flex items-center space-x-4">
             <button
-              onClick={refreshQueries}
+              onClick={() => void refreshWorkspace()}
+              disabled={teamBusy}
               className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 transition-colors flex items-center gap-1.5 text-xs"
               title="Refresh Queries"
             >
-              <RefreshCw className="w-4 h-4" />
-              <span className="hidden sm:inline">Refresh</span>
+              <RefreshCw className={`w-4 h-4 ${teamBusy ? 'animate-spin' : ''}`} />
+              <span className="hidden sm:inline">{teamBusy ? 'Updating…' : 'Refresh'}</span>
             </button>
 
             <button
@@ -303,14 +340,15 @@ export const AdminPage: React.FC = () => {
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-7 sm:px-6 lg:px-8">
           <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div><p className="text-xs font-semibold uppercase tracking-[.18em] text-blue-700">Company workspace</p><h1 className="mt-1 text-3xl font-semibold text-slate-900">{tab === 'overview' ? 'Team overview' : tab === 'team' ? 'People & access' : tab === 'tasks' ? 'Work management' : 'Payroll records'}</h1><p className="mt-2 text-sm text-slate-500">{tab === 'overview' ? 'A live snapshot of team capacity and assigned work.' : 'Manage active staff, assignments, workload and private salary records.'}</p></div>
-            <button onClick={() => { setTeamBusy(true); void refreshTeam().then(()=>setTeamMessage('Workspace refreshed.')).catch(e=>setTeamMessage(e instanceof Error?e.message:'Refresh failed.')).finally(()=>setTeamBusy(false)); }} className="flex items-center gap-2 self-start rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-700"><RefreshCw className={`h-4 w-4 ${teamBusy?'animate-spin':''}`} /> Refresh</button>
+            <button onClick={() => void refreshWorkspace()} disabled={teamBusy} className="flex items-center gap-2 self-start rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-60"><RefreshCw className={`h-4 w-4 ${teamBusy?'animate-spin':''}`} /> {teamBusy ? 'Updating…' : 'Refresh'}</button>
           </div>
           {teamMessage && <div role="status" className="mb-5 rounded-xl border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800">{teamMessage}</div>}
           {!teamRole && <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">Apply <code>supabase/techverse_team_portal.sql</code> in Supabase SQL Editor to enable team tools. Admin login and leads remain available.</div>}
           {teamRole && <>
-            <section className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{[
-              ['Active team', members.filter(m=>m.active).length], ['Open work', tasks.filter(t=>t.status!=='done').length], ['Completed tasks', tasks.filter(t=>t.status==='done').length], ['Unread updates', notifications.filter(n=>!n.read_at).length]
-            ].map(([label,value])=><div key={label} className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-sm text-slate-500">{label}</p><p className="mt-2 text-3xl font-semibold text-slate-900">{value}</p></div>)}</section>
+            <section className="mb-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">{[
+              ['Employees', members.filter(m=>m.active&&m.role==='employee').length, 'bg-blue-500'], ['Admins', members.filter(m=>m.active&&m.role==='admin').length, 'bg-violet-500'], ['Open work', tasks.filter(t=>t.status!=='done').length, 'bg-amber-500'], ['Completed', tasks.filter(t=>t.status==='done').length, 'bg-emerald-500'], ['Unread updates', notifications.filter(n=>!n.read_at).length, 'bg-sky-500']
+            ].map(([label,value,tone])=><div key={label} className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"><div className="flex items-center justify-between"><p className="text-sm text-slate-500">{label}</p><span className={`h-2.5 w-2.5 rounded-full ${tone}`} /></div><p className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{value}</p></div>)}</section>
+            {teamRole === 'owner' && <div className="mb-6 flex flex-col gap-2 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 to-white px-5 py-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-semibold text-slate-900">Owner control</p><p className="mt-1 text-sm text-slate-600">You keep owner access. Team admins can run daily work; change their access in the Team tab.</p></div><span className="w-fit rounded-full border border-blue-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-700">Full control</span></div>}
             {tab === 'overview' && <section className="mb-6 grid gap-5 xl:grid-cols-[1.25fr_.75fr]">
               <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6"><div className="flex flex-wrap items-start justify-between gap-3"><div><h2 className="text-lg font-semibold text-slate-900">Team workload</h2><p className="mt-1 text-sm text-slate-500">Open assignments and logged hours by teammate.</p></div><span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">Live data</span></div>
                 {workload.length ? <div className="mt-6 space-y-5">{workload.map(person=><div key={person.name}><div className="flex items-center justify-between gap-3 text-sm"><span className="font-medium text-slate-800">{person.name}</span><span className="text-slate-500">{person.openTasks} open · {person.hours.toFixed(1)} hrs</span></div><div className="mt-2 h-2.5 overflow-hidden rounded-full bg-slate-100"><div className="dashboard-chart-bar h-full rounded-full bg-blue-600" style={{width:`${person.openTasks ? Math.max(6, person.openTasks / maxOpenTasks * 100) : 0}%`}} /></div></div>)}</div> : <div className="mt-6 rounded-xl bg-slate-50 px-4 py-10 text-center"><p className="font-medium text-slate-700">No active teammates yet</p><p className="mt-1 text-sm text-slate-500">Team activity will appear here when people join and receive assignments.</p></div>}
@@ -320,7 +358,7 @@ export const AdminPage: React.FC = () => {
             {tab === 'team' && <div className="grid gap-5 xl:grid-cols-[.85fr_1.15fr]">
               <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
                 <form onSubmit={async e=>{e.preventDefault();setTeamBusy(true);setTeamMessage('');try{await sendTeamInvite(inviteForm.email,inviteForm.full_name,inviteForm.title,inviteForm.department);setInviteForm({email:'',full_name:'',title:'',department:''});setTeamMessage('Secure account invitation sent. The employee sets their own password from the link.');await refreshTeam();}catch(err){setTeamMessage(err instanceof Error?err.message:'Invitation failed. Check the server function and email provider setup.');}finally{setTeamBusy(false);}}}>
-                <h2 className="text-lg font-semibold text-slate-900">Invite a teammate</h2><p className="mt-1 text-sm text-slate-500">We send a secure account setup link; no password is shared by email.</p>
+                <h2 className="text-lg font-semibold text-slate-900">Invite a teammate</h2><p className="mt-1 text-sm text-slate-500">New accounts join as employees. As owner, you can promote trusted teammates to admin after they join.</p>
                 {(['full_name','email','title','department'] as const).map(field=><label key={field} className="mt-4 block text-xs font-medium capitalize text-slate-600">{field.replace('_',' ')}<input required={field==='full_name'||field==='email'} type={field==='email'?'email':'text'} value={inviteForm[field]} onChange={e=>setInviteForm({...inviteForm,[field]:e.target.value})} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 outline-none focus:border-blue-500" /></label>)}
                 <button disabled={teamBusy} className="mt-5 w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white disabled:opacity-50">Send invite</button>
                 </form>
@@ -328,7 +366,7 @@ export const AdminPage: React.FC = () => {
                   <h3 className="font-medium text-slate-900">Send an in-app update</h3><select required value={noticeForm.recipient_id} onChange={e=>setNoticeForm({...noticeForm,recipient_id:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-900"><option value="">Choose a teammate</option>{members.filter(m=>m.active&&m.role==='employee').map(m=><option key={m.user_id} value={m.user_id}>{m.full_name} · {m.email}</option>)}</select><input required placeholder="Title" value={noticeForm.title} onChange={e=>setNoticeForm({...noticeForm,title:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-900"/><textarea required placeholder="Message" rows={3} value={noticeForm.body} onChange={e=>setNoticeForm({...noticeForm,body:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-900"/><button className="mt-3 rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900">Send notification</button>
                 </form>
               </div>
-              <div className="space-y-3">{members.map(member=><article key={member.user_id} className="rounded-2xl border border-slate-200 bg-white p-5"><div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-semibold text-slate-900">{member.full_name}</h3><p className="mt-1 text-sm text-slate-500">{member.email}</p><p className="mt-2 text-xs text-slate-500">{[member.title,member.department].filter(Boolean).join(' · ')||'Role not set'}</p></div><span className="rounded-full bg-slate-50 px-3 py-1 text-xs capitalize text-slate-600">{member.role} · {member.active?'active':'inactive'}</span></div><div className="mt-4 flex gap-4 border-t border-slate-200 pt-3 text-xs text-slate-500"><span>{tasks.filter(t=>t.assignee_id===member.user_id&&t.status!=='done').length} open assignments</span><span>{logs.filter(l=>l.employee_id===member.user_id).reduce((s,l)=>s+l.minutes,0)/60} hours logged</span><a href={`mailto:${member.email}`} className="ml-auto text-blue-700">Email</a></div></article>)}{members.length===0&&<div className="rounded-2xl border border-slate-200 bg-white p-10 text-center text-slate-500">No team members have joined yet.</div>}</div>
+              <div className="space-y-3">{members.map(member=><article key={member.user_id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"><div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-semibold text-slate-900">{member.full_name}</h3><p className="mt-1 text-sm text-slate-500">{member.email}</p><p className="mt-2 text-xs text-slate-500">{[member.title,member.department].filter(Boolean).join(' · ')||'Role not set'}</p></div>{teamRole === 'owner' && member.role !== 'owner' ? <label className="text-xs font-medium text-slate-500">Access<select aria-label={`Access for ${member.full_name}`} value={member.role} disabled={teamBusy} onChange={event=>void changeMemberRole(member.user_id,event.target.value as Exclude<TeamRole,'owner'>)} className="mt-1 block rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm capitalize text-slate-800 disabled:opacity-60"><option value="employee">Employee</option><option value="admin">Admin</option></select></label> : <span className={`rounded-full px-3 py-1 text-xs font-semibold capitalize ${member.role==='owner'?'bg-blue-50 text-blue-800':'bg-violet-50 text-violet-700'}`}>{member.role} · {member.active?'active':'inactive'}</span>}</div><div className="mt-4 flex flex-wrap gap-4 border-t border-slate-100 pt-3 text-xs text-slate-500"><span>{tasks.filter(t=>t.assignee_id===member.user_id&&t.status!=='done').length} open assignments</span><span>{logs.filter(l=>l.employee_id===member.user_id).reduce((s,l)=>s+l.minutes,0).toFixed(1)} hours logged</span><a href={`mailto:${member.email}`} className="ml-auto font-medium text-blue-700">Email teammate</a></div></article>)}{members.length===0&&<div className="rounded-2xl border border-slate-200 bg-white p-10 text-center text-slate-500">No team members have joined yet. Invite someone to start assigning work.</div>}</div>
             </div>}
             {tab === 'tasks' && <div className="grid gap-5 xl:grid-cols-[.8fr_1.2fr]">
               <form onSubmit={async e=>{e.preventDefault();setTeamBusy(true);try{await createTask({...taskForm,due_at:taskForm.due_at||null});let emailSent=false;try{emailSent=await sendTeamEmail(taskForm.assignee_id,`New task: ${taskForm.title}`,`${taskForm.description||'A new task has been assigned to you.'}${taskForm.due_at?`\nDue date: ${taskForm.due_at}`:''}\nOpen your workspace: ${window.location.origin}/employee`);}catch(emailError){console.error('Could not email task assignment:',emailError);}setTaskForm({title:'',description:'',assignee_id:'',priority:'normal',due_at:''});setTeamMessage(emailSent?'Task assigned; employee received an in-app alert and email.':'Task assigned; in-app alert is ready. Email requires verified Resend configuration.');await refreshTeam();}catch(err){setTeamMessage(err instanceof Error?err.message:'Could not assign task.');}finally{setTeamBusy(false);}}} className="h-fit rounded-2xl border border-slate-200 bg-white p-5 sm:p-6"><h2 className="text-lg font-semibold text-slate-900">Assign work</h2><input required placeholder="Task name" value={taskForm.title} onChange={e=>setTaskForm({...taskForm,title:e.target.value})} className="mt-4 w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-900"/><textarea placeholder="What needs to be done?" rows={4} value={taskForm.description} onChange={e=>setTaskForm({...taskForm,description:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-900"/><select required value={taskForm.assignee_id} onChange={e=>setTaskForm({...taskForm,assignee_id:e.target.value})} className="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-900"><option value="">Assign to</option>{members.filter(m=>m.active&&m.role==='employee').map(m=><option key={m.user_id} value={m.user_id}>{m.full_name}</option>)}</select><div className="mt-3 grid grid-cols-2 gap-3"><select value={taskForm.priority} onChange={e=>setTaskForm({...taskForm,priority:e.target.value as TeamTask['priority']})} className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-900"><option value="low">Low priority</option><option value="normal">Normal priority</option><option value="high">High priority</option><option value="urgent">Urgent</option></select><input type="date" value={taskForm.due_at} onChange={e=>setTaskForm({...taskForm,due_at:e.target.value})} className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-900"/></div><button disabled={teamBusy} className="mt-4 w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white disabled:opacity-50">Assign task</button></form>

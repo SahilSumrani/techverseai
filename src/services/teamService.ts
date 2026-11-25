@@ -28,6 +28,10 @@ export async function listMembers(): Promise<TeamMember[]> {
   if (error) throw error;
   return (data ?? []) as TeamMember[];
 }
+export async function setMemberRole(userId: string, role: Exclude<TeamRole, 'owner'>): Promise<void> {
+  const { error } = await db().rpc('techverse_set_member_role', { p_user_id: userId, p_role: role });
+  if (error) throw error;
+}
 export async function listTasks(): Promise<TeamTask[]> {
   const { data, error } = await db().from('company_tasks').select('*').order('created_at', { ascending: false });
   if (error) throw error;
@@ -74,7 +78,10 @@ export async function markNotificationRead(id: string): Promise<void> {
 }
 export function subscribeToTeamChanges(onChange: () => void) {
   return db().channel(`team-portal-${Math.random().toString(36).slice(2)}`)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'company_members' }, onChange)
     .on('postgres_changes', { event: '*', schema: 'public', table: 'company_tasks' }, onChange)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'work_logs' }, onChange)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'payroll_records' }, onChange)
     .on('postgres_changes', { event: '*', schema: 'public', table: 'company_notifications' }, onChange)
     .subscribe();
 }

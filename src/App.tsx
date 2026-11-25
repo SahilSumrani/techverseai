@@ -10,6 +10,7 @@ import { AboutSection } from './components/AboutSection';
 import { TickerBanner } from './components/TickerBanner';
 import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
+import { getAuthLandingPath } from './services/authCallback';
 
 // Dynamic Page imports for Code Splitting (Reduces Unused JS by ~45%)
 const CustomizedPage = lazy(() => import('./components/CustomizedPage').then(m => ({ default: m.CustomizedPage })));
@@ -23,12 +24,7 @@ const AdminPage = lazy(() => import('./components/AdminPage').then(m => ({ defau
 const EmployeePortal = lazy(() => import('./components/EmployeePortal').then(m => ({ default: m.EmployeePortal })));
 
 export const App: React.FC = () => {
-  const [pathname, setPathname] = useState<string>(() => {
-    // Supabase recovery links may redirect to the Site URL with the recovery
-    // session in the URL hash. Route those links into the password form.
-    const authParams = new URLSearchParams(window.location.hash.slice(1));
-    return authParams.get('type') === 'recovery' || authParams.has('error_code') ? '/employee' : window.location.pathname;
-  });
+  const [pathname, setPathname] = useState<string>(() => getAuthLandingPath(window.location.pathname, window.location.hash));
   const prerenderedPaths = new Set([
     '/services/',
     '/website-development-company-delhi/',

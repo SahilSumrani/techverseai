@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Bell, CheckCircle2, Clock3, LogOut, RefreshCw, ShieldCheck, UserRound, Wallet } from 'lucide-react';
 import { Footer } from './Footer';
 import { Navbar } from './Navbar';
+import { isPasswordRecovery, needsPasswordSetup } from '../services/authCallback';
 import {
   getCurrentUserId, getTeamRole, listNotifications, listPayroll, listTasks,
   createWorkLog, markNotificationRead, signIn, signOut, subscribeToTeamChanges, updateTask,
@@ -21,12 +22,8 @@ export const EmployeePortal: React.FC = () => {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const [activeTab, setActiveTab] = useState<'tasks' | 'pay' | 'updates'>('tasks');
-  const [setupMode, setSetupMode] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    const hash = new URLSearchParams(window.location.hash.slice(1));
-    return params.get('setup') === '1' || params.get('recovery') === '1' || hash.get('type') === 'recovery' || hash.has('error_code');
-  });
-  const [recoveryMode, setRecoveryMode] = useState(() => new URLSearchParams(window.location.search).get('recovery') === '1' || (() => { const hash = new URLSearchParams(window.location.hash.slice(1)); return hash.get('type') === 'recovery' || hash.has('error_code'); })());
+  const [setupMode, setSetupMode] = useState(() => needsPasswordSetup(window.location.search, window.location.hash));
+  const [recoveryMode, setRecoveryMode] = useState(() => isPasswordRecovery(window.location.search, window.location.hash));
   const [forgotMode, setForgotMode] = useState(false);
   const [recoverySent, setRecoverySent] = useState(false);
 
